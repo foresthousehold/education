@@ -32,10 +32,6 @@ public class Question extends BaseEntity{
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
-    /** アドバイス */
-    @Column(name = "advice", nullable = false)
-    private String advice;
-
     /** 並び順 */
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -56,14 +52,6 @@ public class Question extends BaseEntity{
         this.problem = problem;
     }
 
-    public String getAdvice() {
-        return advice;
-    }
-
-    public void setAdvice(String advice) {
-        this.advice = advice;
-    }
-
     public Long getSortOrder() {
         return sortOrder;
     }
@@ -71,6 +59,5 @@ public class Question extends BaseEntity{
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
-
 
 }

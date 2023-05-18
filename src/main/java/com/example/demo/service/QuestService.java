@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import com.example.demo.repository.QuestionRepository;
  * 問題サービス
  */
 @Service
-public class QuestionService {
+public class QuestService {
 
     @Autowired ProblemRepository problemRepository;
 
@@ -41,22 +42,18 @@ public class QuestionService {
     /**
      * 大問フォームを作成します
      */
-    public List<ProblemForm> createProblemForms(Long questId) {
-        List<ProblemForm> problemForms =new ArrayList<>();
+    public ProblemForm createProblemForm(Long questId) {
 
-        // クエストIDに紐づく大問一覧を取得する
-        List<Problem> problems = problemRepository.findByQuestId(questId);
+        // クエストIDに紐づく一番初めの大問を取得する
+        Problem problem = problemRepository.findByQuestId(questId).get(0);
 
-        // 大問の数だけ回し、大問フォームに必要な値を詰める
-        for(Problem problem : problems) {
-            final ProblemForm problemForm = new ProblemForm();
-            problemForm.setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
-            problemForm.setVideoPath(problem.getVideo().getFilePath());
-            problemForm.setQuestionForms(createQuestionForms(problem.getId()));
-            problemForms.add(problemForm);
-        }
+        final ProblemForm problemForm = new ProblemForm();
+        problemForm.setProblemId(problem.getId());
+        problemForm.setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
+        problemForm.setVideoPath(problem.getVideo().getFilePath());
+        problemForm.setQuestionForms(createQuestionForms(problem.getId()));
 
-        return problemForms;
+        return problemForm;
     }
 
     /**
@@ -90,12 +87,28 @@ public class QuestionService {
         // 解答選択肢ごとにフォームにセットする
         for(AnswerChoice answerChoice : answerChoices) {
             AnswerChoiceForm answerChoiceForm = new AnswerChoiceForm();
+            answerChoiceForm.setId(answerChoice.getId());
             answerChoiceForm.setContent(answerChoice.getContent());
-            answerChoiceForm.setCorrectFlg(answerChoice.isCorrectFlg());
             answerChoiceForms.add(answerChoiceForm);
         }
 
         return answerChoiceForms;
 
+    }
+
+    /**
+     * key: questionId, Value: 正解の選択肢Idのマップを作成します
+     */
+    public Map<Long, Long> createAnswerChoiceIdMap(List<Question> questions) {
+        Map<Long, Long> createAnswerChoiceIdMap = questions.stream()
+        .collect(Collectors.toMap(
+            Question::getId,
+            q -> answerChoiceRepository.findByQuestionIdAndCorrectFlg(q.getId())));
+
+        // mapを作成
+        //  key: questionID, value: 正解のansewerchoiceのID
+        // questService.createAnswerChoiceIdMap();
+
+        return createAnswerChoiceIdMap;
     }
 }

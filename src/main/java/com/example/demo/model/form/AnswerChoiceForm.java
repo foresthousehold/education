@@ -5,11 +5,19 @@ package com.example.demo.model.form;
  */
 public class AnswerChoiceForm {
 
+    /** 選択肢を識別するID */
+    private Long id;
+
     /** コンテンツ */
     private String content;
 
-    /** 正答フラグ */
-    private boolean correctFlg;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getContent() {
         return content;
@@ -17,14 +25,6 @@ public class AnswerChoiceForm {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public boolean isCorrectFlg() {
-        return correctFlg;
-    }
-
-    public void setCorrectFlg(boolean correctFlg) {
-        this.correctFlg = correctFlg;
     }
 
 }

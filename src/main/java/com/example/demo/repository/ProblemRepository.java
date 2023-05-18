@@ -13,9 +13,10 @@ public interface ProblemRepository extends BaseRepository<Problem, Long>{
     /**
      * クエストIDに紐づく大問一覧を取得します
      */
-    @Query("select p from Problem p"
+    @Query("select distinct p from Problem p"
             + " inner join p.quest q"
-            + " where q.id = :id")
+            + " where q.id = :id"
+            + " order by p.id")
     public List<Problem> findByQuestId(@Param("id") Long id);
     
 }

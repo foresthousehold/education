@@ -23,7 +23,7 @@ public class Video extends BaseEntity {
     @Column(name = "file_path", nullable = false)
     private String filePath;
 
-    /** クエスト */
+    /** 大問 */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "problem_id")
     private Problem problem;

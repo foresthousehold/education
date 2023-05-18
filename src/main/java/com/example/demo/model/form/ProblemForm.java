@@ -7,6 +7,9 @@ import java.util.List;
  */
 public class ProblemForm {
 
+    // 大問ID
+    private Long problemId;
+
     // 問題画像ファイルパス一覧
     private List<String> imgPaths;
 
@@ -18,6 +21,14 @@ public class ProblemForm {
 
     // 不正解数
     private int misstakeCount;
+
+    public Long getProblemId() {
+        return problemId;
+    }
+
+    public void setProblemId(Long problemId) {
+        this.problemId = problemId;
+    }
 
     public List<String> getImgPaths() {
         return imgPaths;
@@ -52,6 +63,3 @@ public class ProblemForm {
     }
 
 }
-    
-
-    

@@ -11,7 +11,7 @@
     <th:block th:each="quest : ${quests}">
       <div class="container">
         <div class="wrapper d-flex justify-content-center align-items-center mt-2">
-          <a th:href="@{/question/{questId}(questId=${quest.id})}" th:text="${quest.name}" class="btn btn-primary"></a>
+          <a th:href="@{/quest/{questId}(questId=${quest.id})}" th:text="${quest.name}" class="btn btn-primary"></a>
         </div>
       </div>
     </div>

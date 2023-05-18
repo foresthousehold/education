@@ -31,9 +31,13 @@ public class AnswerChoice extends BaseEntity{
     @Column(name = "content")
     private String content;
 
-    /** 選択番号 */
-    @Column(name = "option_number")
-    private Long optionNumber;
+    /** アドバイス */
+    @Column(name = "advice", nullable = false)
+    private String advice;
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
     public Question getQuestion() {
         return question;
@@ -59,13 +63,12 @@ public class AnswerChoice extends BaseEntity{
         this.content = content;
     }
 
-    public Long getOptionNumber() {
-        return optionNumber;
+    public String getAdvice() {
+        return advice;
     }
 
-    public void setOptionNumber(Long optionNumber) {
-        this.optionNumber = optionNumber;
+    public void setAdvice(String advice) {
+        this.advice = advice;
     }
 
-    
 }
