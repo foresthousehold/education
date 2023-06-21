@@ -47,8 +47,8 @@ public class Problem extends BaseEntity{
     private Video video;
 
     /** 並び順 */
-    @Column(name = "sort_order", nullable = false)
-    private Long sortOrder;
+    @Column(name = "problem_no", nullable = false)
+    private Long problemNo;
 
     public String getName() {
         return name;
@@ -90,14 +90,12 @@ public class Problem extends BaseEntity{
         this.video = video;
     }
 
-    public Long getSortOrder() {
-        return sortOrder;
+    public Long getProblemNo() {
+        return problemNo;
     }
 
-    public void setSortOrder(Long sortOrder) {
-        this.sortOrder = sortOrder;
+    public void setProblemNo(Long problemNo) {
+        this.problemNo = problemNo;
     }
-
-    
 
 }

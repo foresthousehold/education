@@ -51,6 +51,5 @@ public class QuestionForm {
         this.advice = advice;
     }
 
-    
 
 }

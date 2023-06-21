@@ -11,7 +11,7 @@
   <header>問題画面</header>
   <div class="border border-primary">
     <form th:action="@{/quest/{questId}(questId=${questId})}" th:object="${problemForm}" method="post">
-      <input type="hidden" th:field="*{problemId}">
+      <input type="hidden" th:field="*{problemNo}">
       <div class="container bg-white">
         <div class="row">
           <div class="image col-md-6">
@@ -34,18 +34,21 @@
         <div class="container">
           <th:block th:each="question, questionStat : *{questionForms}">
             <div class="question-area">
+              <input type="hidden" th:field="*{questionForms[__${questionStat.index}__].questionId}">
               <div class="row mt-3">
                 <div class="question">
                   <div class="btn btn-outline-dark" th:text="${questionStat.count}">A</div>
                 </div>
                 <div class="col-md-6">
-                  <select class="form-select" aria-label="select option">
+                  <select class="form-select" aria-label="select option" th:field="*{questionForms[__${questionStat.index}__].choicedAnswerId}">
                     <option value="" selected>------</option>
                     <th:block th:each="answerChoice : ${question.answerChoiceForms}">
                       <option th:value="${answerChoice.id}" th:text="${answerChoice.content}"></option>
                     </th:block>
                   </select>
-                  <p id="errorMessage"></p>
+                  <div class="answerChoice-advice">
+                    <div th:text=${question.advice}></div>
+                  </div>
                 </div>
               </div>
             </div>

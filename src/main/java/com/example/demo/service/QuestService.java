@@ -40,20 +40,79 @@ public class QuestService {
     }
 
     /**
+     * 最初の大問フォームを作成します
+     */
+    public ProblemForm createFirstProblemForm(Long questId) {
+
+        return createProblemForm(questId, 1L);
+    }
+
+    /**
      * 大問フォームを作成します
      */
-    public ProblemForm createProblemForm(Long questId) {
+    public ProblemForm createProblemForm(Long questId, Long problemNo) {
 
         // クエストIDに紐づく一番初めの大問を取得する
-        Problem problem = problemRepository.findByQuestId(questId).get(0);
+        Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemNo).orElseThrow();
 
         final ProblemForm problemForm = new ProblemForm();
-        problemForm.setProblemId(problem.getId());
+        problemForm.setProblemNo(problem.getProblemNo());
         problemForm.setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
         problemForm.setVideoPath(problem.getVideo().getFilePath());
         problemForm.setQuestionForms(createQuestionForms(problem.getId()));
 
         return problemForm;
+    }
+
+    /**
+     * 受け取ったクエストIDとproblemFormから値を受け取って返す。
+     */
+    public ProblemForm createProblemForm(Long questId, ProblemForm problemForm) {
+
+        // クエストIDに紐づく一番初めの大問を取得する
+        Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemForm.getProblemNo()).orElseThrow();
+
+        final ProblemForm updateProblemForm = new ProblemForm();
+        updateProblemForm.setProblemNo(problem.getProblemNo());
+        updateProblemForm.setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
+        updateProblemForm.setVideoPath(problem.getVideo().getFilePath());
+        updateProblemForm.setQuestionForms(createQuestionForms(problem.getId(), problemForm));
+
+        return updateProblemForm;
+    }
+
+    /**
+     * 問題フォームを作成します
+     */
+    public List<QuestionForm> createQuestionForms(Long problemId, ProblemForm problemForm) {
+        final List<QuestionForm> questionForms = new ArrayList<>();
+
+        // 大問IDに紐づく全ての小問を取得する
+        final List<Question> questions = questionRepository.findByProblemId(problemId);
+
+        // 小問ごとに解答選択フォームを作成する
+        for(int i = 0;  i < questions.size(); i++) {
+            Question question = questions.get(i);
+            QuestionForm questionForm = new QuestionForm();
+            questionForm.setQuestionId(question.getId());
+            questionForm.setChoicedAnswerId(problemForm.getQuestionForms().get(i).getChoicedAnswerId());
+            questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
+
+            // 小問IDに紐づく全ての解答選択肢を取得する
+            final List<AnswerChoice> answerChoices = answerChoiceRepository.findByQuestionId(question.getId());
+
+            // 入ってきた選択肢IDとアドバイスのmap作成
+            Map<Long, String> answerChoiceIdMap = answerChoices.stream().collect(Collectors.toMap(
+                AnswerChoice::getId,
+                AnswerChoice::getAdvice
+            ));
+
+            questionForm.setAdvice(answerChoiceIdMap.get(problemForm.getQuestionForms().get(i).getChoicedAnswerId()));
+
+            questionForms.add(questionForm);
+        }
+        
+        return questionForms;
     }
 
     /**
@@ -68,6 +127,7 @@ public class QuestService {
         // 小問ごとに解答選択フォームを作成する
         for(Question question : questions) {
             QuestionForm questionForm = new QuestionForm();
+            questionForm.setQuestionId(question.getId());
             questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
             questionForms.add(questionForm);
         }
@@ -93,7 +153,6 @@ public class QuestService {
         }
 
         return answerChoiceForms;
-
     }
 
     /**
@@ -104,10 +163,6 @@ public class QuestService {
         .collect(Collectors.toMap(
             Question::getId,
             q -> answerChoiceRepository.findByQuestionIdAndCorrectFlg(q.getId())));
-
-        // mapを作成
-        //  key: questionID, value: 正解のansewerchoiceのID
-        // questService.createAnswerChoiceIdMap();
 
         return createAnswerChoiceIdMap;
     }
