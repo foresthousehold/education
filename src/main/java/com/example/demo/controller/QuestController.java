@@ -2,15 +2,18 @@ package com.example.demo.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Problem;
 import com.example.demo.entity.Question;
@@ -79,11 +82,8 @@ public class QuestController {
         @PathVariable(name = "questId") Long questId,
         @RequestParam("problemNo") Long problemNo,
         ProblemForm problemForm,
+        RedirectAttributes redirectAttributes,
         Model model) {
-        // 解答結果を受け取る
-
-        // クエストIdに紐づく大問一覧を取得
-        
         Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemNo).orElseThrow();
 
         // 大問が取得できなかった場合、全ての大問が時終わったのでクエスト選択画面に遷移
@@ -102,24 +102,39 @@ public class QuestController {
         // 正誤判定
         boolean isAllCorrect = questionForms.stream().allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
         
-        //  - 一つでも間違いがあった場合、formにアドバイスをセット
+        // 一つでも間違いがあった場合、formにアドバイスをセット
         if (!isAllCorrect) {
             ProblemForm adviceProblemForm = questService.createProblemForm(questId, problemForm);
 
-            // アドバイスを作成
-              // 選択した選択肢IDに紐づくエンティティを取得し、アドバイスを取得
-              // 問題フォームにセットする
-            // 再度同じ問題を表示させるために、formに値をset
             // 再度同じ大問を表示する
             model.addAttribute("problemForm", adviceProblemForm);
             return "quest/quest";
         }
 
-        //  - 全て正答だった場合、次の大問用のformをセット
-        //    正誤対象の大問ID+1で一覧から取得しformにセット
+        // 表示する大問があるかどうか判定するための変数
+        Optional<Problem> nextProblem = problemRepository.findByQuestIdAndProblemNo(questId, problem.getProblemNo() + 1);
 
+        // 存在しなかったら経験値画面に遷移
+        if (nextProblem.isEmpty()) {
+            redirectAttributes.addFlashAttribute("questId", questId);
+            return "redirect:/quest/test";
+        }
+
+        // 全て正答だった場合、次の大問用のformをセット
+        // 正誤対象の大問ID+1で一覧から取得しformにセット
         model.addAttribute("problemForm", questService.createProblemForm(questId, problem.getProblemNo() + 1));
 
         return "quest/quest";
+    }
+
+    /**
+     * 経験値画面を表示します。
+     */
+    @GetMapping("/test")
+    public String experience(
+        @ModelAttribute("questId") Long questId,
+        Model model) {
+
+            return "quest/experience";
     }
 }
