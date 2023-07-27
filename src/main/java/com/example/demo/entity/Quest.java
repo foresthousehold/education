@@ -36,6 +36,10 @@ public class Quest extends BaseEntity {
     fetch = FetchType.LAZY, targetEntity = Problem.class, mappedBy = "quest")
     private List<Problem> problems;
 
+    /** 経験値 */
+    @Column(name = "experience", nullable = false)
+    private Long experience;
+
     /** 並び順 */
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -62,6 +66,14 @@ public class Quest extends BaseEntity {
 
     public void setProblems(List<Problem> problems) {
         this.problems = problems;
+    }
+
+    public Long getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Long experience) {
+        this.experience = experience;
     }
 
     public Long getSortOrder() {

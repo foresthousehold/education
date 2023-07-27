@@ -134,7 +134,8 @@ public class QuestController {
     public String experience(
         @ModelAttribute("questId") Long questId,
         Model model) {
+            
 
-            return "quest/experience";
+            return "quest/complete";
     }
 }
