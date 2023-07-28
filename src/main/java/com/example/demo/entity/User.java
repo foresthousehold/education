@@ -1,54 +1,42 @@
 package com.example.demo.entity;
 
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.demo.entity.base.BaseEntity;
 
-public class User implements UserDetails{
+/**
+ *  利用者
+ */
+@Entity
+@Table(name = "user")
+public class User extends BaseEntity{
 
+    private static final long serialVersionUID = 1L;
+
+    /** ユーザネーム */
+    @Column(name = "username", nullable = false)
     private String username;
 
+    /** パスワード */
+    @Column(name = "password", nullable = false)
     private String password;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

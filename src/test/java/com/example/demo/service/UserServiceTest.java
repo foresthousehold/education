@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserServiceTest {
 
     @Autowired
-    UserService service;
+    CustomUserDetailsService service;
 
     @DisplayName("ユーザー取得成功")
     @Test
