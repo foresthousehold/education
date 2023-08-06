@@ -23,6 +23,10 @@ public class User extends BaseEntity{
     @Column(name = "password", nullable = false)
     private String password;
 
+    /** 累積経験値 */
+    @Column(name = "total_experience", nullable = false)
+    private Long totalExperience;
+
     public String getUsername() {
         return username;
     }
@@ -39,4 +43,11 @@ public class User extends BaseEntity{
         this.password = password;
     }
     
+    public Long getTotalExperience() {
+        return totalExperience;
+    }
+
+    public void setTotalExperience(Long totalExperience) {
+        this.totalExperience = totalExperience;
+    }
 }

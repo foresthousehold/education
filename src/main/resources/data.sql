@@ -1,3 +1,3 @@
 -- ユーザ-のデータ
-INSERT INTO user (username, password) VALUES ('test', '$2a$10$uVHwIselc2gvZt4/tSPHQO8LgMtL3dsm0.4nCJPbf9FZ7yK7dUKxa');
-INSERT INTO user (username, password) VALUES ('admin', '$2a$10$uVHwIselc2gvZt4/tSPHQO8LgMtL3dsm0.4nCJPbf9FZ7yK7dUKxa');
+INSERT INTO user (username, password) VALUES ('test', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af');
+INSERT INTO user (username, password) VALUES ('admin', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af');

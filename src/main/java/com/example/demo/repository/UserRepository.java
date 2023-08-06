@@ -16,4 +16,5 @@ public interface UserRepository extends BaseRepository<User, Long> {
     @Query("select u from User u"
             + " where u.username = :username")
     public Optional<User> findByUserName(@Param("username") String username);
+
 }

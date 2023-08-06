@@ -4,21 +4,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableWebSecurity
-@Slf4j
 public class SecurityConfig {
     
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests()
+            .antMatchers("/create/user").permitAll()
             .anyRequest().authenticated();
         http
             .formLogin(login -> login
@@ -31,8 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        log.info("password: {}", encoder.encode("test"));
+        PasswordEncoder encoder = new Pbkdf2PasswordEncoder();
         return encoder;
     }
 }
