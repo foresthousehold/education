@@ -12,6 +12,7 @@
   <div class="border border-primary">
     <form th:action="@{/quest/{questId}(questId=${questId})}" th:object="${problemForm}" method="post">
       <input type="hidden" th:field="*{problemNo}">
+      <input type="hidden" th:field="${questId}">
       <div class="container bg-white">
         <div class="row">
           <div class="image col-md-6">
@@ -58,12 +59,45 @@
 
       <!-- 次へボタン -->
       <div class="d-flex justify-content-center">
-        <button class="btn btn-primary btn-lg submit-btn" type="submit">次へ</button>
+        <button class="btn btn-primary btn-lg submit-btn" type="submit" th:if="${displayExperienceFlg}">次へ</button>
+        <button class="btn btn-primary btn-lg experience-give-btn" 
+        type="button"
+        th:if="${!displayExperienceFlg}"
+        data-toggle="modal"
+        data-target="#settingModal">解答終了</button>
+        <!-- 経験値付与モーダル*/-->
+        <div id="settingModal" class="modal fade"  tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">経験値付与画面</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div>テキスト</div>
+                  <div id="splash">
+                    <div id="splash_text"></div>
+                    <div class="loader_cover loader_cover-up"></div>
+                    <div class="loader_cover loader_cover-down"></div>
+                  </div>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a class="btn btn-primary" th:href="@{/course/select}" role="button">コース選択画面に戻る</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 経験値付与モーダル終わり-->
+        </div>
       </div>
     </form>
   </div>  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="/js/question.js"></script>
+  <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
 </body>
 </html>

@@ -10,17 +10,17 @@ import com.example.demo.entity.base.BaseEntity;
  * 経験値
  */
 @Entity
-@Table(name = "experiencePoint")
-public class ExperiencePoint extends BaseEntity{
+@Table(name = "experience")
+public class Experience extends BaseEntity{
 
     /** レベル */
     @Column(name = "level")
     private Long level;
 
     /** レベルアップに必要な累積経験値 */
-    @Column(name = "needAllEXP")
-    private Long needAllEXP;
-    
+    @Column(name = "needTotalExperience")
+    private Long needTotalExperience;
+
     public Long getLevel() {
         return level;
     }
@@ -29,13 +29,12 @@ public class ExperiencePoint extends BaseEntity{
         this.level = level;
     }
 
-    public Long getNeedAllEXP() {
-        return needAllEXP;
+    public Long getNeedTotalExperience() {
+        return needTotalExperience;
     }
 
-    public void setNeedAllEXP(Long needAllEXP) {
-        this.needAllEXP = needAllEXP;
+    public void setNeedTotalExperience(Long needTotalExperience) {
+        this.needTotalExperience = needTotalExperience;
     }
-
     
 }

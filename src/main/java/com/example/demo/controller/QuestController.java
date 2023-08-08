@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +68,7 @@ public class QuestController {
 
         model.addAttribute("questId", questId);
         model.addAttribute("problemForm", problemForm);
+        model.addAttribute("displayExperienceFlg", true);
 
         return "quest/quest";
     }
@@ -111,31 +111,20 @@ public class QuestController {
             return "quest/quest";
         }
 
-        // 表示する大問があるかどうか判定するための変数
+        // 表示する大問があるかどうか判定するための変数(次の問題)
         Optional<Problem> nextProblem = problemRepository.findByQuestIdAndProblemNo(questId, problem.getProblemNo() + 1);
 
-        // 存在しなかったら経験値画面に遷移
-        if (nextProblem.isEmpty()) {
-            redirectAttributes.addFlashAttribute("questId", questId);
-            return "redirect:/quest/test";
-        }
+        // 表示する大問があるかどうか判定するための変数(次の次の問題)
+        // 経験値画面表示フラグ
+        boolean displayExperienceFlg = problemRepository.findByQuestIdAndProblemNo(questId, problem.getProblemNo() + 2).isPresent();
 
         // 全て正答だった場合、次の大問用のformをセット
         // 正誤対象の大問ID+1で一覧から取得しformにセット
+        model.addAttribute("questId", questId);
         model.addAttribute("problemForm", questService.createProblemForm(questId, problem.getProblemNo() + 1));
+        model.addAttribute("displayExperienceFlg", displayExperienceFlg);
 
         return "quest/quest";
     }
 
-    /**
-     * 経験値画面を表示します。
-     */
-    @GetMapping("/test")
-    public String experience(
-        @ModelAttribute("questId") Long questId,
-        Model model) {
-            
-
-            return "quest/complete";
-    }
 }
