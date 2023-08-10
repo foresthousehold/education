@@ -5,28 +5,32 @@
 /*========= LoadingのためのCSS ===============*/
 
 /* Loading背景画面設定　*/
-#splash {
+#container {
     /*fixedで全面に固定*/
   width: 100%;
-  height: 100px;
+  height: 50%;
+  top: 50%;
+  left: 50%;
   z-index: 999;
   text-align:center;
   color:#fff;
 }
 
-/* Loading画像中央配置　*/
-#splash_text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 999;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  width: 100%;
+.fadein-out {
+  animation-name:fadeUpAnime;
+  animation-duration:0.5s;
+  animation-fill-mode:forwards;
+  opacity:0;
 }
 
-/*IE11対策用バーの線の高さ※対応しなければ削除してください*/
-#splash_text svg{
-    height: 2px;
-}
+@keyframes fadeUpAnime {
+  from {
+    opacity: 0;
+  transform: translateY(100px);
+  }
 
+  to {
+    opacity: 1;
+  transform: translateY(0);
+  }
+}
