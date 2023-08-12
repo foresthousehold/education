@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.CustomUserDetails;
+import com.example.demo.entity.AccountDetails;
 import com.example.demo.repository.UserRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class AccountDetailsService implements UserDetailsService{
 
     @Autowired
     private UserRepository userRepository;
@@ -19,9 +19,11 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUserName(username)
             .map(
-                user-> new CustomUserDetails(
+                user-> new AccountDetails(
+                    user.getId(),
                     user.getUsername(),
-                    user.getPassword()
+                    user.getPassword(),
+                    user.getTotalExperience()
                 )
             )
             .orElseThrow(() -> new UsernameNotFoundException("Username is not found."));

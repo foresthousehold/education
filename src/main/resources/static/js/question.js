@@ -30,30 +30,53 @@ $(() => {
 });
 
 /**
+ * 初回表示時に利用者が持つ経験値をプログレスバーに反映させます。
+ * @param {} totalExperience 利用者が持つ合計経験値
+ * @param {*} step レベルアップに必要な経験値
+ */
+async function initialProgress(totalExperience, step) {
+  if ((totalExperience / step) >= 1) {
+    const displayExp = totalExperience % step; // 120 % 100 = 20, 20 % 100 = 20
+      bar.set(displayExp / step);
+  } else {
+      bar.set(totalExperience / step);
+    }
+  }
+
+/**
   * 解答終了ボタン押下時にプログレスバーのイベントを発火します。
   */
 $('#end-answer').on('click', async() => {
 
-  async function progress(value, step) {
-    if ((value / step) >= 1) {
+  const step = Number($('#step').val());　// 1レベルに必要な経験値
+  let remind = Number($('#addexp').val()); // 獲得経験値
+  let totalExperience = Number($('#totalExperience').val()); // ユーザが持つ経験値を取得(初回画面表示時)
+  let userExperience = Number($('#totalExperience').val()) + remind; // ユーザが持つ経験値を取得(初回画面表示時)
+
+  initialProgress(totalExperience, step);
+
+  async function progress(value, step, totalExperience) {
+    if (((totalExperience + value) / step) >= 1) { 
+      test = totalExperience % step;
+      rest = step - test;
       await new Promise((resolve) => {
         bar.animate(1, () => resolve());
       });
-      return value - step; // 獲得経験値 - レベルアップに必要な経験値
-    }
-    console.log(`value % step: ${value % step}`);
+      return value - rest; // 獲得経験値 - レベルアップに必要な経験値
+    } 
+    console.log(`value % step: ${totalExperience + value % step}`);
     await new Promise((resolve) => {
-      bar.animate((value % step) / step, () => resolve()); //バーを描画する割合を指定します 1.0 なら100%まで描画します
+      bar.animate(((totalExperience + value) % step) / step, () => resolve()); //バーを描画する割合を指定します 1.0 なら100%まで描画します
     });
     return 0;
   }
 
-  const step = Number($('#step').val());
-  let remind = Number($('#addexp').val());
   while(remind > 0) {
 
     // バーを進めて残りを受け取る
-    remind = await progress(remind, step);
+    remind = await progress(remind, step, totalExperience);
+    // 初回経験値を0にする
+    totalExperience = 0;
 
     // 進めた分を保存しておく
     $('#addexp').attr('data-added', Number($('#addexp').attr('data-added')) + step);
@@ -69,6 +92,9 @@ $('#end-answer').on('click', async() => {
       bar.set(0);
     } else {
       // 経験値反映終わり
+      $.post('/quest/update', {userExperience: 'userExperience'} , function(data) {
+        console.log(data);
+      });
       return ;
     }
   }
