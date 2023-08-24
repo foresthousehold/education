@@ -2,7 +2,7 @@
 $(() => {
   const bar = new ProgressBar.Line(container, {//id名を指定
     easing: 'easeInOut',//アニメーション効果linear、easeIn、easeOut、easeInOutが指定可能
-    duration: 2000,//時間指定(1000＝1秒)
+    duration: 1000,//時間指定(1000＝1秒)
     strokeWidth: 4,//進捗ゲージの太さ
     color: '#555',//進捗ゲージのカラー
     trailWidth: 1,//ゲージベースの線の太さ
@@ -56,13 +56,14 @@ $('#end-answer').on('click', async() => {
   initialProgress(totalExperience, step);
 
   async function progress(value, step, totalExperience) {
-    if (((totalExperience + value) / step) >= 1) { 
+    if (((value + totalExperience) / step) >= 1) { 
+      // 獲得経験値がレベルアップに必要な経験値より多かった場合
       test = totalExperience % step;
       rest = step - test;
       await new Promise((resolve) => {
         bar.animate(1, () => resolve());
       });
-      return value - rest; // 獲得経験値 - レベルアップに必要な経験値
+      return value - rest; // 獲得経験値 - レベルアップに必要な経験値 = 残経験値
     } 
     console.log(`value % step: ${totalExperience + value % step}`);
     await new Promise((resolve) => {
@@ -75,26 +76,29 @@ $('#end-answer').on('click', async() => {
 
     // バーを進めて残りを受け取る
     remind = await progress(remind, step, totalExperience);
+
     // 初回経験値を0にする
     totalExperience = 0;
-
-    // 進めた分を保存しておく
-    $('#addexp').attr('data-added', Number($('#addexp').attr('data-added')) + step);
   
     if (remind > 0) {
       // バーが端っこまで到達した
       $('#levelup').addClass('fadein-out');
+      $('#levelup').removeClass('not-display');
       setTimeout(() => {
         $('#levelup').removeClass('fadein-out');
       }, 1000);
 
+      // 進めた分を保存しておく
+      $('#addexp').attr('data-added', Number($('#addexp').attr('data-added')) + step);
+
       // バーを0に戻す
       bar.set(0);
     } else {
+      
+      // 進めた分を保存しておく
+      $('#addexp').attr('data-added', Number($('#addexp').attr('data-added')) + userExperience);
+      
       // 経験値反映終わり
-      $.post('/quest/update', {userExperience: 'userExperience'} , function(data) {
-        console.log(data);
-      });
       return ;
     }
   }

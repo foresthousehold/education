@@ -19,17 +19,22 @@ public class AccountDetails implements UserDetails{
     // 累積経験値
     private Long totalExperience;
 
+    // レベル
+    private Long level;
+
     /**
      * 利用者コンストラクタ
      * @param id アカウントID
      * @param username 利用者名
      * @param password パスワード
+     * @param level レベル
      */
-    public AccountDetails(Long id, String username, String password, Long totalExperience) {
+    public AccountDetails(Long id, String username, String password, Long totalExperience, Long level) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.totalExperience = totalExperience;
+        this.level = level;
     }
 
     @Override
@@ -69,6 +74,22 @@ public class AccountDetails implements UserDetails{
      */
     public void setTotalExperience(Long totalExperience) {
         this.totalExperience = totalExperience;
+    }
+
+    /**
+     * レベルを取得します。
+     * @return
+     */
+    public Long getLevel() {
+        return level;
+    }
+
+    /**
+     * レベルをセットします。
+     * @param level
+     */
+    public void setLevel(Long level) {
+        this.level = level;
     }
 
     @Override

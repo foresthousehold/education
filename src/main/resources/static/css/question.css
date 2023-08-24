@@ -16,6 +16,14 @@
   color:#fff;
 }
 
+.display {
+  visibility: visible;
+}
+
+.not-display {
+  visibility: hidden;
+}
+
 .fadein-out {
   animation-name:fadeUpAnime;
   animation-duration:0.5s;

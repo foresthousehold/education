@@ -23,7 +23,8 @@ public class AccountDetailsService implements UserDetailsService{
                     user.getId(),
                     user.getUsername(),
                     user.getPassword(),
-                    user.getTotalExperience()
+                    user.getTotalExperience(),
+                    user.getLevel()
                 )
             )
             .orElseThrow(() -> new UsernameNotFoundException("Username is not found."));

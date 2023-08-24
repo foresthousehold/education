@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/question.css">
 <meta charset="utf-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>問題画面</title>
 </head>
@@ -16,9 +18,11 @@
       <!-- レベルアップに必要な経験値-->
       <input type="hidden" th:value="100" id="step">
       <!-- 獲得経験値-->
-      <input type="hidden" th:value="10" id="addexp" data-added="0"> 
+      <input type="hidden" th:value="60" id="addexp" data-added="0"> 
       <!-- 利用者が持つ経験値-->
       <input type="hidden" th:value="${totalExperience}" id="totalExperience" value="0"> 
+      <!-- 利用者のレベル-->
+      <input type="hidden" th:value="${level}" id="level">
       <div class="container bg-white">
         <div class="row">
           <div class="image col-md-6">
@@ -83,21 +87,20 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div>テキスト</div>
-                  <div id="container">
-                    <div class="loader_cover loader_cover-up"></div>
-                    <div class="loader_cover loader_cover-down"></div>
-                  </div>
-                  <div id="levelup">Level up!</div>
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-primary" th:href="@{/course/select}" role="button">コース選択画面に戻る</a>
-                  </div>
+                <div id="container">
+                  <div class="loader_cover loader_cover-up"></div>
+                  <div class="loader_cover loader_cover-down"></div>
+                </div>
+                <div id="level" th:data-level="${level}"></div>
+                <div id="levelup" class="not-display">Level up!</div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <a class="btn btn-primary" th:href="@{/course/select}" role="button">コース選択画面に戻る</a>
                 </div>
               </div>
+              </div>
             </div>
-          </div>
-          <!-- 経験値付与モーダル終わり-->
         </div>
+        <!-- 経験値付与モーダル終わり-->
       </div>
     </form>
   </div>  
