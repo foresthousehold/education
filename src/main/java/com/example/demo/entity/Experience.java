@@ -18,7 +18,7 @@ public class Experience extends BaseEntity{
     private Long level;
 
     /** レベルアップに必要な累積経験値 */
-    @Column(name = "needTotalExperience")
+    @Column(name = "need_total_experience")
     private Long needTotalExperience;
 
     public Long getLevel() {

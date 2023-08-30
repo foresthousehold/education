@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,11 +20,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.Problem;
 import com.example.demo.entity.Question;
+import com.example.demo.entity.User;
 import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.repository.ProblemRepository;
 import com.example.demo.repository.QuestRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.QuestService;
 
 @Controller
@@ -40,6 +44,9 @@ public class QuestController {
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * クエスト選択画面を表示します。
@@ -68,13 +75,13 @@ public class QuestController {
         // ①getされた時は必ず一番初めの大問を表示する
         // 大問フォーム一覧を作成
         ProblemForm problemForm = questService.createFirstProblemForm(questId);
-
-        // クエストIDからクエストを取得し、クエストが持つ経験値を取得
+        final Long experience = questRepository.findById(questId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
 
         model.addAttribute("questId", questId);
         model.addAttribute("problemForm", problemForm);
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", accountDetails.getTotalExperience());
+        model.addAttribute("experience", experience);
         model.addAttribute("level", accountDetails.getLevel());
         model.addAttribute("unSelectedFlg", false);
 
@@ -93,10 +100,16 @@ public class QuestController {
         RedirectAttributes redirectAttributes,
         Model model,
         @AuthenticationPrincipal AccountDetails accountDetails) {
+
+        // アカウント詳細IDからユーザを取得
+        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+
         Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemNo).orElseThrow();
 
+        final Long experience = questRepository.findById(questId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
+
         // ユーザ情報からユーザの保持経験値を取得する
-        final Long totalExperience = accountDetails.getTotalExperience();
+        final Long totalExperience = user.getTotalExperience();
 
         // 大問が取得できなかった場合、全ての大問が時終わったのでクエスト選択画面に遷移
         if (problem.equals(null)) {
@@ -122,7 +135,8 @@ public class QuestController {
             model.addAttribute("problemForm", adviceProblemForm);
             model.addAttribute("displayExperienceFlg", true);
             model.addAttribute("totalExperience", totalExperience);
-            model.addAttribute("level", accountDetails.getLevel());
+            model.addAttribute("experience", experience);
+            model.addAttribute("level", user.getLevel());
             model.addAttribute("unSelectedFlg", false);
             return "quest/quest";
         }
@@ -133,18 +147,19 @@ public class QuestController {
         if (nextProblem.isEmpty()) {
             ProblemForm adviceProblemForm = questService.createProblemForm(questId, problemForm);
 
+            // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
+            questService.updateUserLevel(user, experience);
+
             // 再度同じ大問を表示する
             model.addAttribute("problemForm", adviceProblemForm);
             model.addAttribute("displayExperienceFlg", false);
             model.addAttribute("totalExperience", totalExperience);
-            model.addAttribute("level", accountDetails.getLevel());
+            model.addAttribute("experience", experience);
+            model.addAttribute("level", user.getLevel());
             model.addAttribute("unSelectedFlg", true);
+
             return "quest/quest";
         }
-
-        // // 表示する大問があるかどうか判定するための変数(次の次の問題)
-        // // 経験値画面表示フラグ
-        // boolean displayExperienceFlg = problemRepository.findByQuestIdAndProblemNo(questId, problem.getProblemNo() + 2).isPresent();
 
         // 全て正答だった場合、次の大問用のformをセット
         // 正誤対象の大問ID+1で一覧から取得しformにセット
@@ -152,7 +167,8 @@ public class QuestController {
         model.addAttribute("problemForm", questService.createProblemForm(questId, problem.getProblemNo() + 1));
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", totalExperience);
-        model.addAttribute("level", accountDetails.getLevel());
+        model.addAttribute("experience", experience);
+        model.addAttribute("level", user.getLevel());
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";

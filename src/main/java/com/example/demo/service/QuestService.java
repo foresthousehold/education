@@ -1,23 +1,30 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.AnswerChoice;
+import com.example.demo.entity.Experience;
 import com.example.demo.entity.Problem;
 import com.example.demo.entity.Question;
+import com.example.demo.entity.User;
 import com.example.demo.model.form.AnswerChoiceForm;
 import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.QuizForm;
 import com.example.demo.repository.AnswerChoiceRepository;
+import com.example.demo.repository.ExperienceRepository;
 import com.example.demo.repository.ProblemRepository;
 import com.example.demo.repository.QuestionRepository;
+import com.example.demo.repository.UserRepository;
 
 /**
  * 問題サービス
@@ -25,11 +32,15 @@ import com.example.demo.repository.QuestionRepository;
 @Service
 public class QuestService {
 
+    @Autowired AnswerChoiceRepository answerChoiceRepository;
+
+    @Autowired ExperienceRepository experienceRepository;
+
     @Autowired ProblemRepository problemRepository;
 
     @Autowired QuestionRepository questionRepository;
 
-    @Autowired AnswerChoiceRepository answerChoiceRepository;
+    @Autowired UserRepository userRepository;
     
     /**
      * クイズフォームを作成します
@@ -165,5 +176,31 @@ public class QuestService {
             q -> answerChoiceRepository.findByQuestionIdAndCorrectFlg(q.getId())));
 
         return createAnswerChoiceIdMap;
+    }
+
+    /**
+     * key: 合計経験値, value: レベルのマップを作成します
+     */
+    public Map<Long, Long> createExperienceMap() {
+        Map<Long, Long> experienceMap = new HashMap<>();
+
+        final List<Experience> experiences = experienceRepository.findAll();
+        experienceMap = experiences.stream().collect(Collectors.toMap(e -> e.getNeedTotalExperience(), e -> e.getLevel()));
+        
+        return experienceMap;
+    }
+
+    /**
+     * ユーザのレベルを上げ保存します。
+     */
+    @Transactional
+    public void updateUserLevel(User user, Long experience) {
+        final Long totalExperience = user.getTotalExperience() + experience;
+        final Experience entity = experienceRepository.findByTotalExperience(user.getTotalExperience() + experience)
+                                    .stream().findFirst().orElse(null);
+
+        user.setLevel(entity.getLevel());
+        user.setTotalExperience(totalExperience);
+        userRepository.save(user);
     }
 }

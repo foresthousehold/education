@@ -14,9 +14,9 @@ $(() => {
         left: '50%',
         top: '50%',
         padding: '0',
-        margin: '-40px 0 0 0',//バーより上に配置
+        margin: '-32px 0 0 0',//バーより上に配置
         transform:'translate(-50%,-50%)',
-        'font-size':'1rem',
+        'font-size':'2rem',
         color: '#000',
       },
       autoStyleContainer: false //自動付与のスタイルを切る
@@ -52,6 +52,8 @@ $('#end-answer').on('click', async() => {
   let remind = Number($('#addexp').val()); // 獲得経験値
   let totalExperience = Number($('#totalExperience').val()); // ユーザが持つ経験値を取得(初回画面表示時)
   let userExperience = Number($('#totalExperience').val()) + remind; // ユーザが持つ経験値を取得(初回画面表示時)
+  const userLevelElement = $("#level");
+  let userLevel = parseInt(userLevelElement.text().slice(3));
 
   initialProgress(totalExperience, step);
 
@@ -93,6 +95,10 @@ $('#end-answer').on('click', async() => {
 
       // バーを0に戻す
       bar.set(0);
+
+      // ユーザのレベルを+1する
+      userLevelElement.text('Lv.' + ++userLevel);
+
     } else {
       
       // 進めた分を保存しておく

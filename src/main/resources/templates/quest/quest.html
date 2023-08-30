@@ -18,11 +18,10 @@
       <!-- レベルアップに必要な経験値-->
       <input type="hidden" th:value="100" id="step">
       <!-- 獲得経験値-->
-      <input type="hidden" th:value="60" id="addexp" data-added="0"> 
+      <input type="hidden" th:value="${experience}" id="addexp" data-added="0"> 
       <!-- 利用者が持つ経験値-->
       <input type="hidden" th:value="${totalExperience}" id="totalExperience" value="0"> 
-      <!-- 利用者のレベル-->
-      <input type="hidden" th:value="${level}" id="level">
+      <input type="hidden" th:value="${level}" id="level"> -->
       <div class="container bg-white">
         <div class="row">
           <div class="image col-md-6">
@@ -87,11 +86,11 @@
                 </button>
               </div>
               <div class="modal-body">
+                <div id="level" th:text="'Lv.' + ${level}">0</div>
                 <div id="container">
                   <div class="loader_cover loader_cover-up"></div>
                   <div class="loader_cover loader_cover-down"></div>
                 </div>
-                <div id="level" th:data-level="${level}"></div>
                 <div id="levelup" class="not-display">Level up!</div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   <a class="btn btn-primary" th:href="@{/course/select}" role="button">コース選択画面に戻る</a>
