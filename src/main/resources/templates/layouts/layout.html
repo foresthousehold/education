@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<!-- (1)共通にしたいheadをfragment化する -->
+<head th:fragment="head(title,links,scripts)">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <!-- (2)共通で読み込むCSS/JS -->
+  <link rel="stylesheet" href="/css/layout.css" />
+  <!-- (3)タイトルのフォーマット -->
+  <title th:text="${title}">各ページタイトル | sample app</title>
+
+  <!-- (4)各View固有で読み込むもの -->
+  <th:block th:replace="${links} ?: _" />
+  <th:block th:replace="${scripts} ?: _" />
+</head>
+
+<body>
+  <!-- (5)body内で共通化したい部品をfragment化する -->
+  <header th:fragment="header(headerName)">
+    <div class="container mt-2">
+      <div class="row">
+        <h2 class="col-md-4 font-weight-bold" th:text="${headerName}"></h2>
+        <label class="col-md-6"></label>
+        <div class="nav-item dropdown">
+          <div class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span th:text="${userName}">ユーザ名</span>
+            <span th:text="'(' + 'Lv.' + ${level} + ')'">レベル</span>
+          </div>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <form th:action="@{/logout}" method="post">
+              <button type="submit" class="dropdown-item">ログアウト</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</body>
+
+</html>
