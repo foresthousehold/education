@@ -27,6 +27,10 @@ public class Course extends BaseEntity{
     @OneToMany(targetEntity=Quest.class, fetch=FetchType.LAZY, mappedBy = "course")
     private List<Quest> quests;
 
+    /** 画像 */
+    @Column(name = "image_path", nullable = false)
+    private String imagePath;
+
     /** 並び順 */
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -39,12 +43,20 @@ public class Course extends BaseEntity{
         this.courseName = courseName;
     }
 
-    public List<Quest> getQuest() {
+    public List<Quest> getQuests() {
         return quests;
     }
 
-    public void setQuest(List<Quest> quests) {
+    public void setQuests(List<Quest> quests) {
         this.quests = quests;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Long getSortOrder() {
@@ -54,5 +66,4 @@ public class Course extends BaseEntity{
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
-    
 }

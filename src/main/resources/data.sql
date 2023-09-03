@@ -3,11 +3,11 @@ INSERT INTO user (username, password, total_experience, level) VALUES ('test', '
 INSERT INTO user (username, password, total_experience, level) VALUES ('admin', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 0, 1);
 
 -- コースのテストデータ
-INSERT INTO course (course_name, sort_order) VALUES ('料理コース', 1); 
+INSERT INTO course (course_name, image_path, sort_order) VALUES ('料理コース', '/images/cook.jpg', 1); 
 
 -- クエストのテストデータ
-INSERT INTO quest (name, course_id, experience, sort_order) VALUES ('クエスト1', 1, 10, 1);
-INSERT INTO quest (name, course_id, experience, sort_order) VALUES ('クエスト2', 1, 20, 2);
+INSERT INTO quest (name, course_id, experience, image_path, sort_order) VALUES ('クエスト1', 1, 10, '/images/carry.png', 1);
+INSERT INTO quest (name, course_id, experience, image_path, sort_order) VALUES ('クエスト2', 1, 20, '/images/miso.png', 2);
 
 -- 大問のテストデータ
 INSERT INTO problem (name, quest_id, problem_no) VALUES ('大問1', 1, 1);

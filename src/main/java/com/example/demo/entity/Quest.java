@@ -40,6 +40,10 @@ public class Quest extends BaseEntity {
     @Column(name = "experience", nullable = false)
     private Long experience;
 
+    /** 画像 */
+    @Column(name = "image_path", nullable = false)
+    private String imagePath;
+
     /** 並び順 */
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -74,6 +78,14 @@ public class Quest extends BaseEntity {
 
     public void setExperience(Long experience) {
         this.experience = experience;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Long getSortOrder() {

@@ -54,11 +54,18 @@ public class QuestController {
      */
     @GetMapping("/select/{courseId}")
     public String selectQuest(
-        @PathVariable(name = "courseId") Long courseId, Model model) {
-            // コースIDに紐づくクエスト一覧を取得する
-            model.addAttribute("quests", questRepository.findAll());
+        @PathVariable(name = "courseId") Long courseId, 
+        @AuthenticationPrincipal AccountDetails accountDetails,
+        Model model) {
 
-            return "quest/select";
+        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+
+        // コースIDに紐づくクエスト一覧を取得する
+        model.addAttribute("quests", questRepository.findAll());
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("level", user.getLevel());
+
+        return "quest/select";
     }
 
     /**
@@ -74,15 +81,17 @@ public class QuestController {
         // formを作ってsetして返す
         // ①getされた時は必ず一番初めの大問を表示する
         // 大問フォーム一覧を作成
+        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         ProblemForm problemForm = questService.createFirstProblemForm(questId);
         final Long experience = questRepository.findById(questId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
 
         model.addAttribute("questId", questId);
         model.addAttribute("problemForm", problemForm);
         model.addAttribute("displayExperienceFlg", true);
-        model.addAttribute("totalExperience", accountDetails.getTotalExperience());
+        model.addAttribute("totalExperience", user.getTotalExperience());
         model.addAttribute("experience", experience);
-        model.addAttribute("level", accountDetails.getLevel());
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("level", user.getLevel());
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";
@@ -136,6 +145,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", true);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
+            model.addAttribute("userName", user.getUsername());
             model.addAttribute("level", user.getLevel());
             model.addAttribute("unSelectedFlg", false);
             return "quest/quest";
@@ -155,6 +165,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", false);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
+            model.addAttribute("userName", user.getUsername());
             model.addAttribute("level", user.getLevel());
             model.addAttribute("unSelectedFlg", true);
 
@@ -168,6 +179,7 @@ public class QuestController {
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", totalExperience);
         model.addAttribute("experience", experience);
+        model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
         model.addAttribute("unSelectedFlg", false);
 

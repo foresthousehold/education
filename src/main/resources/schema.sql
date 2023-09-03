@@ -23,6 +23,7 @@ CREATE TABLE course (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(255) NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
     sort_order BIGINT NOT NULL
 );
 
@@ -33,6 +34,7 @@ CREATE TABLE quest (
     course_id BIGINT NOT NULL,
     experience BIGINT NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
     sort_order BIGINT NOT NULL,
     FOREIGN KEY (course_id) REFERENCES course(id)
 );

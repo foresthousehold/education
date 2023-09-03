@@ -10,7 +10,27 @@
 <title>問題画面</title>
 </head>
 <body>
-  <header>問題画面</header>
+  <div id="header">
+    <header class="header">
+      <div class="container mt-2">
+        <div class="row">
+          <label class="col-md-2">問題画面</label>
+          <label class="col-md-7"></label>
+          <div class="nav-item dropdown">
+            <div class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span th:text="${userName}">ユーザ名</span>
+              <span th:text="'Lv.' + ${level}">レベル</span>
+            </div>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <form th:action="@{/logout}" method="post">
+                <button type="submit" class="dropdown-item">ログアウト</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
   <div class="border border-primary">
     <form th:action="@{/quest/{questId}(questId=${questId})}" th:object="${problemForm}" method="post">
       <input type="hidden" th:field="*{problemNo}">
@@ -21,7 +41,7 @@
       <input type="hidden" th:value="${experience}" id="addexp" data-added="0"> 
       <!-- 利用者が持つ経験値-->
       <input type="hidden" th:value="${totalExperience}" id="totalExperience" value="0"> 
-      <input type="hidden" th:value="${level}" id="level"> -->
+      <input type="hidden" th:value="${level}" id="level"> 
       <div class="container bg-white">
         <div class="row">
           <div class="image col-md-6">
