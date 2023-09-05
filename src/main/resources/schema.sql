@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS word;
+DROP TABLE IF EXISTS problem_word;
 DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS video;
 DROP TABLE IF EXISTS answer_choice;
@@ -9,6 +11,7 @@ DROP TABLE IF EXISTS quest;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS experience;
 
+
 -- ユーザマスタのテーブル作成
 CREATE TABLE user (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -18,6 +21,22 @@ CREATE TABLE user (
     level int NOT NULL COMMENT 'レベル',
     DELETE_FLG boolean DEFAULT '0' NOT NULL
 ) COMMENT 'ユーザマスタ';
+
+-- 用語マスタのテーブル作成
+CREATE TABLE word (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    classification_name VARCHAR(20) NOT NULL COMMENT '分類名',
+    comment VARCHAR(200) NOT NULL COMMENT '解説',
+    DELETE_FLG boolean DEFAULT '0' NOT NULL
+) COMMENT '用語マスタ';
+
+-- 大問用語マスタのテーブル作成
+CREATE TABLE problem_word (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    problem_id BIGINT NOT NULL,
+    word_id BIGINT NOT NULL,
+    DELETE_FLG boolean DEFAULT '0' NOT NULL
+) COMMENT '大問用語マスタ';
 
 -- コースマスタのテーブル作成
 CREATE TABLE course (

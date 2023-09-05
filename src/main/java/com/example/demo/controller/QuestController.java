@@ -22,6 +22,7 @@ import com.example.demo.entity.Problem;
 import com.example.demo.entity.Process;
 import com.example.demo.entity.Question;
 import com.example.demo.entity.User;
+import com.example.demo.entity.Word;
 import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.repository.ProblemRepository;
@@ -29,6 +30,7 @@ import com.example.demo.repository.ProcessRepository;
 import com.example.demo.repository.QuestRepository;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.WordRepository;
 import com.example.demo.service.QuestService;
 
 @Controller
@@ -52,6 +54,9 @@ public class QuestController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    WordRepository wordRepository;
 
     /**
      * クエスト選択画面を表示します。
@@ -113,6 +118,10 @@ public class QuestController {
         ProblemForm problemForm = questService.createFirstProblemForm(processId);
         final Long experience = processRepository.findById(processId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
 
+        // 大問IDから全ての用語を取得します。
+        final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
+        
+        model.addAttribute("words", words);
         model.addAttribute("processId", processId);
         model.addAttribute("problemForm", problemForm);
         model.addAttribute("displayExperienceFlg", true);
@@ -163,12 +172,16 @@ public class QuestController {
 
         // 正誤判定
         boolean isAllCorrect = questionForms.stream().allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
+
+        // 大問IDから全ての用語を取得します。
+        final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
         
         // 一つでも間違いがあった場合、formにアドバイスをセット
         if (!isAllCorrect) {
             ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm);
 
             // 再度同じ大問を表示する
+            model.addAttribute("words", words);
             model.addAttribute("problemForm", adviceProblemForm);
             model.addAttribute("displayExperienceFlg", true);
             model.addAttribute("totalExperience", totalExperience);
@@ -189,6 +202,7 @@ public class QuestController {
             questService.updateUserLevel(user, experience);
 
             // 再度同じ大問を表示する
+            model.addAttribute("words", words);
             model.addAttribute("problemForm", adviceProblemForm);
             model.addAttribute("displayExperienceFlg", false);
             model.addAttribute("totalExperience", totalExperience);
@@ -202,6 +216,7 @@ public class QuestController {
 
         // 全て正答だった場合、次の大問用のformをセット
         // 正誤対象の大問ID+1で一覧から取得しformにセット
+        model.addAttribute("words", words);
         model.addAttribute("processId", processId);
         model.addAttribute("problemForm", questService.createProblemForm(processId, problem.getProblemNo() + 1));
         model.addAttribute("displayExperienceFlg", true);

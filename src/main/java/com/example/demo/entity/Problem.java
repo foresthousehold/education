@@ -42,6 +42,11 @@ public class Problem extends BaseEntity{
     targetEntity=Image.class, mappedBy = "problem")
     private List<Image> images;
 
+    /** 大問用語 */
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE },
+    fetch = FetchType.LAZY, targetEntity = ProblemWord.class, mappedBy = "problem")
+    private List<ProblemWord> problemWords;
+
     /** 動画*/
     @OneToOne(mappedBy = "problem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Video video;
@@ -80,6 +85,14 @@ public class Problem extends BaseEntity{
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public List<ProblemWord> getProblemWords() {
+        return problemWords;
+    }
+
+    public void setProblemWords(List<ProblemWord> problemWords) {
+        this.problemWords = problemWords;
     }
 
     public Video getVideo() {

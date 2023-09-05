@@ -43,12 +43,6 @@
   }
 }
 
-/* video.vid_main {
-  overflow: hidden;
-  width: 75%;
-  max-width: 920px;/*PC版での最大幅
-} */
-
 .element-left {
   overflow-y: scroll; 
   height: 100%;
@@ -58,9 +52,13 @@
   height: 100%;
 }
 
-.explain {
-  display: block;
-  padding-top: 15%;
+.word-label {
+  size: 10px;
+  padding-top: 5%;
+}
+
+.word-classificationName {
+  color: red;
 }
 
 .image {
