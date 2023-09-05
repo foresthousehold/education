@@ -27,10 +27,10 @@ public class Problem extends BaseEntity{
     @Column(name = "name", nullable = false)
     private String name;
 
-    /** クエスト */
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Quest.class, optional = false)
-    @JoinColumn(name = "quest_id", nullable = false)
-    private Quest quest;
+    /** プロセス */
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Process.class, optional = false)
+    @JoinColumn(name = "process_id", nullable = false)
+    private Process process;
 
     /** 問題一覧 */
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE },
@@ -58,12 +58,12 @@ public class Problem extends BaseEntity{
         this.name = name;
     }
 
-    public Quest getQuest() {
-        return quest;
+    public Process getProcess() {
+        return process;
     }
 
-    public void setQuest(Quest quest) {
-        this.quest = quest;
+    public void setProcess(Process process) {
+        this.process = process;
     }
 
     public List<Question> getQuestions() {
@@ -97,5 +97,4 @@ public class Problem extends BaseEntity{
     public void setProblemNo(Long problemNo) {
         this.problemNo = problemNo;
     }
-
 }

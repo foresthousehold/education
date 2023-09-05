@@ -11,11 +11,13 @@ import com.example.demo.entity.base.BaseRepository;
 public interface ProblemRepository extends BaseRepository<Problem, Long>{
 
     /**
-     * クエストIDに紐づく大問一覧を取得します
+     * プロセスIDに紐づく大問一覧を取得します
+     * @param id プロセスID
+     * @param problemNo 大問ID
      */
     @Query("select distinct p from Problem p"
-            + " where p.quest.id = :id"
+            + " where p.process.id = :id"
             + " and p.problemNo = :problemNo")
-    public Optional<Problem> findByQuestIdAndProblemNo(@Param("id") Long id, @Param("problemNo") Long problemNo);
+    public Optional<Problem> findByProcessIdAndProblemNo(@Param("id") Long id, @Param("problemNo") Long problemNo);
     
 }

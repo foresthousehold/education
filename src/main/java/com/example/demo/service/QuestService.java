@@ -53,18 +53,18 @@ public class QuestService {
     /**
      * 最初の大問フォームを作成します
      */
-    public ProblemForm createFirstProblemForm(Long questId) {
+    public ProblemForm createFirstProblemForm(Long processId) {
 
-        return createProblemForm(questId, 1L);
+        return createProblemForm(processId, 1L);
     }
 
     /**
      * 大問フォームを作成します
      */
-    public ProblemForm createProblemForm(Long questId, Long problemNo) {
+    public ProblemForm createProblemForm(Long processId, Long problemNo) {
 
         // クエストIDに紐づく一番初めの大問を取得する
-        Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemNo).orElseThrow();
+        Problem problem = problemRepository.findByProcessIdAndProblemNo(processId, problemNo).orElseThrow();
 
         final ProblemForm problemForm = new ProblemForm();
         problemForm.setProblemNo(problem.getProblemNo());
@@ -81,7 +81,7 @@ public class QuestService {
     public ProblemForm createProblemForm(Long questId, ProblemForm problemForm) {
 
         // クエストIDに紐づく一番初めの大問を取得する
-        Problem problem = problemRepository.findByQuestIdAndProblemNo(questId, problemForm.getProblemNo()).orElseThrow();
+        Problem problem = problemRepository.findByProcessIdAndProblemNo(questId, problemForm.getProblemNo()).orElseThrow();
 
         final ProblemForm updateProblemForm = new ProblemForm();
         updateProblemForm.setProblemNo(problem.getProblemNo());

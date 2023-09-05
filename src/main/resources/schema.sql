@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS video;
 DROP TABLE IF EXISTS answer_choice;
 DROP TABLE IF EXISTS question;
 DROP TABLE IF EXISTS problem;
+DROP TABLE IF EXISTS process;
 DROP TABLE IF EXISTS quest;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS experience;
@@ -32,21 +33,32 @@ CREATE TABLE quest (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     course_id BIGINT NOT NULL,
-    experience BIGINT NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     sort_order BIGINT NOT NULL,
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
 
+-- プロセスマスタのテーブル
+CREATE TABLE process (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    process_name VARCHAR(255) NOT NULL,
+    quest_id BIGINT NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    experience BIGINT NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    sort_order BIGINT NOT NULL,
+    FOREIGN KEY (quest_id) REFERENCES quest(id)
+);
+
 -- 大問マスタのテーブル
 CREATE TABLE problem (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    quest_id BIGINT NOT NULL,
+    process_id BIGINT NOT NULL,
     problem_no BIGINT NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
-    FOREIGN KEY (quest_id) REFERENCES quest(id)
+    FOREIGN KEY (process_id) REFERENCES process(id)
 );
 
 -- 小問マスタのテーブル

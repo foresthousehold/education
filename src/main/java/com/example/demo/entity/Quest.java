@@ -31,14 +31,10 @@ public class Quest extends BaseEntity {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    /** 大問 */
+    /** プロセス */
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE },
-    fetch = FetchType.LAZY, targetEntity = Problem.class, mappedBy = "quest")
-    private List<Problem> problems;
-
-    /** 経験値 */
-    @Column(name = "experience", nullable = false)
-    private Long experience;
+    fetch = FetchType.LAZY, targetEntity = Process.class, mappedBy = "quest")
+    private List<Process> processes;
 
     /** 画像 */
     @Column(name = "image_path", nullable = false)
@@ -64,20 +60,12 @@ public class Quest extends BaseEntity {
         this.course = course;
     }
 
-    public List<Problem> getProblems() {
-        return problems;
+    public List<Process> getProcesses() {
+        return processes;
     }
 
-    public void setProblems(List<Problem> problems) {
-        this.problems = problems;
-    }
-
-    public Long getExperience() {
-        return experience;
-    }
-
-    public void setExperience(Long experience) {
-        this.experience = experience;
+    public void setProcesses(List<Process> processes) {
+        this.processes = processes;
     }
 
     public String getImagePath() {
@@ -95,5 +83,4 @@ public class Quest extends BaseEntity {
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
-
 }
