@@ -25,8 +25,10 @@ CREATE TABLE user (
 -- 用語マスタのテーブル作成
 CREATE TABLE word (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    classification_name VARCHAR(20) NOT NULL COMMENT '分類名',
-    comment VARCHAR(200) NOT NULL COMMENT '解説',
+    japanese_classification VARCHAR(20) NOT NULL COMMENT '分類名(日本語)',
+    english_classification VARCHAR(20) NOT NULL COMMENT '分類名(英語)',
+    japanese_comment VARCHAR(500) NOT NULL COMMENT '解説(日本語)',
+    english_comment VARCHAR(500) NOT NULL COMMENT '解説(英語)',
     DELETE_FLG boolean DEFAULT '0' NOT NULL
 ) COMMENT '用語マスタ';
 

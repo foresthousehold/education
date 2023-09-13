@@ -3,25 +3,35 @@ INSERT INTO user (username, password, total_experience, level) VALUES ('test', '
 INSERT INTO user (username, password, total_experience, level) VALUES ('admin', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 0, 1);
 
 -- 用語のテストデータ
-INSERT INTO word (classification_name, comment) 
-VALUES ('インターフェース', 'インターフェース" を一言で表すと、「接点」や「接続点」といえるでしょう。インターフェースは、異なるコンポーネント、システム、またはユーザー間で情報や機能を共有し、相互に連携できるようにする接点や仲介点を指します。');
-INSERT INTO word (classification_name, comment) 
-VALUES ('継承', '継承は、Javaにおいてクラスが他のクラスから特性（フィールドやメソッド）を引き継いで再利用する仕組みです。これにより、新しいクラスを既存のクラスに基づいて定義し、コードの再利用性と階層的な構造を実現します。簡潔に言えば、継承は「親クラスの特性を子クラスが受け継ぐ」仕組みです。');
+INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
+VALUES ('インターフェース', 'Interface',
+'インターフェース" を一言で表すと、「接点」や「接続点」といえるでしょう。インターフェースは、異なるコンポーネント、システム、またはユーザー間で情報や機能を共有し、相互に連携できるようにする接点や仲介点を指します。',
+'In a nutshell, an "interface" can be described as a "point of contact" or a "connection point. An interface is a point of contact or intermediary point that allows information and functionality to be shared and interworked between different components, systems, or users.');
+INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
+VALUES ('継承', 'Inheritance',
+'継承は、Javaにおいてクラスが他のクラスから特性（フィールドやメソッド）を引き継いで再利用する仕組みです。これにより、新しいクラスを既存のクラスに基づいて定義し、コードの再利用性と階層的な構造を実現します。簡潔に言えば、継承は「親クラスの特性を子クラスが受け継ぐ」仕組みです。',
+'Inheritance is a mechanism in Java whereby a class inherits characteristics (fields and methods) from another class and reuses them. This allows new classes to be defined based on existing classes, providing code reusability and hierarchical structure. Simply put, inheritance is a mechanism whereby "a child class inherits the characteristics of a parent class.');
+INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
+VALUES ('ワード1', 'word1', '日本語解説1', '英語解説1');
+INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
+VALUES ('ワード2', 'word2','日本語解説2', '英語解説2');
 
 -- 大問用語のテストデータ
 INSERT INTO problem_word (problem_id, word_id) VALUES (1, 1);
 INSERT INTO problem_word (problem_id, word_id) VALUES (1, 2);
+INSERT INTO problem_word (problem_id, word_id) VALUES (2, 1);
+INSERT INTO problem_word (problem_id, word_id) VALUES (2, 2);
 
 -- コースのテストデータ
-INSERT INTO course (course_name, image_path, sort_order) VALUES ('料理コース', '/images/cook.jpg', 1); 
+INSERT INTO course (course_name, image_path, sort_order) VALUES ('料理コース', '/images/cook.jpg', 1);
 
 -- クエストのテストデータ
 INSERT INTO quest (name, course_id, image_path, sort_order) VALUES ('味噌汁', 1, '/images/miso.png', 1);
 INSERT INTO quest (name, course_id, image_path, sort_order) VALUES ('カレー', 1, '/images/carry.png', 2);
 
 -- プロセスのテストデータ
-INSERT INTO process (process_name, quest_id, experience, image_path, sort_order) VALUES ('出汁と味噌を用意しよう', 1, 550, '/images/carry.png', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, sort_order) VALUES ('プロセス2', 1, 20, '/images/carry.png', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, sort_order) VALUES ('出汁と味噌を用意しよう', 1, 100, '/images/carry.png', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, sort_order) VALUES ('味噌汁クラスを作成しよう', 1, 230, '/images/carry.png', 2);
 
 -- 大問のテストデータ
 INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ1大問1', 1, 1);
@@ -31,6 +41,8 @@ INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ2大問1', 2, 
 INSERT INTO question (problem_id, sort_order) VALUES (1, 1); 
 INSERT INTO question (problem_id, sort_order) VALUES (1, 2);
 INSERT INTO question (problem_id, sort_order) VALUES (1, 3);
+INSERT INTO question (problem_id, sort_order) VALUES (2, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (2, 2);
 
 -- 解答選択肢のテストデータ
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
@@ -45,13 +57,22 @@ INSERT INTO answer_choice (question_id, correct_flg, content, advice)
 VALUES (3, true, 'getName', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
 VALUES (3, false, '不正解の選択肢3', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+VALUES (4, true, 'dashi', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+VALUES (4, false, '不正解の選択肢1', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+VALUES (5, true, 'miso', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+VALUES (5, false, '不正解の選択肢2', '不正解です。');
 
 -- 画像のテストデータ
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso1.png', 1, 1);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso2.png', 1, 2);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso3.png', 1, 3);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso4.png', 1, 4);
-
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso2-1.png', 2, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/miso/miso2-2.png', 2, 2);
 
 -- 動画のテストデータ
 INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/test.mp4', 'ビデオ1', 1);

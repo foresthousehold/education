@@ -22,7 +22,7 @@ public class ProblemWord extends BaseEntity{
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
-    /** 用語 */
+    /** 用語(日本語) */
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Word.class, optional = false)
     @JoinColumn(name = "word_id", nullable = false)
     private Word word;

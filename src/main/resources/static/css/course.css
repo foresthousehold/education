@@ -1,3 +1,30 @@
 .main {
     margin-top: 70px;
 }
+
+.element-course {
+    margin-bottom: 15%;
+}
+
+/* styles.css */
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 30px);
+    grid-gap: 10px;
+}
+
+.calendar-day {
+    border: 1px solid #ccc;
+    padding: 0px;
+    text-align: center;
+}
+
+.current-month {
+    background-color: #66ccff; /* 現在の月の背景色 */
+    color: white;
+}
+
+.login-day {
+    background-color: #00cc00; /* ログイン日の背景色 */
+    color: white;
+}

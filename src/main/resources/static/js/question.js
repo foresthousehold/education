@@ -111,3 +111,27 @@ $('#end-answer').on('click', async() => {
 });
 
 });
+
+$(() => {
+  $(".explain-japanese").show();
+  $(".explain-english").hide();
+  $("#toggleButton").on("click", (() => {
+    $('#app').toggleClass('show');
+        //#appがshowのclassを持っていれば
+        if($('#app').hasClass('show')){
+             //要素の表示を切り替える
+            $('.explain-japanese').hide();
+            $('.explain-english').show();
+            // 日本語 -> 英語
+            $('#toggleButton').text("ENGLISH -> JAPANESE");
+        }else{
+             //要素の表示を切り替える
+            $('.explain-japanese').show();
+            $('.explain-english').hide();
+            // 英語 -> 日本語
+            $('#toggleButton').text("日本語 -> 英語");
+        }
+        
+    }
+  ))
+});

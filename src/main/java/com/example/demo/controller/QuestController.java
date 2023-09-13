@@ -115,6 +115,7 @@ public class QuestController {
         // ①getされた時は必ず一番初めの大問を表示する
         // 大問フォーム一覧を作成
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+        // final Long problemId = problemRepository.findByProcessId(processId);
         ProblemForm problemForm = questService.createFirstProblemForm(processId);
         final Long experience = processRepository.findById(processId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
 

@@ -61,14 +61,29 @@
               <video th:src="*{videoPath}" class="img-fluid vid_main" controls style="width: 100%;"></video>
             </div>
             <label class="h4 word-label font-weight-bold">用語の解説</label>
-            <th:block th:each="word : ${words}">
-              <div class="explain">
-                <ul>
-                  <li class="h5 word-classificationName" th:text="${word.classificationName}">番号なしリスト01</li>
-                  <p th:text="${word.comment}"></p>
-                </ul>
+            <button type="button" class="button" id="toggleButton">日本語 -> 英語</button>
+            <div id="app">
+              <div class="explain-japanese">
+                <th:block th:each="word : ${words}">
+                  <div class="explain">
+                    <ul>
+                      <li class="h5 word-classificationName" th:text="${word.japaneseClassification}">番号なしリスト01</li>
+                      <p th:text="${word.japaneseComment}"></p>
+                    </ul>
+                  </div>
+                </th:block>
               </div>
-            </th:block>
+              <div class="explain-english">
+                <th:block th:each="word : ${words}">
+                  <div class="explain">
+                    <ul>
+                      <li class="h5 word-classificationName" th:text="${word.englishClassification}">番号なしリスト01</li>
+                      <p th:text="${word.englishComment}"></p>
+                    </ul>
+                  </div>
+                </th:block>
+              </div>
+            </div>
           </div>
         </div>
       </div>

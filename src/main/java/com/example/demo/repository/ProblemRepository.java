@@ -20,4 +20,8 @@ public interface ProblemRepository extends BaseRepository<Problem, Long>{
             + " and p.problemNo = :problemNo")
     public Optional<Problem> findByProcessIdAndProblemNo(@Param("id") Long id, @Param("problemNo") Long problemNo);
     
+
+    /**
+     * 
+     */
 }

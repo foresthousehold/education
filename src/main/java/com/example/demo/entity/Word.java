@@ -20,35 +20,57 @@ public class Word extends BaseEntity {
     
     private static final long serialVersionUID = 1L;
 
-    /** 分類名 */
-    @Column(name = "classification_name")
-    private String classificationName;
+    /** 分類名(日本語) */
+    @Column(name = "japanese_classification")
+    private String japaneseClassification;
 
-    /** 解説 */
-    @Column(name = "comment")
-    private String comment;
+    /** 分類名(英語) */
+    @Column(name = "english_classification")
+    private String englishClassification;
+
+    /** 解説(日本語) */
+    @Column(name = "japanese_comment")
+    private String japaneseComment;
+
+    /** 解説(英語) */
+    @Column(name = "english_comment")
+    private String englishComment;
 
     /** 大問用語 */
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE },
     fetch = FetchType.LAZY, targetEntity = ProblemWord.class, mappedBy = "word")
     private List<ProblemWord> problemWords;
 
-      /** 参考サイト */
-
-    public String getClassificationName() {
-        return classificationName;
+    public String getJapaneseClassification() {
+        return japaneseClassification;
     }
 
-    public void setClassificationName(String classificationName) {
-        this.classificationName = classificationName;
+    public void setJapaneseClassification(String japaneseClassification) {
+        this.japaneseClassification = japaneseClassification;
     }
 
-    public String getComment() {
-        return comment;
+    public String getEnglishClassification() {
+        return englishClassification;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setEnglishClassification(String englishClassification) {
+        this.englishClassification = englishClassification;
+    }
+
+    public String getJapaneseComment() {
+        return japaneseComment;
+    }
+
+    public void setJapaneseComment(String japaneseComment) {
+        this.japaneseComment = japaneseComment;
+    }
+
+    public String getEnglishComment() {
+        return englishComment;
+    }
+
+    public void setEnglishComment(String englishComment) {
+        this.englishComment = englishComment;
     }
 
     public List<ProblemWord> getProblemWords() {
@@ -58,5 +80,4 @@ public class Word extends BaseEntity {
     public void setProblemWords(List<ProblemWord> problemWords) {
         this.problemWords = problemWords;
     }
-
 }
