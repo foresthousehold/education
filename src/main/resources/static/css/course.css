@@ -2,6 +2,13 @@
     margin-top: 70px;
 }
 
+.sidebar {
+    padding: 0%;
+    height: 100%;
+    position: absolute;
+    background-color:aqua;
+}
+
 .element-course {
     margin-bottom: 15%;
 }

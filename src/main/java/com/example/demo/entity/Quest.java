@@ -40,6 +40,10 @@ public class Quest extends BaseEntity {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
+    /** アクセスフラグ */
+    @Column(name = "access_flg", nullable=false)
+    private boolean accessFlg;
+
     /** 並び順 */
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -76,6 +80,14 @@ public class Quest extends BaseEntity {
         this.imagePath = imagePath;
     }
 
+    public boolean isAccessFlg() {
+        return accessFlg;
+    }
+
+    public void setAccessFlg(boolean accessFlg) {
+        this.accessFlg = accessFlg;
+    }
+
     public Long getSortOrder() {
         return sortOrder;
     }
@@ -83,4 +95,6 @@ public class Quest extends BaseEntity {
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
+
+   
 }

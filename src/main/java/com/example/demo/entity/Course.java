@@ -66,4 +66,5 @@ public class Course extends BaseEntity{
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
+    
 }

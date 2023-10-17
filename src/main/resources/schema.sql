@@ -44,7 +44,7 @@ CREATE TABLE problem_word (
 CREATE TABLE course (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(255) NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     sort_order BIGINT NOT NULL
 );
@@ -54,8 +54,9 @@ CREATE TABLE quest (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     course_id BIGINT NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     image_path VARCHAR(255) NOT NULL,
+    access_flg BOOLEAN NOT NULL,
     sort_order BIGINT NOT NULL,
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
@@ -65,9 +66,10 @@ CREATE TABLE process (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     process_name VARCHAR(255) NOT NULL,
     quest_id BIGINT NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     experience BIGINT NOT NULL,
     image_path VARCHAR(255) NOT NULL,
+    access_flg BOOLEAN NOT NULL,
     sort_order BIGINT NOT NULL,
     FOREIGN KEY (quest_id) REFERENCES quest(id)
 );
@@ -78,7 +80,7 @@ CREATE TABLE problem (
     name VARCHAR(255) NOT NULL,
     process_id BIGINT NOT NULL,
     problem_no BIGINT NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     FOREIGN KEY (process_id) REFERENCES process(id)
 );
 
@@ -86,7 +88,7 @@ CREATE TABLE problem (
 CREATE TABLE question (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     problem_id BIGINT NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     sort_order BIGINT NOT NULL,
     FOREIGN KEY (problem_id) REFERENCES problem(id)
 );
@@ -98,7 +100,7 @@ CREATE TABLE answer_choice (
     correct_flg BOOLEAN,
     content VARCHAR(255),
     advice VARCHAR(255) NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     FOREIGN KEY (question_id) REFERENCES question(id)
 );
 
@@ -107,7 +109,7 @@ CREATE TABLE image (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     file_path VARCHAR(255),
     problem_id BIGINT NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     sort_order BIGINT,
     FOREIGN KEY (problem_id) REFERENCES problem(id)
 );
@@ -118,7 +120,7 @@ CREATE TABLE video (
     title VARCHAR(255) NOT NULL,
     file_path VARCHAR(255) NOT NULL,
     problem_id BIGINT,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     FOREIGN KEY (problem_id) REFERENCES problem(id)
 );
 
@@ -127,5 +129,5 @@ CREATE TABLE experience (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     level BIGINT,
     need_total_experience BIGINT,
-    DELETE_FLG BOOLEAN DEFAULT 0 NOT NULL
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
 );

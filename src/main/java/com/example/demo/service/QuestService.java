@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.AnswerChoice;
 import com.example.demo.entity.Experience;
 import com.example.demo.entity.Problem;
+import com.example.demo.entity.Process;
 import com.example.demo.entity.Question;
 import com.example.demo.entity.User;
 import com.example.demo.model.form.AnswerChoiceForm;
@@ -23,6 +25,7 @@ import com.example.demo.model.form.QuizForm;
 import com.example.demo.repository.AnswerChoiceRepository;
 import com.example.demo.repository.ExperienceRepository;
 import com.example.demo.repository.ProblemRepository;
+import com.example.demo.repository.ProcessRepository;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.UserRepository;
 
@@ -37,6 +40,8 @@ public class QuestService {
     @Autowired ExperienceRepository experienceRepository;
 
     @Autowired ProblemRepository problemRepository;
+
+    @Autowired ProcessRepository processRepository;
 
     @Autowired QuestionRepository questionRepository;
 
@@ -202,5 +207,17 @@ public class QuestService {
         user.setLevel(entity.getLevel());
         user.setTotalExperience(totalExperience);
         userRepository.save(user);
+    }
+
+    /**
+     * プロセスのフラグを更新します。
+     * @param processId プロセスID
+     */
+    @Transactional
+    public void updateAccessFlg(Long processId) {
+        //Todo: Optional型に修正
+        final Process process = processRepository.findById(processId).orElseThrow(EntityNotFoundException::new);
+        process.setAccessFlg(true);
+        processRepository.save(process);
     }
 }

@@ -44,6 +44,10 @@ public class Process extends BaseEntity {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
+    /** アクセスフラグ */
+    @Column(name = "access_flg", nullable=false)
+    private Boolean accessFlg;
+
     /** 並び順　*/
     @Column(name = "sort_order", nullable = false)
     private Long sortOrder;
@@ -88,11 +92,19 @@ public class Process extends BaseEntity {
         this.imagePath = imagePath;
     }
 
+    public Boolean isAccessFlg() {
+        return accessFlg;
+    }
+
+    public void setAccessFlg(Boolean accessFlg) {
+        this.accessFlg = accessFlg;
+    }
+
     public Long getSortOrder() {
         return sortOrder;
     }
 
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
-    }  
+    } 
 }

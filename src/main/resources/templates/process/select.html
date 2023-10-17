@@ -7,25 +7,51 @@
 <body>
   <div th:replace="layouts/layout::header('プロセス画面')"></div>
   <div class="main">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <th:block th:each="process : ${processes}">
-          <div class="col-md-4">
-            <svg class="bd-placeholder-img card-img-top" height="90%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#868e96"/>
-              <image th:href="${process.imagePath}" width="100%">
-            </svg>
-            <div class="card-body">
-              <h5 class="card-title" th:text="${process.processName}"></h5>
-              <a th:href="@{/quest/{processId}(processId=${process.id})}" class="btn btn-primary">問題を解く</a>
-            </div>
+        <div class="sidebar col-md-1">
+          <div>
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link active" th:href="@{/course/select}">
+                  コース
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" th:href="@{/quest/select/{courseId}(courseId=${courseId})}">
+                  クエスト
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  ランキング
+                </a>
+              </li>
+            </ul>
           </div>
-        </th:block>
+        </div>
+        <div class="part-select col-md-11 offset-1">
+          <div class="row">
+          <th:block th:each="process : ${processes}">
+            <div class="col-md-3">
+              <svg class="bd-placeholder-img card-img-top" height="90%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"/>
+                <image th:href="${process.imagePath}" width="100%">
+              </svg>
+              <div class="card-body">
+                <h5 class="card-title" th:text="${process.processName}"></h5>
+                <a th:href="@{/quest/{processId}(processId=${process.id})}" class="btn btn-primary" th:data-value=${process.accessFlg}>問題を解く</a>
+              </div>
+            </div>
+          </th:block>
+        </div>
+        </div>
       </div>
     </div>
   </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="/js/process.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>

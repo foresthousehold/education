@@ -22,13 +22,14 @@
         <label class="col-md-6"></label>
         <div class="nav-item dropdown">
           <div class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span th:text="${userName}">ユーザ名</span>
-            <span th:text="'(' + 'Lv.' + ${level} + ')'">レベル</span>
+            <span th:text="${userName}" style="font-size: large;">ユーザ名</span>
+            <span th:text="'(' + 'Lv.' + ${level} + ')'" style="font-size: large;">レベル</span>
           </div>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <form th:action="@{/logout}" method="post">
               <button type="submit" class="dropdown-item">ログアウト</button>
             </form>
+            <a href="http://localhost:8080/course/select" class="dropdown-item">コース選択画面へ</a>
           </div>
         </div>
       </div>

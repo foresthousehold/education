@@ -70,8 +70,6 @@ public class QuestController {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
 
-        // コースIDに紐づくクエスト一覧を取得する
-        // TODO
         model.addAttribute("quests", questRepository.findAll());
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
@@ -93,7 +91,9 @@ public class QuestController {
 
             // クエストIDからクエストに紐づく全てのプロセスを取得
             final List<Process> processes = processRepository.findByQuestId(questId);
+            Long courseId = processes.get(0).getQuest().getCourse().getId();
 
+            model.addAttribute("courseId", courseId);
             model.addAttribute("processes", processes);
             model.addAttribute("userName", user.getUsername());
             model.addAttribute("level", user.getLevel());
@@ -201,6 +201,9 @@ public class QuestController {
 
             // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
             questService.updateUserLevel(user, experience);
+
+           // processIDからプロセスを取得し、フラグをtrueにする
+            questService.updateAccessFlg(processId+1);
 
             // 再度同じ大問を表示する
             model.addAttribute("words", words);
