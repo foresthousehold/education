@@ -16,12 +16,13 @@
 <body>
   <!-- (5)body内で共通化したい部品をfragment化する -->
   <header th:fragment="header(headerName)">
-    <div class="container mt-2">
+    <div class="container">
       <div class="row">
-        <h2 class="col-md-4 font-weight-bold" th:text="${headerName}"></h2>
-        <label class="col-md-6"></label>
+        <h2 class="col-md-5 font-weight-bold mt-2" th:text="${headerName}"></h2>
+        <label class="col-md-4"></label>
+        <img class="user-icon col-md-1" src="https://lh6.googleusercontent.com/-ElTWDe7lJGM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcRxTOorRK1et7a390RxKO-znT_Xw/s120/photo.jpg">
         <div class="nav-item dropdown">
-          <div class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="user-name nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span th:text="${userName}" style="font-size: large;">ユーザ名</span>
             <span th:text="'(' + 'Lv.' + ${level} + ')'" style="font-size: large;">レベル</span>
           </div>

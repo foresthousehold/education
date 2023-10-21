@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,9 @@ public interface UserRepository extends BaseRepository<User, Long> {
     @Query("select u from User u"
             + " where u.username = :username")
     public Optional<User> findByUserName(@Param("username") String username);
+
+    @Query("select u from User u"
+            + " order by u.level desc")
+    public List<User> findAllSortByLevel();
 
 }
