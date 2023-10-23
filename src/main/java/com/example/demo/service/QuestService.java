@@ -22,7 +22,10 @@ import com.example.demo.model.form.AnswerChoiceForm;
 import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.QuizForm;
+import com.example.demo.model.form.SearchForm;
 import com.example.demo.repository.AnswerChoiceRepository;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.DishRepository;
 import com.example.demo.repository.ExperienceRepository;
 import com.example.demo.repository.ProblemRepository;
 import com.example.demo.repository.ProcessRepository;
@@ -35,23 +38,35 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class QuestService {
 
-    @Autowired AnswerChoiceRepository answerChoiceRepository;
+    @Autowired
+    AnswerChoiceRepository answerChoiceRepository;
 
-    @Autowired ExperienceRepository experienceRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
-    @Autowired ProblemRepository problemRepository;
+    @Autowired
+    DishRepository dishRepository;
 
-    @Autowired ProcessRepository processRepository;
+    @Autowired
+    ExperienceRepository experienceRepository;
 
-    @Autowired QuestionRepository questionRepository;
+    @Autowired
+    ProblemRepository problemRepository;
 
-    @Autowired UserRepository userRepository;
-    
+    @Autowired
+    ProcessRepository processRepository;
+
+    @Autowired
+    QuestionRepository questionRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     /**
      * クイズフォームを作成します
      */
     public QuizForm createQuizForm(QuizForm quizForm) {
-        
+
         return quizForm;
     }
 
@@ -86,11 +101,13 @@ public class QuestService {
     public ProblemForm createProblemForm(Long questId, ProblemForm problemForm) {
 
         // クエストIDに紐づく一番初めの大問を取得する
-        Problem problem = problemRepository.findByProcessIdAndProblemNo(questId, problemForm.getProblemNo()).orElseThrow();
+        Problem problem = problemRepository.findByProcessIdAndProblemNo(questId, problemForm.getProblemNo())
+                .orElseThrow();
 
         final ProblemForm updateProblemForm = new ProblemForm();
         updateProblemForm.setProblemNo(problem.getProblemNo());
-        updateProblemForm.setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
+        updateProblemForm
+                .setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
         updateProblemForm.setVideoPath(problem.getVideo().getFilePath());
         updateProblemForm.setQuestionForms(createQuestionForms(problem.getId(), problemForm));
 
@@ -107,7 +124,7 @@ public class QuestService {
         final List<Question> questions = questionRepository.findByProblemId(problemId);
 
         // 小問ごとに解答選択フォームを作成する
-        for(int i = 0;  i < questions.size(); i++) {
+        for (int i = 0; i < questions.size(); i++) {
             Question question = questions.get(i);
             QuestionForm questionForm = new QuestionForm();
             questionForm.setQuestionId(question.getId());
@@ -119,15 +136,14 @@ public class QuestService {
 
             // 入ってきた選択肢IDとアドバイスのmap作成
             Map<Long, String> answerChoiceIdMap = answerChoices.stream().collect(Collectors.toMap(
-                AnswerChoice::getId,
-                AnswerChoice::getAdvice
-            ));
+                    AnswerChoice::getId,
+                    AnswerChoice::getAdvice));
 
             questionForm.setAdvice(answerChoiceIdMap.get(problemForm.getQuestionForms().get(i).getChoicedAnswerId()));
 
             questionForms.add(questionForm);
         }
-        
+
         return questionForms;
     }
 
@@ -141,13 +157,13 @@ public class QuestService {
         final List<Question> questions = questionRepository.findByProblemId(problemId);
 
         // 小問ごとに解答選択フォームを作成する
-        for(Question question : questions) {
+        for (Question question : questions) {
             QuestionForm questionForm = new QuestionForm();
             questionForm.setQuestionId(question.getId());
             questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
             questionForms.add(questionForm);
         }
-        
+
         return questionForms;
     }
 
@@ -161,7 +177,7 @@ public class QuestService {
         final List<AnswerChoice> answerChoices = answerChoiceRepository.findByQuestionId(questionId);
 
         // 解答選択肢ごとにフォームにセットする
-        for(AnswerChoice answerChoice : answerChoices) {
+        for (AnswerChoice answerChoice : answerChoices) {
             AnswerChoiceForm answerChoiceForm = new AnswerChoiceForm();
             answerChoiceForm.setId(answerChoice.getId());
             answerChoiceForm.setContent(answerChoice.getContent());
@@ -176,9 +192,9 @@ public class QuestService {
      */
     public Map<Long, Long> createAnswerChoiceIdMap(List<Question> questions) {
         Map<Long, Long> createAnswerChoiceIdMap = questions.stream()
-        .collect(Collectors.toMap(
-            Question::getId,
-            q -> answerChoiceRepository.findByQuestionIdAndCorrectFlg(q.getId())));
+                .collect(Collectors.toMap(
+                        Question::getId,
+                        q -> answerChoiceRepository.findByQuestionIdAndCorrectFlg(q.getId())));
 
         return createAnswerChoiceIdMap;
     }
@@ -190,8 +206,9 @@ public class QuestService {
         Map<Long, Long> experienceMap = new HashMap<>();
 
         final List<Experience> experiences = experienceRepository.findAll();
-        experienceMap = experiences.stream().collect(Collectors.toMap(e -> e.getNeedTotalExperience(), e -> e.getLevel()));
-        
+        experienceMap = experiences.stream()
+                .collect(Collectors.toMap(e -> e.getNeedTotalExperience(), e -> e.getLevel()));
+
         return experienceMap;
     }
 
@@ -202,7 +219,7 @@ public class QuestService {
     public void updateUserLevel(User user, Long experience) {
         final Long totalExperience = user.getTotalExperience() + experience;
         final Experience entity = experienceRepository.findByTotalExperience(user.getTotalExperience() + experience)
-                                    .stream().findFirst().orElse(null);
+                .stream().findFirst().orElse(null);
 
         user.setLevel(entity.getLevel());
         user.setTotalExperience(totalExperience);
@@ -211,13 +228,25 @@ public class QuestService {
 
     /**
      * プロセスのフラグを更新します。
+     * 
      * @param processId プロセスID
      */
     @Transactional
     public void updateAccessFlg(Long processId) {
-        //Todo: Optional型に修正
+        // Todo: Optional型に修正
         final Process process = processRepository.findById(processId).orElseThrow(EntityNotFoundException::new);
         process.setAccessFlg(true);
         processRepository.save(process);
+    }
+
+    /**
+     * 検索フォームを作成します。
+     */
+    public SearchForm createSearchForm() {
+        SearchForm searchForm = new SearchForm();
+        searchForm.setDishes(dishRepository.findAll());
+        searchForm.setCategories1(categoryRepository.findAll());
+        searchForm.setCategories2(categoryRepository.findAll());
+        return searchForm;
     }
 }

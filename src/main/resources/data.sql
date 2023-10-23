@@ -32,8 +32,8 @@ INSERT INTO problem_word (problem_id, word_id) VALUES (2, 2);
 INSERT INTO course (course_name, image_path, sort_order) VALUES ('料理コース', '/images/cook.jpg', 1);
 
 -- クエストのテストデータ
-INSERT INTO quest (name, course_id, image_path, access_flg, sort_order) VALUES ('味噌汁', 1, '/images/miso.png', '1', 1);
-INSERT INTO quest (name, course_id, image_path, access_flg, sort_order) VALUES ('カレー', 1, '/images/carry.png', '0', 2);
+INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('味噌汁', 1, 1,'/images/miso.png', '1', 1);
+INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('カレー', 1, 2,'/images/carry.png', '0', 2);
 
 -- プロセスのテストデータ
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('豆腐とねぎを用意する', 1, 110, '/images/process/miso/miso_negi.png', '1', 1);
@@ -138,3 +138,13 @@ VALUES
     (48, 4800),
     (49, 4900),
     (50, 5000);
+
+-- 料理のテストデータ
+INSERT INTO dish (name) VALUES ('みそ汁');
+INSERT INTO dish (name) VALUES ('カレー');
+INSERT INTO dish (name) VALUES ('豚汁');
+
+-- 分類のテストデータ
+INSERT INTO category (name) VALUES ('継承');
+INSERT INTO category (name) VALUES ('インターフェース');
+INSERT INTO category (name) VALUES ('クラス');

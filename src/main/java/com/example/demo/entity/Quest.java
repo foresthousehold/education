@@ -32,16 +32,21 @@ public class Quest extends BaseEntity {
     private Course course;
 
     /** プロセス */
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE },
-    fetch = FetchType.LAZY, targetEntity = Process.class, mappedBy = "quest")
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = Process.class, mappedBy = "quest")
     private List<Process> processes;
+
+    /** 料理 */
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Dish.class, optional = false)
+    @JoinColumn(name = "dish_id", nullable = false)
+    private Dish dish;
 
     /** 画像 */
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
     /** アクセスフラグ */
-    @Column(name = "access_flg", nullable=false)
+    @Column(name = "access_flg", nullable = false)
     private boolean accessFlg;
 
     /** 並び順 */
@@ -72,6 +77,14 @@ public class Quest extends BaseEntity {
         this.processes = processes;
     }
 
+    public Dish getDish() {
+        return dish;
+    }
+
+    public void setDish(Dish dish) {
+        this.dish = dish;
+    }
+
     public String getImagePath() {
         return imagePath;
     }
@@ -96,5 +109,4 @@ public class Quest extends BaseEntity {
         this.sortOrder = sortOrder;
     }
 
-   
 }

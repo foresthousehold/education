@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS process;
 DROP TABLE IF EXISTS quest;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS experience;
+DROP TABLE IF EXISTS dish;
+DROP TABLE IF EXISTS category;
 
 
 -- ユーザマスタのテーブル作成
@@ -54,6 +56,7 @@ CREATE TABLE quest (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     course_id BIGINT NOT NULL,
+    dish_id BIGINT NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     access_flg BOOLEAN NOT NULL,
@@ -129,5 +132,20 @@ CREATE TABLE experience (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
     level BIGINT,
     need_total_experience BIGINT,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
+
+
+-- 料理テーブル
+CREATE TABLE dish (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
+
+-- 分類テーブル
+CREATE TABLE category (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
 );
