@@ -23,6 +23,7 @@ import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.QuizForm;
 import com.example.demo.model.form.SearchForm;
+import com.example.demo.model.parameter.quest.SearchCriteria;
 import com.example.demo.repository.AnswerChoiceRepository;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.DishRepository;
@@ -248,5 +249,14 @@ public class QuestService {
         searchForm.setCategories1(categoryRepository.findAll());
         searchForm.setCategories2(categoryRepository.findAll());
         return searchForm;
+    }
+
+    /**
+     * 検索条件を作成します
+     */
+    public SearchCriteria createSearchCriteria(SearchForm searchForm) {
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setDishId(searchForm.getDishId());
+        return searchCriteria;
     }
 }

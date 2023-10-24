@@ -26,6 +26,7 @@ import com.example.demo.entity.Word;
 import com.example.demo.model.form.ProblemForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.SearchForm;
+import com.example.demo.model.parameter.quest.SearchCriteria;
 import com.example.demo.repository.ProblemRepository;
 import com.example.demo.repository.ProcessRepository;
 import com.example.demo.repository.QuestRepository;
@@ -82,24 +83,25 @@ public class QuestController {
 
     /**
      * クエスト選択検索結果画面を表示します
-     * @param questId
-     * @param accountDetails
-     * @param model
+     * @param 
+     * @param 
+     * @param 
      * @return
      */
     @GetMapping("/search-result")
     public String search(
         @AuthenticationPrincipal AccountDetails accountDetails,
+        SearchForm searchForm,
         Model model) {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        final SearchForm searchForm = questService.createSearchForm();
+        final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
 
         model.addAttribute("searchForm", searchForm);
-        model.addAttribute("quests", questRepository.findAll());
+        model.addAttribute("quests", questRepository.search(searchCriteria));
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
-        
+
         return "/quest/select";
     }
 

@@ -31,7 +31,7 @@
         <div class="part-select col-md-11 offset-1">
           <th:block class="search-content">
             <form th:object="${searchForm}" method="get" th:action="@{/quest/search-result}">
-              <select>
+              <select th:field="*{dishId}">
                 <option selected value=''>------</option>
                 <th:block th:each="dish : *{dishes}">
                   <option th:text="${dish.name}" th:value="${dish.id}">option
