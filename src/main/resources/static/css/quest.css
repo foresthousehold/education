@@ -1,0 +1,15 @@
+.category-extend {
+    border-radius: 30%;
+    color: white;
+    background-color: blue;
+    border: solid 3px blue;
+    width: 40px;
+}
+
+.category-interface {
+    border-radius: 20%;
+    color: white;
+    background-color: blue;
+    border: solid 3px blue;
+    width: 140px;
+}

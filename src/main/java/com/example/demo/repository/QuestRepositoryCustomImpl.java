@@ -14,7 +14,7 @@ import com.example.demo.model.parameter.quest.SearchCriteria;
 /**
  * クエストリポジトリカスタム実装
  */
-public class QuestRepositoryCustomImpl implements QuestRepositoryCustom{
+public class QuestRepositoryCustomImpl implements QuestRepositoryCustom {
 
     /** データベースにアクセスする際に必要 */
     @Autowired
@@ -25,14 +25,19 @@ public class QuestRepositoryCustomImpl implements QuestRepositoryCustom{
 
         final String findQueryHead = "select distinct q from Quest q"
                 + " inner join q.dish d"
-                + " inner join q.questCategories qc"
+                + " left join q.questCategories qc"
                 + " inner join qc.category c";
 
         StringBuilder dishQuery = new StringBuilder()
-            // .append(" where q.deleteFlg = false")
-            .append(" where ").append(QueryUtil.optionalQuery(SearchCriteria.DISH_ID_KEY, "d.id = :dishId"))
-            .append(QueryUtil.createQuery(SearchCriteria.CATEGORY_ID_1_KEY, "c.id = :categoryId1"));
-            // .append(" or ").append(QueryUtil.optionalQuery(SearchCriteria.CATEGORY_ID_2_KEY, "c.id = :categoryId2)"))
+                // .append(" where q.deleteFlg = false")
+                .append(" where ")
+                .append(QueryUtil.optionalQuery(SearchCriteria.DISH_ID_KEY, "d.id = :dishId",
+                        searchCriteria.getDishId()))
+                .append(QueryUtil.createQuery(SearchCriteria.CATEGORY_ID_1_KEY, "c.id = :categoryId1",
+                        searchCriteria.getCategoryId1()));
+        // .append(" or
+        // ").append(QueryUtil.optionalQuery(SearchCriteria.CATEGORY_ID_2_KEY, "c.id =
+        // :categoryId2)"))
 
         final String findQueryStr = new StringBuilder(findQueryHead).append(dishQuery.toString()).toString();
 
@@ -46,5 +51,5 @@ public class QuestRepositoryCustomImpl implements QuestRepositoryCustom{
 
         return quests;
     }
-    
+
 }

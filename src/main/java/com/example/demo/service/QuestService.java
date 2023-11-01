@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,10 +16,12 @@ import com.example.demo.entity.AnswerChoice;
 import com.example.demo.entity.Experience;
 import com.example.demo.entity.Problem;
 import com.example.demo.entity.Process;
+import com.example.demo.entity.Quest;
 import com.example.demo.entity.Question;
 import com.example.demo.entity.User;
 import com.example.demo.model.form.AnswerChoiceForm;
 import com.example.demo.model.form.ProblemForm;
+import com.example.demo.model.form.QuestForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.QuizForm;
 import com.example.demo.model.form.SearchForm;
@@ -31,6 +32,7 @@ import com.example.demo.repository.DishRepository;
 import com.example.demo.repository.ExperienceRepository;
 import com.example.demo.repository.ProblemRepository;
 import com.example.demo.repository.ProcessRepository;
+import com.example.demo.repository.QuestRepository;
 import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.UserRepository;
 
@@ -57,6 +59,9 @@ public class QuestService {
 
     @Autowired
     ProcessRepository processRepository;
+
+    @Autowired
+    QuestRepository questRepository;
 
     @Autowired
     QuestionRepository questionRepository;
@@ -261,5 +266,16 @@ public class QuestService {
         searchCriteria.setCategoryId1(searchForm.getCategoryId1());
         searchCriteria.setCategoryId2(searchForm.getCategoryId2());
         return searchCriteria;
+    }
+
+    /**
+     * クエストフォームを作成します
+     */
+    public QuestForm createQuestForm(Quest quest) {
+        QuestForm questForm = new QuestForm();
+        // クエストからクエストカテゴリーにアクセスし、紐づくカテゴリーIDを全て取得
+        List<Long> categoryIds = categoryRepository.findByCategoryId(quest.getId());
+
+        return questForm;
     }
 }

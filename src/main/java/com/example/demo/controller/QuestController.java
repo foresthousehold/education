@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -20,10 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.Problem;
 import com.example.demo.entity.Process;
+import com.example.demo.entity.Quest;
 import com.example.demo.entity.Question;
 import com.example.demo.entity.User;
 import com.example.demo.entity.Word;
 import com.example.demo.model.form.ProblemForm;
+import com.example.demo.model.form.QuestForm;
 import com.example.demo.model.form.QuestionForm;
 import com.example.demo.model.form.SearchForm;
 import com.example.demo.model.parameter.quest.SearchCriteria;
@@ -99,8 +102,13 @@ public class QuestController {
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
         final SearchForm searchForm2 = questService.createSearchForm();
+        final List<Quest> quests = questRepository.search(searchCriteria);
+
+        final List<QuestForm> questForms = quests.stream()
+                .map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
 
         model.addAttribute("searchForm", searchForm2);
+        // model.addAttribute("questForms", questForms);
         model.addAttribute("quests", questRepository.search(searchCriteria));
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
