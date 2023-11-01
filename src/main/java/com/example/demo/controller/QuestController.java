@@ -42,7 +42,7 @@ public class QuestController {
     @Autowired
     ProblemRepository problemRepository;
 
-    @Autowired 
+    @Autowired
     ProcessRepository processRepository;
 
     @Autowired
@@ -62,13 +62,14 @@ public class QuestController {
 
     /**
      * クエスト選択画面を表示します。
+     * 
      * @param model モデル
      */
     @GetMapping("/select/{courseId}")
     public String selectQuest(
-        @PathVariable(name = "courseId") Long courseId, 
-        @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) {
+            @PathVariable(name = "courseId") Long courseId,
+            @AuthenticationPrincipal AccountDetails accountDetails,
+            Model model) {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchForm searchForm = questService.createSearchForm();
@@ -83,21 +84,23 @@ public class QuestController {
 
     /**
      * クエスト選択検索結果画面を表示します
-     * @param 
-     * @param 
-     * @param 
-     * @return
+     * 
+     * @param accountDetails 利用者詳細
+     * @param searchForm     検索フォーム
+     * @param model          モデル
+     * @return クエスト検索結果画面
      */
     @GetMapping("/search-result")
     public String search(
-        @AuthenticationPrincipal AccountDetails accountDetails,
-        SearchForm searchForm,
-        Model model) {
+            @AuthenticationPrincipal AccountDetails accountDetails,
+            SearchForm searchForm,
+            Model model) {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
+        final SearchForm searchForm2 = questService.createSearchForm();
 
-        model.addAttribute("searchForm", searchForm);
+        model.addAttribute("searchForm", searchForm2);
         model.addAttribute("quests", questRepository.search(searchCriteria));
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
@@ -107,37 +110,39 @@ public class QuestController {
 
     /**
      * プロセス画面を表示します。
+     * 
      * @return プロセス画面
      */
     @GetMapping("process/{questId}")
     public String process(
-        @PathVariable(name = "questId") Long questId, 
-        @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) {
+            @PathVariable(name = "questId") Long questId,
+            @AuthenticationPrincipal AccountDetails accountDetails,
+            Model model) {
 
-            final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
 
-            // クエストIDからクエストに紐づく全てのプロセスを取得
-            final List<Process> processes = processRepository.findByQuestId(questId);
-            Long courseId = processes.get(0).getQuest().getCourse().getId();
+        // クエストIDからクエストに紐づく全てのプロセスを取得
+        final List<Process> processes = processRepository.findByQuestId(questId);
+        Long courseId = processes.get(0).getQuest().getCourse().getId();
 
-            model.addAttribute("courseId", courseId);
-            model.addAttribute("processes", processes);
-            model.addAttribute("userName", user.getUsername());
-            model.addAttribute("level", user.getLevel());
+        model.addAttribute("courseId", courseId);
+        model.addAttribute("processes", processes);
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("level", user.getLevel());
 
-            return "process/select";
+        return "process/select";
     }
 
     /**
      * 問題画面を表示します。
+     * 
      * @param model モデル
      */
     @GetMapping("/{processId}")
     public String getQuest(
-        @PathVariable(name = "processId") Long processId,
-        Model model, 
-        @AuthenticationPrincipal AccountDetails accountDetails) {
+            @PathVariable(name = "processId") Long processId,
+            Model model,
+            @AuthenticationPrincipal AccountDetails accountDetails) {
         // クエスト選択された時、クエストIDに紐づく大問の一つ目を表示
         // formを作ってsetして返す
         // ①getされた時は必ず一番初めの大問を表示する
@@ -145,11 +150,12 @@ public class QuestController {
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         // final Long problemId = problemRepository.findByProcessId(processId);
         ProblemForm problemForm = questService.createFirstProblemForm(processId);
-        final Long experience = processRepository.findById(processId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
+        final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
+                .orElseThrow(EntityNotFoundException::new);
 
         // 大問IDから全ての用語を取得します。
         final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
-        
+
         model.addAttribute("words", words);
         model.addAttribute("processId", processId);
         model.addAttribute("problemForm", problemForm);
@@ -165,23 +171,25 @@ public class QuestController {
 
     /**
      * 正誤判定をします
+     * 
      * @param model モデル
      */
     @PostMapping("/{processId}")
     public String postQuest(
-        @PathVariable(name = "processId") Long processId,
-        @RequestParam("problemNo") Long problemNo,
-        ProblemForm problemForm,
-        RedirectAttributes redirectAttributes,
-        Model model,
-        @AuthenticationPrincipal AccountDetails accountDetails) {
+            @PathVariable(name = "processId") Long processId,
+            @RequestParam("problemNo") Long problemNo,
+            ProblemForm problemForm,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            @AuthenticationPrincipal AccountDetails accountDetails) {
 
         // アカウント詳細IDからユーザを取得
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
 
         Problem problem = problemRepository.findByProcessIdAndProblemNo(processId, problemNo).orElseThrow();
 
-        final Long experience = processRepository.findById(processId).map(q -> q.getExperience()).orElseThrow(EntityNotFoundException::new);
+        final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
+                .orElseThrow(EntityNotFoundException::new);
 
         // ユーザ情報からユーザの保持経験値を取得する
         final Long totalExperience = user.getTotalExperience();
@@ -193,18 +201,19 @@ public class QuestController {
 
         // 大問から紐づく小問一覧を取得
         List<Question> questions = questionRepository.findByProblemId(problem.getId());
-        
+
         // 取得した小問一覧から小問ごとに小問IDに紐づく正答の選択肢を取得
         Map<Long, Long> answerChoiceIdMap = questService.createAnswerChoiceIdMap(questions);
 
         List<QuestionForm> questionForms = problemForm.getQuestionForms();
 
         // 正誤判定
-        boolean isAllCorrect = questionForms.stream().allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
+        boolean isAllCorrect = questionForms.stream()
+                .allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
 
         // 大問IDから全ての用語を取得します。
         final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
-        
+
         // 一つでも間違いがあった場合、formにアドバイスをセット
         if (!isAllCorrect) {
             ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm);
@@ -222,7 +231,8 @@ public class QuestController {
         }
 
         // 表示する大問があるかどうか判定するための変数(次の問題)
-        Optional<Problem> nextProblem = problemRepository.findByProcessIdAndProblemNo(processId, problem.getProblemNo() + 1);
+        Optional<Problem> nextProblem = problemRepository.findByProcessIdAndProblemNo(processId,
+                problem.getProblemNo() + 1);
 
         if (nextProblem.isEmpty()) {
             ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm);
@@ -230,8 +240,8 @@ public class QuestController {
             // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
             questService.updateUserLevel(user, experience);
 
-           // processIDからプロセスを取得し、フラグをtrueにする
-            questService.updateAccessFlg(processId+1);
+            // processIDからプロセスを取得し、フラグをtrueにする
+            questService.updateAccessFlg(processId + 1);
 
             // 再度同じ大問を表示する
             model.addAttribute("words", words);

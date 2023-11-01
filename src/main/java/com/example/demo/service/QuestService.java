@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -257,6 +258,8 @@ public class QuestService {
     public SearchCriteria createSearchCriteria(SearchForm searchForm) {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setDishId(searchForm.getDishId());
+        searchCriteria.setCategoryId1(searchForm.getCategoryId1());
+        searchCriteria.setCategoryId2(searchForm.getCategoryId2());
         return searchCriteria;
     }
 }

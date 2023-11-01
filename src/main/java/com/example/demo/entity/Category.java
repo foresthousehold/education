@@ -1,7 +1,13 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.example.demo.entity.base.BaseEntity;
@@ -15,6 +21,12 @@ public class Category extends BaseEntity {
     /** 分類名 */
     @Column(name = "name")
     private String name;
+
+    /** クエストカテゴリ- */
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = QuestCategory.class, mappedBy = "category")
+    @OrderBy("id asc")
+    private List<QuestCategory> questCategories;
 
     public String getName() {
         return name;

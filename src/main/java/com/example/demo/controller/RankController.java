@@ -38,6 +38,7 @@ public class RankController {
         List<User> users = userRepository.findAllSortByLevel();
 
         model.addAttribute("users", users);
+        model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
 
         return "rank/select";

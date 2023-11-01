@@ -1,14 +1,27 @@
+.main {
+    margin-top: 70px;
+}
+
+.sidebar {
+    padding: 0%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: aqua;
+}
+
 .user-1 {
     font-size: large;
     font-weight: bold;
     height: 120px;
 }
 
-.user-1 > .user-name {
+.user-1>.user-name {
     font-size: 20px;
 }
 
-.user-1 > .user-level, .user-totalExperience {
+.user-1>.user-level,
+.user-totalExperience {
     font-size: 35px;
 }
 
@@ -25,11 +38,12 @@ tr.user-1 .user-rank-icon {
     height: 100px;
 }
 
-.user-2 > .user-name {
+.user-2>.user-name {
     font-size: 18px;
 }
 
-.user-2 > .user-level, .user-totalExperience {
+.user-2>.user-level,
+.user-totalExperience {
     font-size: 30px;
 }
 
@@ -45,11 +59,12 @@ tr.user-2 .user-rank-icon {
     height: 80px;
 }
 
-.user-3 > .user-name {
+.user-3>.user-name {
     font-size: 15px;
 }
 
-.user-3 > .user-level, .user-totalExperience {
+.user-3>.user-level,
+.user-totalExperience {
     font-size: 25px;
 }
 

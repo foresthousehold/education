@@ -148,3 +148,8 @@ INSERT INTO dish (name) VALUES ('豚汁');
 INSERT INTO category (name) VALUES ('継承');
 INSERT INTO category (name) VALUES ('インターフェース');
 INSERT INTO category (name) VALUES ('クラス');
+
+-- クエスト分類のテストデータ
+INSERT INTO quest_category (quest_id, category_id) VALUES (1, 1);
+INSERT INTO quest_category (quest_id, category_id) VALUES (1, 2);
+INSERT INTO quest_category (quest_id, category_id) VALUES (2, 1);

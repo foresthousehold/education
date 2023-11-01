@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.example.demo.entity.base.BaseEntity;
@@ -40,6 +41,12 @@ public class Quest extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Dish.class, optional = false)
     @JoinColumn(name = "dish_id", nullable = false)
     private Dish dish;
+
+    /** クエストカテゴリ- */
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = QuestCategory.class, mappedBy = "quest")
+    @OrderBy("id asc")
+    private List<QuestCategory> questCategories;
 
     /** 画像 */
     @Column(name = "image_path", nullable = false)

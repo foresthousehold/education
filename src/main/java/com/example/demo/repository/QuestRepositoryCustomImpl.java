@@ -23,12 +23,16 @@ public class QuestRepositoryCustomImpl implements QuestRepositoryCustom{
     @Override
     public List<Quest> search(SearchCriteria searchCriteria) {
 
-        final String findQueryHead = "select q from Quest q"
-                + " inner join fetch q.dish d";
+        final String findQueryHead = "select distinct q from Quest q"
+                + " inner join q.dish d"
+                + " inner join q.questCategories qc"
+                + " inner join qc.category c";
 
         StringBuilder dishQuery = new StringBuilder()
             // .append(" where q.deleteFlg = false")
-            .append(" where d.id = ").append(QueryUtil.nullSafeQuery(searchCriteria.getDishId(), SearchCriteria.DISH_ID_KEY));
+            .append(" where ").append(QueryUtil.optionalQuery(SearchCriteria.DISH_ID_KEY, "d.id = :dishId"))
+            .append(QueryUtil.createQuery(SearchCriteria.CATEGORY_ID_1_KEY, "c.id = :categoryId1"));
+            // .append(" or ").append(QueryUtil.optionalQuery(SearchCriteria.CATEGORY_ID_2_KEY, "c.id = :categoryId2)"))
 
         final String findQueryStr = new StringBuilder(findQueryHead).append(dishQuery.toString()).toString();
 

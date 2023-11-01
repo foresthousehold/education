@@ -35,10 +35,6 @@ public class AnswerChoice extends BaseEntity{
     @Column(name = "advice", nullable = false)
     private String advice;
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
     public Question getQuestion() {
         return question;
     }

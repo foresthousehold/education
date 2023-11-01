@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layouts/layout::head('クエスト選択画面', ~{::link}, ~{script})">
+<head th:replace="layouts/layout::head('ランキング画面', ~{::link}, ~{script})">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/course.css">
   <link rel="stylesheet" href="/css/rank/rank.css">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
   <div th:replace="layouts/layout::header('ランキング画面')"></div>
   <div class="main">
-    <div class="container-fluid" style="padding-left: 0;">
-      <div class="sidebar col-md-1">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link active" th:href="@{/course/select}">
-              コース
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">
-              ランキング
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="container-fluid">
       <div class="row">
+        <div class="sidebar col-md-1">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link active" th:href="@{/course/select}">
+                コース
+              </a>
+            </li>
+          </ul>
+        </div>
         <div class="col-md-3"></div>
         <div class="col-md-7">
           <div class="d-flex justify-content-center">
@@ -39,7 +31,8 @@
                     <img th:if="${stat.index == 0}" src="/images/rank/one.png" style="height: 100px; width: 100px;">
                     <img th:if="${stat.index == 1}" src="/images/rank/two.png" style="height: 100px; width: 100px;">
                     <img th:if="${stat.index == 2}" src="/images/rank/three.png" style="height: 100px; width: 100px;">
-                    <span th:unless="${stat.index == 0 || stat.index == 1 || stat.index == 2}" th:text="${stat.index+1}"></span>
+                    <span th:unless="${stat.index == 0 || stat.index == 1 || stat.index == 2}"
+                      th:text="${stat.index+1}"></span>
                   </td>
                   <td class="align-middle text-center"><img class="user-rank-icon"
                       src="https://lh6.googleusercontent.com/-ElTWDe7lJGM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcRxTOorRK1et7a390RxKO-znT_Xw/s120/photo.jpg">
@@ -52,7 +45,7 @@
             </table>
           </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
       </div>
     </div>
   </div>

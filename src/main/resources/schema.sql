@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS experience;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS quest_category;
 
 
 -- ユーザマスタのテーブル作成
@@ -135,7 +136,6 @@ CREATE TABLE experience (
     DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
 );
 
-
 -- 料理テーブル
 CREATE TABLE dish (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -149,3 +149,11 @@ CREATE TABLE category (
     name VARCHAR(255) NOT NULL,
     DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
 );
+
+-- クエスト分類テーブル
+CREATE TABLE quest_category (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    quest_id BIGINT,
+    category_id BIGINT,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+)
