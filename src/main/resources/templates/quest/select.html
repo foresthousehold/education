@@ -80,19 +80,19 @@
           </th:block>
           <div class="border rounded p-3">
             <div class="row">
-              <th:block th:each="quest : ${quests}">
+              <th:block th:each="form : ${questForms}">
                 <div class="col-md-3">
                   <div class="card">
-                    <img class="card-img-top" th:src="${quest.imagePath}">
+                    <img class="card-img-top" th:src="${form.quest.imagePath}">
                     <div class="card-body">
-                      <h5 class="card-title" th:text="${quest.name}"></h5>
-                      <th:block>
+                      <h5 class="card-title" th:text="${form.quest.name}"></h5>
+                      <th:block th:if="${form.extendFlg}">
                         <p class="category category-extend">継承</p>
                       </th:block>
-                      <th:block>
+                      <th:block th:if="${form.interfaceFlg}">
                         <p class="category category-interface">インターフェース</p>
                       </th:block>
-                      <a th:href="@{/quest/process/{questId}(questId=${quest.id})}" class="btn btn-primary">問題を解く</a>
+                      <a th:href="@{/quest/process/{questId}(questId=${form.quest.id})}" class="btn btn-primary">問題を解く</a>
                     </div>
                   </div>
                 </div>

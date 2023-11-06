@@ -69,6 +69,15 @@ public class QuestService {
     @Autowired
     UserRepository userRepository;
 
+    /** 継承 */
+    private static final Long EXTEND = 1L;
+
+    /** インターフェース */
+    private static final Long INTERFACE = 2L;
+
+    /** クラス */
+    private static final Long CLASS = 3L;
+
     /**
      * クイズフォームを作成します
      */
@@ -275,7 +284,16 @@ public class QuestService {
         QuestForm questForm = new QuestForm();
         // クエストからクエストカテゴリーにアクセスし、紐づくカテゴリーIDを全て取得
         List<Long> categoryIds = categoryRepository.findByCategoryId(quest.getId());
+        questForm.setQuest(quest);
 
+        categoryIds.stream().forEach(id -> {
+            if (id == EXTEND) {
+                questForm.setExtendFlg(true);
+            }
+            if (id == INTERFACE) {
+                questForm.setInterfaceFlg(true);
+            }
+        });
         return questForm;
     }
 }

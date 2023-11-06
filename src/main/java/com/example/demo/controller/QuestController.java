@@ -76,8 +76,11 @@ public class QuestController {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchForm searchForm = questService.createSearchForm();
+        final List<Quest> quests = questRepository.findAll();
+        final List<QuestForm> questForms = quests.stream().map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
 
         model.addAttribute("searchForm", searchForm);
+        model.addAttribute("questForms", questForms);
         model.addAttribute("quests", questRepository.findAll());
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());
@@ -108,7 +111,7 @@ public class QuestController {
                 .map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
 
         model.addAttribute("searchForm", searchForm2);
-        // model.addAttribute("questForms", questForms);
+        model.addAttribute("questForms", questForms);
         model.addAttribute("quests", questRepository.search(searchCriteria));
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("level", user.getLevel());

@@ -7,7 +7,7 @@ import com.example.demo.entity.Quest;
  */
 public class QuestForm {
 
-    /** クエスト一覧 */
+    /** クエスト */
     private Quest quest;
 
     /** 継承フラグ */
@@ -20,7 +20,7 @@ public class QuestForm {
         return quest;
     }
 
-    public void setQuests(Quest quest) {
+    public void setQuest(Quest quest) {
         this.quest = quest;
     }
 

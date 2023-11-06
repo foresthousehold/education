@@ -13,3 +13,7 @@
     border: solid 3px blue;
     width: 140px;
 }
+
+.card-body {
+    min-height: 200px;
+}
