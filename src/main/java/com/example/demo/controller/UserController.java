@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,9 +55,10 @@ public class UserController {
     /**
      * ユーザ登録をします。
      * @return ログイン画面
+     * @throws IOException
      */
     @PostMapping("/create/user")
-    public String create(@Validated UserForm userForm, BindingResult result) {
+    public String create(@Validated UserForm userForm, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             return create(userForm);
         }

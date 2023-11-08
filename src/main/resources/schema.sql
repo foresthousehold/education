@@ -21,7 +21,7 @@ CREATE TABLE user (
     username VARCHAR(20) NOT NULL COMMENT 'ユーザー名',
     password VARCHAR(100) COMMENT 'パスワード',
     total_experience int DEFAULT 0 COMMENT '累積経験値',
-    level int NOT NULL COMMENT 'レベル',
+    level int DEFAULT 0 COMMENT 'レベル',
     DELETE_FLG boolean DEFAULT '0' NOT NULL
 ) COMMENT 'ユーザマスタ';
 

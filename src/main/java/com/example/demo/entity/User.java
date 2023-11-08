@@ -62,6 +62,4 @@ public class User extends BaseEntity{
     public void setLevel(Long level) {
         this.level = level;
     }
-
-    
 }
