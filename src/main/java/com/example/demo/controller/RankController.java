@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +15,7 @@ import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 
 @Controller
 public class RankController {
@@ -24,22 +26,25 @@ public class RankController {
     @Autowired 
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
+
     /**
      * ランキング画面を表示します。
      * @param model モデル
      * @return コース選択画面
+     * @throws IOException
      */
     @GetMapping("/rank")
     public String rank(
         @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) {
+        Model model) throws IOException {
 
         User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         List<User> users = userRepository.findAllSortByLevel();
 
         model.addAttribute("users", users);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
+        model.addAttribute("profileForm", userService.createProfileForm(user));  
 
         return "rank/select";
     }

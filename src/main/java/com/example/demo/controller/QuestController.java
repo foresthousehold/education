@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,6 +38,7 @@ import com.example.demo.repository.QuestionRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WordRepository;
 import com.example.demo.service.QuestService;
+import com.example.demo.service.UserService;
 
 @Controller
 @RequestMapping("/quest")
@@ -61,18 +63,22 @@ public class QuestController {
     UserRepository userRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     WordRepository wordRepository;
 
     /**
      * クエスト選択画面を表示します。
      * 
      * @param model モデル
+     * @throws IOException
      */
     @GetMapping("/select/{courseId}")
     public String selectQuest(
             @PathVariable(name = "courseId") Long courseId,
             @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) {
+            Model model) throws IOException {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchForm searchForm = questService.createSearchForm();
@@ -81,10 +87,8 @@ public class QuestController {
 
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("questForms", questForms);
+        model.addAttribute("profileForm", userService.createProfileForm(user));
         model.addAttribute("quests", questRepository.findAll());
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
-
         return "quest/select";
     }
 
@@ -95,12 +99,13 @@ public class QuestController {
      * @param searchForm     検索フォーム
      * @param model          モデル
      * @return クエスト検索結果画面
+     * @throws IOException
      */
     @GetMapping("/search-result")
     public String search(
             @AuthenticationPrincipal AccountDetails accountDetails,
             SearchForm searchForm,
-            Model model) {
+            Model model) throws IOException {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
@@ -113,8 +118,7 @@ public class QuestController {
         model.addAttribute("searchForm", searchForm2);
         model.addAttribute("questForms", questForms);
         model.addAttribute("quests", questRepository.search(searchCriteria));
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
+        model.addAttribute("profileForm", userService.createProfileForm(user));  
 
         return "/quest/select";
     }
@@ -123,12 +127,13 @@ public class QuestController {
      * プロセス画面を表示します。
      * 
      * @return プロセス画面
+     * @throws IOException
      */
     @GetMapping("process/{questId}")
     public String process(
             @PathVariable(name = "questId") Long questId,
             @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) {
+            Model model) throws IOException {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
 
@@ -138,8 +143,7 @@ public class QuestController {
 
         model.addAttribute("courseId", courseId);
         model.addAttribute("processes", processes);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
+        model.addAttribute("profileForm", userService.createProfileForm(user));  
 
         return "process/select";
     }
@@ -148,12 +152,13 @@ public class QuestController {
      * 問題画面を表示します。
      * 
      * @param model モデル
+     * @throws IOException
      */
     @GetMapping("/{processId}")
     public String getQuest(
             @PathVariable(name = "processId") Long processId,
             Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) {
+            @AuthenticationPrincipal AccountDetails accountDetails) throws IOException {
         // クエスト選択された時、クエストIDに紐づく大問の一つ目を表示
         // formを作ってsetして返す
         // ①getされた時は必ず一番初めの大問を表示する
@@ -173,8 +178,7 @@ public class QuestController {
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", user.getTotalExperience());
         model.addAttribute("experience", experience);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
+        model.addAttribute("profileForm", userService.createProfileForm(user));  
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";
@@ -184,6 +188,7 @@ public class QuestController {
      * 正誤判定をします
      * 
      * @param model モデル
+     * @throws IOException
      */
     @PostMapping("/{processId}")
     public String postQuest(
@@ -192,7 +197,7 @@ public class QuestController {
             ProblemForm problemForm,
             RedirectAttributes redirectAttributes,
             Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) {
+            @AuthenticationPrincipal AccountDetails accountDetails) throws IOException {
 
         // アカウント詳細IDからユーザを取得
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
@@ -235,8 +240,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", true);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
-            model.addAttribute("userName", user.getUsername());
-            model.addAttribute("level", user.getLevel());
+            model.addAttribute("profileForm", userService.createProfileForm(user));  
             model.addAttribute("unSelectedFlg", false);
             return "quest/quest";
         }
@@ -260,8 +264,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", false);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
-            model.addAttribute("userName", user.getUsername());
-            model.addAttribute("level", user.getLevel());
+            model.addAttribute("profileForm", userService.createProfileForm(user));  
             model.addAttribute("unSelectedFlg", true);
 
             return "quest/quest";
@@ -275,8 +278,7 @@ public class QuestController {
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", totalExperience);
         model.addAttribute("experience", experience);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("level", user.getLevel());
+        model.addAttribute("profileForm", userService.createProfileForm(user));  
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";

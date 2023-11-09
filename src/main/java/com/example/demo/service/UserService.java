@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.form.ProfileForm;
 import com.example.demo.model.form.UserForm;
 import com.example.demo.repository.UserRepository;
 
@@ -31,6 +34,10 @@ public class UserService {
     /** プロフィール画像の保存拡張子 */
     @Value("${image.extract}")
     private String imgExtract;
+
+    /** プロフィール画像のデフォルト画像の保管先フォルダ */
+    @Value("${image.default}")
+    private String imgDefault;
 
     /**
      * ユーザを作成します。
@@ -70,5 +77,47 @@ public class UserService {
         entity.setDeleteFlg(false);
 
         return entity;
+    }
+
+    /**
+     * プロフィールフォームを作成します
+     * @throws IOException
+     */
+    public ProfileForm createProfileForm(User user) throws IOException {
+
+            // ProfileFormに必要なデータをセットする
+            ProfileForm profileForm = new ProfileForm();
+            profileForm.setUserName(user.getUsername());
+            profileForm.setLevel(Optional.ofNullable(user.getLevel()).isEmpty() ? 1L : user.getLevel());
+            profileForm.setProfileIcon("data:image/jpg;base64," + outPutImage(user.getUsername()));
+
+            return profileForm;
+    }
+
+    /** 
+     * プロフィールアイコンを出力します 
+     * @throws IOException
+     */
+    public String outPutImage(String userName) throws IOException {
+        // ファイルの検索
+        Path path = searchImagePath(userName);
+
+        // ファイルの読み込み
+        byte[] byteImg = Files.readAllBytes(path);
+
+        return Base64.getEncoder().encodeToString(byteImg);
+    }
+
+    /**
+     * ユーザIDに紐づくプロフィール画像のパスを検索する。
+     * 未登録の場合はデフォルトの画像パスを返す。
+     */
+    public Path searchImagePath(String userName) {
+        String targetFileName = userName + imgExtract;
+
+        // フルパスの作成
+        Path targetPath = Path.of(imgFolder, targetFileName);
+
+        return Files.exists(targetPath) ? targetPath : Path.of(imgFolder, imgDefault + imgExtract);
     }
 }

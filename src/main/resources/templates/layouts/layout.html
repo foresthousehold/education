@@ -21,16 +21,15 @@
       <div class="row">
         <h2 class="col-5 col-lg-5 font-weight-bold mt-2" th:text="${headerName}"></h2>
         <label class="col-5 col-lg-5"></label>
-        <div class="row col-2 col-lg-2">
-          <div class="img-fluid mr-2">
-            <img class="user-icon"
-              src="https://lh6.googleusercontent.com/-ElTWDe7lJGM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcRxTOorRK1et7a390RxKO-znT_Xw/s120/photo.jpg">
+        <div class="row col-2 col-lg-2" th:with="form=${profileForm}">
+          <div class="img-fluid mr-1">
+            <img class="user-icon" th:src="${form.profileIcon}">
           </div>
           <div class="nav-item dropdown">
             <div class="user-name nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink"
               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span th:text="${userName}" style="font-size: large;">ユーザ名</span>
-              <span th:text="'(' + 'Lv.' + ${level} + ')'" style="font-size: large;">レベル</span>
+              <span th:text="${form.userName}" style="font-size: large;">ユーザ名</span>
+              <span th:text="'(' + 'Lv.' + ${form.level} + ')'" style="font-size: large;">レベル</span>
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <form th:action="@{/logout}" method="post">
