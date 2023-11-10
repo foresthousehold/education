@@ -39,7 +39,7 @@ public class CourseController {
     @GetMapping("/select")
     public String select(
         @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) throws IOException {
+        Model model) throws Exception {
 
         final User user =  userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         

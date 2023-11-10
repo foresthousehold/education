@@ -58,7 +58,7 @@ public class UserController {
      * @throws IOException
      */
     @PostMapping("/create/user")
-    public String create(@Validated UserForm userForm, BindingResult result) throws IOException {
+    public String create(@Validated UserForm userForm, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             return create(userForm);
         }

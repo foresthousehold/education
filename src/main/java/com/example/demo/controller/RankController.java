@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.User;
+import com.example.demo.model.form.RankForm;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -23,7 +25,7 @@ public class RankController {
     @Autowired
     CourseRepository courseRepository;
 
-    @Autowired 
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -31,21 +33,43 @@ public class RankController {
 
     /**
      * ランキング画面を表示します。
+     * 
      * @param model モデル
      * @return コース選択画面
      * @throws IOException
+     * @throws Exception
      */
     @GetMapping("/rank")
     public String rank(
-        @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) throws IOException {
+            @AuthenticationPrincipal AccountDetails accountDetails,
+            Model model) {
+        try {
+            // ここにファイルや入出力関連の処理があると仮定
+            // 例: Files.readAllLinesや、InputStream/OutputStreamの利用など
 
-        User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        List<User> users = userRepository.findAllSortByLevel();
+            User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+            List<User> users = userRepository.findAllSortByLevel();
+            // ユーザごとにランクフォームを作成する
+            List<RankForm> rankForms = users.stream().map(u -> {
+                try {
+                    return userService.createRankForm(u);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    throw new EntityNotFoundException();
+                }
+            })
+                    .collect(Collectors.toList());
 
-        model.addAttribute("users", users);
-        model.addAttribute("profileForm", userService.createProfileForm(user));  
+            model.addAttribute("rankForms", rankForms);
+            model.addAttribute("profileForm", userService.createProfileForm(user));
 
-        return "rank/select";
+            return "rank/select";
+        } catch (IOException e) {
+            // IOExceptionが発生した場合の処理を記述
+            // 例外をキャッチして適切な処理を行うか、ログに出力するなど
+            return "error"; // エラーが発生した場合に遷移するページを指定
+        }
     }
+
 }

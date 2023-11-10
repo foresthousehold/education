@@ -26,7 +26,7 @@
           <div class="d-flex justify-content-center">
             <table class="table table-striped">
               <tbody>
-                <tr th:each="user, stat : ${users}" th:class="'user-' + ${stat.index+1}">
+                <tr th:each="form, stat : ${rankForms}" th:class="'user-' + ${stat.index+1}">
                   <td class="align-middle">
                     <img th:if="${stat.index == 0}" src="/images/rank/one.png" style="height: 100px; width: 100px;">
                     <img th:if="${stat.index == 1}" src="/images/rank/two.png" style="height: 100px; width: 100px;">
@@ -34,12 +34,11 @@
                     <span th:unless="${stat.index == 0 || stat.index == 1 || stat.index == 2}"
                       th:text="${stat.index+1}"></span>
                   </td>
-                  <td class="align-middle text-center"><img class="user-rank-icon"
-                      src="https://lh6.googleusercontent.com/-ElTWDe7lJGM/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcRxTOorRK1et7a390RxKO-znT_Xw/s120/photo.jpg">
+                  <td class="align-middle text-center"><img class="user-rank-icon" th:src="${form.profileIcon}">
                   </td>
-                  <td class="user-name align-middle" th:text="${user.username}"></td>
-                  <td class="user-level align-middle" th:text="Lv. + ${user.level}"></td>
-                  <td class="user-totalExperience align-middle" th:text="${user.totalExperience} + EXP"></td>
+                  <td class="user-name align-middle" th:text="${form.userName}"></td>
+                  <td class="user-level align-middle" th:text="Lv. + ${form.level}"></td>
+                  <td class="user-totalExperience align-middle" th:text="${form.totalExperience} + EXP"></td>
                 </tr>
               </tbody>
             </table>

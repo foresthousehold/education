@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
 import com.example.demo.model.form.ProfileForm;
+import com.example.demo.model.form.RankForm;
 import com.example.demo.model.form.UserForm;
 import com.example.demo.repository.UserRepository;
 
@@ -44,11 +45,12 @@ public class UserService {
      * 
      * @param userForm
      * @return
+     * @throws IOException
      */
     @Transactional
     public User createUser(UserForm userForm) throws IOException {
 
-        if(!userForm.getAccountIcon().isEmpty()) {
+        if (!userForm.getAccountIcon().isEmpty()) {
             // 保存する画像ファイルパスの設定
             // ファイルパス: ユーザネーム+.jpg
             var saveFileName = userForm.getUserName() + imgExtract;
@@ -81,21 +83,23 @@ public class UserService {
 
     /**
      * プロフィールフォームを作成します
+     * 
      * @throws IOException
      */
     public ProfileForm createProfileForm(User user) throws IOException {
 
-            // ProfileFormに必要なデータをセットする
-            ProfileForm profileForm = new ProfileForm();
-            profileForm.setUserName(user.getUsername());
-            profileForm.setLevel(Optional.ofNullable(user.getLevel()).isEmpty() ? 1L : user.getLevel());
-            profileForm.setProfileIcon("data:image/jpg;base64," + outPutImage(user.getUsername()));
+        // ProfileFormに必要なデータをセットする
+        ProfileForm profileForm = new ProfileForm();
+        profileForm.setUserName(user.getUsername());
+        profileForm.setLevel(Optional.ofNullable(user.getLevel()).isEmpty() ? 1L : user.getLevel());
+        profileForm.setProfileIcon("data:image/jpg;base64," + outPutImage(user.getUsername()));
 
-            return profileForm;
+        return profileForm;
     }
 
-    /** 
-     * プロフィールアイコンを出力します 
+    /**
+     * プロフィールアイコンを出力します
+     * 
      * @throws IOException
      */
     public String outPutImage(String userName) throws IOException {
@@ -113,11 +117,28 @@ public class UserService {
      * 未登録の場合はデフォルトの画像パスを返す。
      */
     public Path searchImagePath(String userName) {
+        // ファイル名の作成
         String targetFileName = userName + imgExtract;
 
         // フルパスの作成
         Path targetPath = Path.of(imgFolder, targetFileName);
 
         return Files.exists(targetPath) ? targetPath : Path.of(imgFolder, imgDefault + imgExtract);
+    }
+
+    /**
+     * ランクフォームを作成します
+     * 
+     * @throws IOException
+     */
+    public RankForm createRankForm(User user) throws IOException {
+        RankForm rankForm = new RankForm();
+
+        rankForm.setUserName(user.getUsername());
+        rankForm.setLevel(Optional.ofNullable(user.getLevel()).isEmpty() ? 1L : user.getLevel());
+        rankForm.setTotalExperience(user.getTotalExperience());
+        rankForm.setProfileIcon("data:image/jpg;base64," + outPutImage(user.getUsername()));
+
+        return rankForm;
     }
 }

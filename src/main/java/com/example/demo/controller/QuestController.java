@@ -78,7 +78,7 @@ public class QuestController {
     public String selectQuest(
             @PathVariable(name = "courseId") Long courseId,
             @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) throws IOException {
+            Model model) throws Exception {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchForm searchForm = questService.createSearchForm();
@@ -105,7 +105,7 @@ public class QuestController {
     public String search(
             @AuthenticationPrincipal AccountDetails accountDetails,
             SearchForm searchForm,
-            Model model) throws IOException {
+            Model model) throws Exception {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
@@ -133,7 +133,7 @@ public class QuestController {
     public String process(
             @PathVariable(name = "questId") Long questId,
             @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) throws IOException {
+            Model model) throws Exception {
 
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
 
@@ -158,7 +158,7 @@ public class QuestController {
     public String getQuest(
             @PathVariable(name = "processId") Long processId,
             Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) throws IOException {
+            @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
         // クエスト選択された時、クエストIDに紐づく大問の一つ目を表示
         // formを作ってsetして返す
         // ①getされた時は必ず一番初めの大問を表示する
@@ -197,7 +197,7 @@ public class QuestController {
             ProblemForm problemForm,
             RedirectAttributes redirectAttributes,
             Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) throws IOException {
+            @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
 
         // アカウント詳細IDからユーザを取得
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
