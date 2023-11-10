@@ -112,5 +112,20 @@ $(document).ready(function () {
         displayDate.setFullYear(displayDate.getFullYear() + 1);
         showCalender(displayDate);
     });
+});
 
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        dayCellContent: function (e) {
+            e.dayNumberText = e.dayNumberText.replace('日', '');
+        },
+        locale: 'ja',
+        height: 'auto',
+        title: 'ログイン日時',
+        navLinks: true,
+        editable: true,
+        initialView: 'dayGridMonth',
+    });
+    calendar.render();
 });

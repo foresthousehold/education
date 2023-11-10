@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/course.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.css">
 </head>
 
 <body>
@@ -40,7 +41,8 @@
           </div>
         </div>
         <div class="col-md-3">
-          <div class="carender-area">
+          <div id="calendar"></div>
+          <!-- <div class="carender-area">
             <div class="calender-header text-center">
               <label id="year-month-label" class="font-weight-bold h3"></label>
               <div class="buttn-group mb-2 row">
@@ -51,12 +53,14 @@
                 <div class="btn btn-secondary proceed-year btn-sm col-2">&gt&gt</div>
               </div>
             </div>
-          </div>
-          <div class="calender-body" id="calender-body"></div>
+          </div> -->
+          <!-- <div class="calender-body" id="calender-body"></div> -->
         </div>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.js"></script>
+
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="/js/course.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
