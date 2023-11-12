@@ -1,17 +1,22 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.entity.base.BaseEntity;
 
 /**
- *  利用者
+ * 利用者
  */
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +35,11 @@ public class User extends BaseEntity{
     /** レベル */
     @Column(name = "level", nullable = false)
     private Long level;
+
+    /** ユーザログイン */
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = UserLogin.class, mappedBy = "user")
+    private List<UserLogin> userLogins;
 
     public String getUsername() {
         return username;
@@ -61,5 +71,13 @@ public class User extends BaseEntity{
 
     public void setLevel(Long level) {
         this.level = level;
+    }
+
+    public List<UserLogin> getUserLogins() {
+        return userLogins;
+    }
+
+    public void setUserLogins(List<UserLogin> userLogins) {
+        this.userLogins = userLogins;
     }
 }

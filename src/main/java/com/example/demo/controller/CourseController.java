@@ -15,6 +15,7 @@ import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.CourseService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -24,7 +25,10 @@ public class CourseController {
     @Autowired
     CourseRepository courseRepository;
 
-    @Autowired 
+    @Autowired
+    CourseService courseService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -32,17 +36,20 @@ public class CourseController {
 
     /**
      * コース選択画面を表示します。
+     * 
      * @param model モデル
      * @return コース選択画面
      * @throws IOException
      */
     @GetMapping("/select")
     public String select(
-        @AuthenticationPrincipal AccountDetails accountDetails,
-        Model model) throws Exception {
+            @AuthenticationPrincipal AccountDetails accountDetails,
+            Model model) throws Exception {
 
-        final User user =  userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        
+        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
+
+        // ユーザ情報からユーザログインにログイン日時を保存する。
+        courseService.updateUserLogin(user);
         model.addAttribute("profileForm", userService.createProfileForm(user));
         model.addAttribute("courses", courseRepository.findAll());
 

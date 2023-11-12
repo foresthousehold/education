@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS user_login;
 DROP TABLE IF EXISTS word;
 DROP TABLE IF EXISTS problem_word;
 DROP TABLE IF EXISTS image;
@@ -24,6 +25,14 @@ CREATE TABLE user (
     level int DEFAULT 0 COMMENT 'レベル',
     DELETE_FLG boolean DEFAULT '0' NOT NULL
 ) COMMENT 'ユーザマスタ';
+
+-- ユーザログインのテーブル作成
+CREATE Table user_login (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    user_id BIGINT COMMENT 'ユーザID',
+    login_date DATE COMMENT 'ログイン日時',
+    DELETE_FLG boolean DEFAULT '0' NOT NULL
+) COMMENT 'ユーザログインマスタ';
 
 -- 用語マスタのテーブル作成
 CREATE TABLE word (

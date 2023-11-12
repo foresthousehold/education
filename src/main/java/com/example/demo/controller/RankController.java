@@ -54,7 +54,6 @@ public class RankController {
                 try {
                     return userService.createRankForm(u);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                     throw new EntityNotFoundException();
                 }

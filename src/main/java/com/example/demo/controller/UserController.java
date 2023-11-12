@@ -23,11 +23,12 @@ public class UserController {
     @Autowired
     CourseRepository courseRepository;
 
-    @Autowired 
+    @Autowired
     UserRepository userRepository;
 
     /**
      * ログイン画面を表示します
+     * 
      * @return ログイン画面
      */
     @GetMapping("/login")
@@ -45,15 +46,17 @@ public class UserController {
 
     /**
      * ユーザ登録画面を表示します。
+     * 
      * @return ユーザ登録画面
      */
     @GetMapping("/create/user")
-    public String create(@ModelAttribute UserForm userForm){
+    public String create(@ModelAttribute UserForm userForm) {
         return "/user/create";
     }
 
     /**
      * ユーザ登録をします。
+     * 
      * @return ログイン画面
      * @throws IOException
      */
@@ -67,5 +70,5 @@ public class UserController {
 
         return "login";
     }
-    
+
 }

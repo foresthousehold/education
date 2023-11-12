@@ -8,6 +8,11 @@ INSERT INTO user (username, password, total_experience, level) VALUES ('ユー�
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ7', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 200, 2);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ8', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 100, 1);
 
+-- ユーザログインのテストデータ
+INSERT INTO user_login (user_id, login_date) values (1, '2023-10-31');
+INSERT INTO user_login (user_id, login_date) values (1, '2023-11-01');
+INSERT INTO user_login (user_id, login_date) values (1, '2023-11-02');
+
 -- 用語のテストデータ
 INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
 VALUES ('インターフェース', 'Interface',
