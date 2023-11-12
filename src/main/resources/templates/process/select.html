@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <div th:replace="layouts/layout::header('プロセス画面')"></div>
+  <div th:replace="layouts/layout::header('Process')"></div>
   <div class="main">
     <div class="container-fluid">
       <div class="row">
@@ -16,17 +16,17 @@
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/course/select}">
-                コース
+                Course
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/quest/select/{courseId}(courseId=${courseId})}">
-                クエスト
+                QUest
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/rank}">
-                ランキング
+                Ranking
               </a>
             </li>
           </ul>
@@ -44,7 +44,7 @@
                 <div class="card-body">
                   <h5 class="card-title" th:text="${process.processName}"></h5>
                   <a th:href="@{/quest/{processId}(processId=${process.id})}" class="btn btn-primary"
-                    th:data-value=${process.accessFlg}>問題を解く</a>
+                    th:data-value=${process.accessFlg}>Answer</a>
                 </div>
               </div>
             </th:block>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div th:replace="layouts/layout::header('クエスト選択画面')"></div>
+  <div th:replace="layouts/layout::header('Quest')"></div>
   <div class="main">
     <div class="container-fluid">
       <div class="row">
@@ -19,12 +19,12 @@
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/course/select}">
-                コース
+                Course
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/rank}">
-                ランキング
+                Ranking
               </a>
             </li>
           </ul>
@@ -87,12 +87,13 @@
                     <div class="card-body">
                       <h5 class="card-title" th:text="${form.quest.name}"></h5>
                       <th:block th:if="${form.extendFlg}">
-                        <p class="category category-extend">継承</p>
+                        <p class="category category-extend">Inheritance</p>
                       </th:block>
                       <th:block th:if="${form.interfaceFlg}">
-                        <p class="category category-interface">インターフェース</p>
+                        <p class="category category-interface">Interface</p>
                       </th:block>
-                      <a th:href="@{/quest/process/{questId}(questId=${form.quest.id})}" class="btn btn-primary">問題を解く</a>
+                      <a th:href="@{/quest/process/{questId}(questId=${form.quest.id})}"
+                        class="btn btn-primary">問題を解く</a>
                     </div>
                   </div>
                 </div>
