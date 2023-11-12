@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.UserLoginRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.UserService;
@@ -30,6 +31,9 @@ public class CourseController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserLoginRepository userLoginRepository;
 
     @Autowired
     UserService userService;
@@ -52,6 +56,7 @@ public class CourseController {
         courseService.updateUserLogin(user);
         model.addAttribute("profileForm", userService.createProfileForm(user));
         model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("dates", userLoginRepository.findByUserId(user.getId()));
 
         return "course/select";
     }
