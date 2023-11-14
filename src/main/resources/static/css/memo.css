@@ -1,0 +1,21 @@
+.main {
+	margin-top: 5%;
+}
+
+.sidebar {
+	overflow-y: scroll;
+	height: 86%;
+}
+
+.container .memo-detail .content {
+	height: 500px;
+	width: 97%;
+	font-size: 1rem;
+	color: var(--primary-text-color);
+	border: solid 0.5px #e1dfdf;
+}
+
+.container .memo-detail .content textarea {
+	height: 100%;
+	width: 100%;
+}

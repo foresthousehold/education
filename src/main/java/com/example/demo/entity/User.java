@@ -36,6 +36,11 @@ public class User extends BaseEntity {
     @Column(name = "level", nullable = false)
     private Long level;
 
+    /** メモ一覧 */
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = Memo.class, mappedBy = "user")
+    private List<Memo> memos;
+
     /** ユーザログイン */
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE }, fetch = FetchType.LAZY, targetEntity = UserLogin.class, mappedBy = "user")
@@ -79,5 +84,13 @@ public class User extends BaseEntity {
 
     public void setUserLogins(List<UserLogin> userLogins) {
         this.userLogins = userLogins;
+    }
+
+    public List<Memo> getMemos() {
+        return memos;
+    }
+
+    public void setMemos(List<Memo> memos) {
+        this.memos = memos;
     }
 }

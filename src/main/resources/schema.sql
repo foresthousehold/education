@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS experience;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS quest_category;
-
+DROP TABLE IF EXISTS memo;
 
 -- ユーザマスタのテーブル作成
 CREATE TABLE user (
@@ -165,4 +165,15 @@ CREATE TABLE quest_category (
     quest_id BIGINT,
     category_id BIGINT,
     DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
-)
+);
+
+-- メモテーブル
+CREATE TABLE memo (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL COMMENT 'タイトル', 
+    content VARCHAR(255) NOT NULL COMMENT 'コンテンツ',
+    created_date DATE COMMENT '作成日',
+    edited_date DATE COMMENT '編集日',
+    user_id BIGINT DEFAULT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
