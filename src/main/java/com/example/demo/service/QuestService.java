@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -250,9 +250,11 @@ public class QuestService {
     @Transactional
     public void updateAccessFlg(Long processId) {
         // Todo: Optional型に修正
-        final Process process = processRepository.findById(processId).orElseThrow(EntityNotFoundException::new);
-        process.setAccessFlg(true);
-        processRepository.save(process);
+        final Optional<Process> process = processRepository.findById(processId);
+        if (process.isPresent()) {
+            process.get().setAccessFlg(true);
+            processRepository.save(process.get());
+        }
     }
 
     /**
