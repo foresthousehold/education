@@ -6,8 +6,8 @@
     padding: 0%;
     height: 100%;
     position: absolute;
-    z-index: 1;
-    background-color: aqua;
+    /* z-index: 1; */
+    background-color: rgb(112, 177, 242);
 }
 
 .element-course {

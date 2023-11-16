@@ -6,78 +6,133 @@
 		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 	<link href="/css/memo.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/course.css">
 </head>
 
 <body>
 	<div th:replace="layouts/layout::header('Memo')"></div>
-	<div class="main">
-		<div class="container">
-			<div class="header">
-				<div class="row">
-					<div class="col-md-12 text-right">
+	<div class="main" style="margin-top: 50px;">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="sidebar col-md-1 font-weight-bold">
+					<ul class="nav">
+						<li class="nav-item">
+							<a class="nav-link active h5" th:href="@{/course/select}">
+								Course
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-11 offset-1">
+					<div class="text-right mb-4">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#entryModal"><i
-								class="fa-solid fa-pen"></i>新規作成</button>
-						<!-- /** メモ登録モーダル */-->
-						<!-- モーダル -->
-						<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-							aria-hidden="true">
-							<form th:action="@{/memo/create}" method="post">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Create Memo</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+								class="fas fa-pen"></i>新規作成</button>
+					</div>
+					<!-- /** メモ登録モーダル */-->
+					<!-- モーダル -->
+					<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<form th:action="@{/memo/create}" method="post">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Create Memo</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body text-left">
+										<div class="form-group">
+											<label for="title" class="col-form-label">Title</label>
+											<input type="text" class="form-control" id="title" th:field="${modalMemoForm.title}">
 										</div>
-										<div class="modal-body text-left">
-											<div class="form-group">
-												<label for="title" class="col-form-label">Title</label>
-												<input type="text" class="form-control" id="title" th:field="${memoForm.title}">
-											</div>
-											<div class="form-group text-left">
-												<label for="content" class="col-form-label">Content</label>
-												<textarea class="form-control" id="content" th:field="${memoForm.content}" rows="10"
-													cols="50"></textarea>
-											</div>
+										<div class="form-group text-left">
+											<label for="content" class="col-form-label">Content</label>
+											<textarea class="form-control" id="content" th:field="${modalMemoForm.content}" rows="10"
+												cols="50"></textarea>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-											<button type="submit" class="btn btn-primary">Save</button>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- モーダル終わり -->
+					<!-- /** メモ編集モーダル */-->
+					<!-- モーダル -->
+					<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<form th:action="@{/memo/edit/{memoId}(memoId=${memoForm.id})}" method="get">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Edit Memo</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body text-left">
+										<div class="form-group">
+											<label for="title" class="col-form-label">Title</label>
+											<input type="text" class="form-control" id="title" th:field="${memoForm.title}">
+										</div>
+										<div class="form-group text-left">
+											<label for="content" class="col-form-label">Content</label>
+											<textarea class="form-control" id="content" th:field="${memoForm.content}" rows="10"
+												cols="50"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- モーダル終わり -->
+					<div class="row">
+						<div class="col-md-6 border" style="overflow-y: scroll; height: 600px;">
+							<div class="sidebar-items" th:each="memo : ${memos}" th:object="${memo}">
+								<div class="borderbox">
+									<div class="row my-3">
+										<div class="memo-title col-md-5 text-left font-weight-bold d-flex align-items-center pb-0">
+											<label th:text="*{title}"></label>
+										</div>
+										<div class="memo-action col-md-6 text-right pr-0">
+											<a class="memo-detail btn btn-secondary col-3 ml-1"
+												th:href="@{/memo/{memoId}(memoId=${memo.id})}">詳細</a>
+											<button class="memo-edit btn btn-secondary col-3 ml-1"
+												th:href="@{/memo/edit/{memoId}(memoId=${memo.id})}" data-toggle="modal"
+												data-target="#editModal">編集</button>
+											<a class="memo-delete btn btn-secondary col-3 ml-1"
+												th:href="@{/memo/delete/{memoId}(memoId=${memo.id})}">削除</a>
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="memo-detail col-md-6 border">
+							<th:block th:if="${memoForm}">
+								<form th:action="@{/memo/edit/{memoId}(memoId=${memoForm.id})}" method="get">
+									<div class="title font-weight-bold my-3">
+										<h2 class="detail-title" th:text="${memoForm.title}" readonly>タイトル</h2>
+									</div>
+									<div class="content">
+										<textarea class="form-control content" th:text="${memoForm.content}" rows="20" cols="50"
+											readonly>内容</textarea>
+									</div>
+									<th:block th:if="${editFlg}">
+										<button type="submit">保存する</button>
+									</th:block>
+							</th:block>
 							</form>
 						</div>
-						<!-- モーダル終わり -->
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="sidebar col-md-5" style="overflow-y: scroll; height: 600px;">
-					<div class="sidebar-items" th:each="memo : ${memos}" th:object="${memo}">
-						<div class="row">
-							<div class="memo-title col-md-5 text-left m-1">
-								<p th:text="*{title}"></p>
-							</div>
-							<div class="memo-action col-md-6">
-								<a class="memo-detail btn btn-primary mr-2" th:href="@{/memo/{memoId}(memoId=${memo.id})}">詳細</a>
-								<a class="memo-edit btn btn-primary mr-2" href="">編集</a>
-								<a class="memo-delete btn btn-primary" href="">削除</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<th:block th:if="${memoDetail}">
-					<div class="memo-detail col-md-6">
-						<div class="title">
-							<p class="detail-title" th:text="${memoDetail.title}">タイトル</p>
-						</div>
-						<div class="content">
-							<textarea class="form-control content" th:text="${memoDetail.content}">内容</textarea>
-						</div>
-					</div>
-				</th:block>
 			</div>
 		</div>
 	</div>

@@ -1,7 +1,6 @@
 package com.example.demo.model.form;
 
-public class MemoForm {
-
+public class ModalMemoForm {
     /** メモID */
     private Long id;
 

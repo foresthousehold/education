@@ -20,8 +20,10 @@ import com.example.demo.entity.AccountDetails;
 import com.example.demo.entity.Memo;
 import com.example.demo.entity.User;
 import com.example.demo.model.form.MemoForm;
+import com.example.demo.model.form.ModalMemoForm;
 import com.example.demo.repository.MemoRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.MemoService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -29,6 +31,9 @@ import com.example.demo.service.UserService;
 public class MemoController {
     @Autowired
     MemoRepository memoRepository;
+
+    @Autowired
+    MemoService memoService;
 
     @Autowired
     UserRepository userRepository;
@@ -49,12 +54,15 @@ public class MemoController {
         final List<Memo> memos = Optional.ofNullable(memoRepository.findByUserId(user.getId())).orElse(null);
 
         // パラメータからIdに紐づくメモを取得します
-        final Memo memoDetail = memos.stream().filter(m -> m.getId().equals(memoId)).findFirst().orElse(null);
+        final Memo memo = memos.stream().filter(m -> m.getId().equals(memoId)).findFirst().orElse(null);
+
+        // メモフォームの作成
+        final MemoForm memoForm = memoService.createMemoForm(memo);
 
         model.addAttribute("memos", memos);
-        model.addAttribute("memoDetail", memoDetail);
+        model.addAttribute("memoForm", memoForm);
         model.addAttribute("profileForm", userService.createProfileForm(user));
-        model.addAttribute("memoForm", new MemoForm());
+        model.addAttribute("modalMemoForm", new ModalMemoForm());
         return "memo/memo";
     }
 
@@ -76,6 +84,31 @@ public class MemoController {
         memo.setDeleteFlg(false);
         memoRepository.save(memo);
 
+        return "redirect:/memo/";
+    }
+
+    /**
+     * メモを削除します
+     */
+    @GetMapping("/delete/{memoId}")
+    @Transactional
+    public String deleteMemo(@PathVariable(name = "memoId", required = false) Long memoId) {
+        Memo memo = memoRepository.findById(memoId).orElseThrow(EntityNotFoundException::new);
+        memo.setDeleteFlg(true);
+        memoRepository.save(memo);
+
+        return "redirect:/memo/";
+    }
+
+    /**
+     * メモの編集をします。
+     */
+    @GetMapping("/edit/{memoId}")
+    @Transactional
+    public String editMemo(@PathVariable(name = "memoId", required = false) Long memoId, MemoForm memoForm) {
+        Memo memo = memoRepository.findById(memoId).orElseThrow(EntityNotFoundException::new);
+        // メモの更新をします。
+        memoService.updateMemo(memo, memoForm);
         return "redirect:/memo/";
     }
 }
