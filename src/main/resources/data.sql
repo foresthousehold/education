@@ -34,61 +34,188 @@ INSERT INTO problem_word (problem_id, word_id) VALUES (2, 1);
 INSERT INTO problem_word (problem_id, word_id) VALUES (2, 2);
 
 -- コースのテストデータ
-INSERT INTO course (course_name, image_path, sort_order) VALUES ('料理コース', '/images/cook.jpg', 1);
+INSERT INTO course (course_name, image_path, sort_order) VALUES ('Cooking course', '/images/cook.jpg', 1);
 
 -- クエストのテストデータ
-INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('味噌汁', 1, 1,'/images/miso.png', '1', 1);
-INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('カレー', 1, 2,'/images/carry.png', '0', 2);
+INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('Miso soup', 1, 1,'/images/miso.png', '1', 1);
+INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order) VALUES ('Curry', 1, 2,'/images/carry.png', '0', 2);
 
 -- プロセスのテストデータ
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('豆腐とねぎを用意する', 1, 110, '/images/process/miso/miso_negi.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('豆腐とねぎを切る', 1, 220, '/images/process/miso/miso_negi.png', '0', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '1', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Cutting tofu and green onion', 1, 220, '/images/process/miso/miso_negi.png', '1', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare water and seaweed, broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 3);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Boil after add water and broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 4);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add tofu and seaweed', 1, 220, '/images/process/miso/miso_negi.png', '1', 5);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Dissolve miso after add miso', 1, 220, '/images/process/miso/miso_negi.png', '1', 6);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add the green onions and broth and mix to complete the dish', 1, 220, '/images/process/miso/miso_negi.png', '1', 7);
 
 -- 大問のテストデータ
 INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ1大問1', 1, 1);
 INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ2大問1', 2, 1);
+INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ3大問1', 3, 1);
+INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ4大問1', 4, 1);
+INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ5大問1', 5, 1);
+INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ6大問1', 6, 1);
+INSERT INTO problem (name, process_id, problem_no) VALUES ('みそ7大問1', 7, 1);
 
 -- 小問のテストデータ
+-- みそのデータ
 INSERT INTO question (problem_id, sort_order) VALUES (1, 1); 
 INSERT INTO question (problem_id, sort_order) VALUES (1, 2);
 INSERT INTO question (problem_id, sort_order) VALUES (1, 3);
 INSERT INTO question (problem_id, sort_order) VALUES (2, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (3, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (3, 2);
+INSERT INTO question (problem_id, sort_order) VALUES (3, 3);
+INSERT INTO question (problem_id, sort_order) VALUES (4, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (4, 2); 
+INSERT INTO question (problem_id, sort_order) VALUES (4, 3);
+INSERT INTO question (problem_id, sort_order) VALUES (5, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (5, 2); 
+INSERT INTO question (problem_id, sort_order) VALUES (6, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (6, 2); 
+INSERT INTO question (problem_id, sort_order) VALUES (6, 3);
+INSERT INTO question (problem_id, sort_order) VALUES (6, 4);
+INSERT INTO question (problem_id, sort_order) VALUES (7, 1); 
+INSERT INTO question (problem_id, sort_order) VALUES (7, 2); 
+INSERT INTO question (problem_id, sort_order) VALUES (7, 3);
+-- カレーのデータ
 
 -- 解答選択肢のテストデータ
+-- みそのデータ
+-- 大問１
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (1, true, 'Ingredient', '正解の選択肢です。');
+    VALUES (1, true, 'Ingredient', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (1, false, 'Tohu', '不正解です。');
+    VALUES (1, false, 'Tohu', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (1, false, 'Negi', '不正解です。');
+    VALUES (1, false, 'Negi', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (2, false, 'new Negi(false)', '不正解です。');
+    VALUES (2, false, 'new Negi(false)', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (2, true, 'new Tohu(false)', '正解の選択肢です。');
+    VALUES (2, true, 'new Tohu(false)', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (2, false, 'new Ingredient(false)', '不正解です。');
+    VALUES (2, false, 'new Ingredient(false)', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (3, true, 'new Negi(false)', '正解の選択肢です。');
+    VALUES (3, true, 'new Negi(false)', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (3, false, 'new Tohu(false)', '不正解です。');
+    VALUES (3, false, 'new Tohu(false)', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (3, false, 'new Ingredient(false)', '不正解です。');
+    VALUES (3, false, 'new Ingredient(false)', '不正解です。');
+-- 大問2
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (4, true, 'cut()', '正解の選択肢です。');
+    VALUES (4, true, 'cut()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (4, false, 'ingredient()', '不正解です。');
+    VALUES (4, false, 'ingredient()', '不正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-VALUES (4, false, 'new Cut()', '不正解です。');
+    VALUES (4, false, 'new Cut()', '不正解です。');
+-- 大問3
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (5, true, 'new Water()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (5, false, 'new Dashi()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (5, false, 'new Wakame()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (6, false, 'new Water()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (6, true, 'new Dashi()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (6, false, 'new Wakame()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (7, false, 'new Water()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (7, false, 'new Dashi()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (7, true, 'new Wakame()', '不正解です。');
+-- 大問4
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (8, true, 'Soup', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (8, false, 'BoiledSoup', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (8, false, 'Soup()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (9, true, 'water', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (9, false, 'dashi', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (10, true, 'boil()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (10, false, 'boil', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (10, false, 'Boil', '正解の選択肢です。');
+-- 大問5
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (11, true, 'tofu', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (11, false, 'Tofu', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (12, true, 'seaweed', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (12, false, 'Seaweed', '不正解です。');
+-- 大問6
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (13, true, 'Ingredient', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (13, false, 'ingredient', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (14, false, 'miso()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (14, true, 'new Miso()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (14, false, 'Miso()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (15, true, 'miso', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (15, false, 'Miso', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (16, false, 'dissolve', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (16, true, 'dissolve()', '正解の選択肢です。');
+-- 大問7
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (17, true, 'green onion', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (17, false, 'dashi', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (18, true, 'mix()', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (18, false, 'Mix()', '不正解です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (19, true, 'MisoSoup', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (19, false, 'misoSoup', '不正解です。');
+-- カレーのデータ
 
 -- 画像のテストデータ
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso1-1.png', 1, 1);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso1-2.png', 1, 2);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso2-1.png', 2, 1);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso2-2.png', 2, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso3-1.png', 3, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso3-2.png', 3, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso4-1.png', 4, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso4-2.png', 4, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso4-3.png', 4, 3);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso5-1.png', 5, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso5-2.png', 5, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso5-3.png', 5, 3);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso6-1.png', 6, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso6-2.png', 6, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso6-3.png', 6, 3);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso7-1.png', 7, 1);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso7-2.png', 7, 2);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/miso/miso7-3.png', 7, 3);
 
 -- 動画のテストデータ
 INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ1', 1);
 INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ2', 2);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ3', 3);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ4', 4);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ5', 5);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ6', 6);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ7', 7);
 
 -- 経験値のテストデータ
 INSERT INTO experience (level, need_total_experience)
