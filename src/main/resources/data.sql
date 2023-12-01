@@ -377,13 +377,13 @@ INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/c
 
 -- 動画のテストデータ
 -- 味噌汁
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ1', 1);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ2', 2);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ3', 3);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ4', 4);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ5', 5);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ6', 6);
-INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso1-1.mov', 'ビデオ7', 7);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso1.mov', 'ビデオ1', 1);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso2.mov', 'ビデオ2', 2);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso3.mov', 'ビデオ3', 3);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso4.mov', 'ビデオ4', 4);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso5.mov', 'ビデオ5', 5);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso6.mov', 'ビデオ6', 6);
+INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/miso/miso7.mov', 'ビデオ7', 7);
 -- カレー
 INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/curry/curry1.mov', 'ビデオ8', 8);
 INSERT INTO video (file_path, title, problem_id) VALUES ('/videos/curry/curry1.mov', 'ビデオ9', 9);
