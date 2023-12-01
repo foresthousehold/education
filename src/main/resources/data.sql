@@ -128,204 +128,232 @@ INSERT INTO question (problem_id, sort_order) VALUES (14, 1);
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (1, true, 'Ingredient', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (1, false, 'Tohu', '不正解です。');
+    VALUES (1, false, 'Tohu', 'TofuクラスはIngredientクラスを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (1, false, 'Negi', '不正解です。');
+    VALUES (1, false, 'Negi', 'NegiはIngredientクラスを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (2, false, 'new Negi(false)', '不正解です。');
+    VALUES (2, false, 'new Negi(false)', 'TofuとNegiは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (2, true, 'new Tohu(false)', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (2, false, 'new Ingredient(false)', '不正解です。');
-INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (3, true, 'new Negi(false)', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (3, false, 'new Tohu(false)', '不正解です。');
-INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (3, false, 'new Ingredient(false)', '不正解です。');
+    VALUES (3, false, 'new Tohu(false)', 'TofuとNegiは別オブジェクトです。インスタンスを生成できません。');
 -- 大問2
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (4, true, 'cut()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (4, false, 'ingredient()', '不正解です。');
+    VALUES (4, false, 'ingredient()', 'ingredientはメソッドではありません。オブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (4, false, 'new Cut()', '不正解です。');
+    VALUES (4, false, 'new Cut()', 'Cutはオブジェクトではありません。メソッドです。');
 -- 大問3
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (5, true, 'new Water()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (5, false, 'new Dashi()', '不正解です。');
+    VALUES (5, false, 'new Dashi()', 'DashiとWaterは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (5, false, 'new Wakame()', '不正解です。');
+    VALUES (5, false, 'new Wakame()', 'WakameとWaterは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (6, false, 'new Water()', '正解の選択肢です。');
+    VALUES (6, false, 'new Water()', 'DashiとWaterは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (6, true, 'new Dashi()', '不正解です。');
+    VALUES (6, true, 'new Dashi()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (6, false, 'new Wakame()', '不正解です。');
+    VALUES (6, false, 'new Wakame()', 'WakameとDashiは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (7, false, 'new Water()', '正解の選択肢です。');
+    VALUES (7, false, 'new Water()', 'WakameとWaterは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (7, false, 'new Dashi()', '不正解です。');
+    VALUES (7, false, 'new Dashi()', 'WakameとDashiは別オブジェクトです。インスタンスを生成できません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (7, true, 'new Wakame()', '不正解です。');
+    VALUES (7, true, 'new Wakame()', '正解の選択肢です。');
 -- 大問4
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (8, true, 'Soup', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (8, false, 'BoiledSoup', '不正解です。');
+    VALUES (8, false, 'BoiledSoup', 'BoiledSoupはSoupクラスを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (8, false, 'Soup()', '正解の選択肢です。');
+    VALUES (8, false, 'Soup()', 'BoiledSoupはSoupクラスを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (9, true, 'water', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (9, false, 'dashi', '不正解です。');
+    VALUES (9, false, 'dashi', '間違いではありませんが、waterを追加する必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (10, true, 'boil()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (10, false, 'boil', '不正解です。');
+    VALUES (10, false, 'boil', 'boilメソッドを実装する必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (10, false, 'Boil', '正解の選択肢です。');
+    VALUES (10, false, 'Boil', 'Boilクラスではなくboilメソッドを実装する必要があります。');
 -- 大問5
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (11, true, 'tofu', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (11, false, 'Tofu', '不正解です。');
+    VALUES (11, false, 'Tofu', '生成した変数名はtofuです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (12, true, 'seaweed', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (12, false, 'Seaweed', '不正解です。');
+    VALUES (12, false, 'Seaweed', '生成した変数名はseaweedです。');
 -- 大問6
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (13, true, 'Ingredient', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (13, false, 'ingredient', '不正解です。');
+    VALUES (13, false, 'ingredient', 'MisoはIngredientクラスを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (14, false, 'miso()', '不正解です。');
+    VALUES (14, false, 'miso()', 'Misoインスタンスを生成してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (14, true, 'new Miso()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (14, false, 'Miso()', '不正解です。');
+    VALUES (14, false, 'Miso()', 'Misoインスタンスを生成してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (15, true, 'miso', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (15, false, 'Miso', '不正解です。');
+    VALUES (15, false, 'Miso', '生成した変数名はmisoです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (16, false, 'dissolve', '不正解です。');
+    VALUES (16, false, 'dissolve', 'メソッドを選択してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (16, true, 'dissolve()', '正解の選択肢です。');
 -- 大問7
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (17, true, 'green onion', '正解の選択肢です。');
+    VALUES (17, true, 'negi', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (17, false, 'dashi', '不正解です。');
+    VALUES (17, false, 'dashi', '間違いではありませんが、negiを追加する必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (18, true, 'mix()', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (18, false, 'Mix()', '不正解です。');
+    VALUES (18, false, 'Mix()', 'Mixメソッドは宣言されていません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (19, true, 'MisoSoup', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (19, false, 'misoSoup', '不正解です。');
+    VALUES (19, false, 'misoSoup', 'MisoSoup型を宣言してください。');
 -- カレーのデータ
 -- 大問１
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (20, true, 'Ingredient', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (20, false, 'Tohu', '不正解です。');
+    VALUES (20, false, 'ingredient', '各素材はIngredientを継承しています。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (21, true, 'new Negi(false)', '正解の選択肢です。');
+    VALUES (21, true, 'name', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (21, false, 'new Tohu(false)', '不正解です。');
+    VALUES (21, false, 'Name', 'コンストラクタの引数を用いてください');
 -- 大問2
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (22, true, 'new Ingredient(false)', '正解の選択肢です。');
+    VALUES (22, true, 'new Carrot', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (22, false, 'new Negi(false)', '不正解です。');
+    VALUES (22, false, 'new Potato', 'CarrotとPotatoは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (23, true, 'new Tohu(false)', '正解の選択肢です。');
+    VALUES (22, false, 'new Onion', 'CarrotとOnionは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (23, false, 'new Ingredient(false)', '不正解です。');
+    VALUES (23, true, 'new Potato', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (24, true, 'new Negi(false)', '正解の選択肢です。');
+    VALUES (23, false, 'new Carrot', 'PotatoとCarrotは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (24, false, 'new Tohu(false)', '不正解です。');
+    VALUES (23, false, 'new Meat', 'PotatoとMeatは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (25, true, 'new Ingredient(false)', '正解の選択肢です。');
+    VALUES (24, true, 'new Onion', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (25, false, 'new Negi(false)', '不正解です。');
+    VALUES (24, false, 'new Potato', 'OnionとPotatoは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (26, true, 'new Tohu(false)', '正解の選択肢です。');
+    VALUES (24, false, 'new Meat', 'PotatoとMeatは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (26, false, 'new Ingredient(false)', '不正解です。');
+    VALUES (25, true, 'new Meat', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (27, true, 'new Negi(false)', '正解の選択肢です。');
+    VALUES (25, false, 'new Water', 'MeatとWaterは異なるオブジェクトです。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (27, false, 'new Tohu(false)', '不正解です。');
+    VALUES (25, false, 'new Onion', 'MeatとOnionは異なるオブジェクトです。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (26, true, 'new CurryRoux', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (26, false, 'new Carrot', 'CurryRouxとCarrotは異なるオブジェクトです。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (26, false, 'new Potato', 'CurryRouxとPotatoは異なるオブジェクトです。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (27, true, 'new Water', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (27, false, 'new Carrot', 'WaterとCarrotは異なるオブジェクトです。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (27, false, 'new Onion', 'WaterとOnionは異なるオブジェクトです。');
 -- 大問3
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (28, true, 'new Ingredient(false)', '正解の選択肢です。');
+    VALUES (28, true, 'cut', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (28, false, 'cut()', '不正解です。');
+    VALUES (28, false, 'add', 'addメソッドはCutステータスを付与しません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (29, true, 'ingredient()', '正解の選択肢です。');
+    VALUES (28, false, 'boil', 'boilメソッドはCutステータスを付与しません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (29, false, 'new Cut()', '不正解です。');
+    VALUES (29, true, '"Cut"', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (30, true, 'new Water()', '正解の選択肢です。');
+    VALUES (29, false, '"Flied"', 'cutメソッドはCutステータスを付与します。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (30, false, 'new Dashi()', '不正解です。');
+    VALUES (29, false, '"Boil"', 'cutメソッドはCutステータスを付与します。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (30, true, 'cut(i)', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (30, false, 'cut()', 'cutメソッドはIngredient型を引数に必要です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (30, false, 'cut', 'cutメソッドを選択してください。');
 -- 大問4
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (31, true, 'new Wakame()', '正解の選択肢です。');
+    VALUES (31, true, 'add', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (31, false, 'new Water()', '不正解です。');
+    VALUES (31, false, 'cut', 'Cookingインターフェースのaddメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (32, true, 'new Dashi()', '正解の選択肢です。');
+    VALUES (31, false, 'boil', 'Cookingインターフェースのaddメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (32, false, 'new Wakame()', '不正解です。');
+    VALUES (32, true, 'ingredient', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (33, true, 'new Water()', '正解の選択肢です。');
+    VALUES (32, false, 'Ingredient', '変数名がIngredientは宣言されていません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (33, false, 'new Dashi()', '不正解です。');
+    VALUES (33, true, 'add', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (33, false, 'cut', '間違いではありませんが、baseCurryに材料を追加する必要があります。');
 -- 大問5
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (34, true, 'new Wakame()', '正解の選択肢です。');
+    VALUES (34, true, 'fly', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (34, false, 'Soup', '不正解です。');
+    VALUES (34, false, 'cut', 'Cookingインターフェースのflyメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (35, true, 'BoiledSoup', '正解の選択肢です。');
+    VALUES (34, false, 'add', 'Cookingインターフェースのflyメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (35, false, 'Soup()', '不正解です。');
+    VALUES (35, true, '"Flied"', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (36, true, 'water', '正解の選択肢です。');
+    VALUES (35, false, 'Cut', '間違いではありませんが、Fliedをセットする必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (36, false, 'dashi', '不正解です。');
+    VALUES (36, true, 'fly(i)', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (36, false, 'fly()', 'flyメソッドはIngredient型を引数に必要です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (36, false, 'fly', 'flyメソッドを選択してください。');
 -- 大問6
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (37, true, 'boil()', '正解の選択肢です。');
+    VALUES (37, true, 'boil', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (37, false, 'boil', '不正解です。');
+    VALUES (37, false, 'cut', 'Cookingインターフェースのboilメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (38, true, 'Boil', '正解の選択肢です。');
+    VALUES (37, false, 'fly', 'Cookingインターフェースのboilメソッドを実装してください。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (38, false, 'tofu', '不正解です。');
+    VALUES (38, true, '"Boiled"', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (39, true, 'water', '正解の選択肢です。');
+    VALUES (38, false, '"Cut"', '間違いではありませんが、Boiledをセットする必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (39, false, 'dashi', '不正解です。');
+    VALUES (38, false, '"Flied"', '間違いではありませんが、Boiledをセットする必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (40, true, 'boil()', '正解の選択肢です。');
+    VALUES (39, true, 'curry', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (40, false, 'boil', '不正解です。');
+    VALUES (39, false, 'baseCurry', 'baseCurryという変数名は宣言されていません。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (41, true, 'Boil', '正解の選択肢です。');
+    VALUES (40, true, 'add', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (41, false, 'tofu', '不正解です。');
+    VALUES (40, false, 'boil', '間違いではありませんが、addメソッドを使用してルーを追加する必要があります。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (42, true, 'Tofu', '正解の選択肢です。');
+    VALUES (41, true, 'convertToCurry', '正解の選択肢です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (42, false, 'Tseaweedofu', '不正解です。');
+    VALUES (41, false, 'cut', 'cutメソッドは引数にIngredient型が必要です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (41, false, 'fly', 'flyメソッドは引数にIngredient型が必要です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (42, true, 'boil(i)', '正解の選択肢です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (42, false, 'boil()', 'boilメソッドはIngredient型を引数に必要です。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (42, false, 'boil', 'boilメソッドを選択してください。');
 -- 大問7
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (43, true, 'seaweed', '正解の選択肢です。');
