@@ -356,9 +356,11 @@ INSERT INTO answer_choice (question_id, correct_flg, content, advice)
     VALUES (42, false, 'boil', 'boilメソッドを選択してください。');
 -- 大問7
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (43, true, 'seaweed', '正解です。');
+    VALUES (43, true, '①', '正解です。');
 INSERT INTO answer_choice (question_id, correct_flg, content, advice)
-    VALUES (43, false, 'Tofu', '不正解です。');
+    VALUES (43, false, '②', '人参、ジャガイモ、玉ねぎ、肉、水は２回煮込まれています。');
+INSERT INTO answer_choice (question_id, correct_flg, content, advice)
+    VALUES (43, false, '③', 'カレーのルーを追加した後に、煮込まれています。<br >もう一度コードを確認してみましょう。');
 
 
 -- 画像のテストデータ
@@ -402,6 +404,9 @@ INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/c
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-2.png', 14, 2);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-3.png', 14, 3);
 INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-4.png', 14, 4);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-5.png', 14, 5);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-6.png', 14, 6);
+INSERT INTO image (file_path, problem_id, sort_order) VALUES ('/images/english/curry/curry6-7.png', 14, 7);
 
 -- 動画のテストデータ
 -- 味噌汁
