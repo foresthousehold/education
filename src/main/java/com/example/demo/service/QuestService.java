@@ -149,6 +149,7 @@ public class QuestService {
             questionForm.setChoicedAnswerId(problemForm.getQuestionForms().get(i).getChoicedAnswerId());
             questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
             questionForm.setCorrectFlg(true);
+            questionForm.setFirstDisplayFlg(false);
 
             // 小問IDに紐づく全ての解答選択肢を取得する
             final List<AnswerChoice> answerChoices = answerChoiceRepository.findByQuestionId(question.getId());
@@ -189,6 +190,7 @@ public class QuestService {
             QuestionForm questionForm = new QuestionForm();
             questionForm.setQuestionId(question.getId());
             questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
+            questionForm.setFirstDisplayFlg(true);
             questionForms.add(questionForm);
         }
 

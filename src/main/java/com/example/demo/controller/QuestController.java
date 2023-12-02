@@ -44,252 +44,264 @@ import com.example.demo.service.UserService;
 @RequestMapping("/quest")
 public class QuestController {
 
-    @Autowired
-    ProblemRepository problemRepository;
+        @Autowired
+        ProblemRepository problemRepository;
 
-    @Autowired
-    ProcessRepository processRepository;
+        @Autowired
+        ProcessRepository processRepository;
 
-    @Autowired
-    QuestService questService;
+        @Autowired
+        QuestService questService;
 
-    @Autowired
-    QuestRepository questRepository;
+        @Autowired
+        QuestRepository questRepository;
 
-    @Autowired
-    QuestionRepository questionRepository;
+        @Autowired
+        QuestionRepository questionRepository;
 
-    @Autowired
-    UserRepository userRepository;
+        @Autowired
+        UserRepository userRepository;
 
-    @Autowired
-    UserService userService;
+        @Autowired
+        UserService userService;
 
-    @Autowired
-    WordRepository wordRepository;
+        @Autowired
+        WordRepository wordRepository;
 
-    /**
-     * クエスト選択画面を表示します。
-     * 
-     * @param model モデル
-     * @throws IOException
-     */
-    @GetMapping("/select/{courseId}")
-    public String selectQuest(
-            @PathVariable(name = "courseId") Long courseId,
-            @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) throws Exception {
+        /**
+         * クエスト選択画面を表示します。
+         * 
+         * @param model モデル
+         * @throws IOException
+         */
+        @GetMapping("/select/{courseId}")
+        public String selectQuest(
+                        @PathVariable(name = "courseId") Long courseId,
+                        @AuthenticationPrincipal AccountDetails accountDetails,
+                        Model model) throws Exception {
 
-        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        final SearchForm searchForm = questService.createSearchForm();
-        final List<Quest> quests = questRepository.findAll();
-        final List<QuestForm> questForms = quests.stream().map(q -> questService.createQuestForm(q))
-                .collect(Collectors.toList());
+                final User user = userRepository.findById(accountDetails.getId())
+                                .orElseThrow(EntityNotFoundException::new);
+                final SearchForm searchForm = questService.createSearchForm();
+                final List<Quest> quests = questRepository.findAll();
+                final List<QuestForm> questForms = quests.stream().map(q -> questService.createQuestForm(q))
+                                .collect(Collectors.toList());
 
-        model.addAttribute("searchForm", searchForm);
-        model.addAttribute("questForms", questForms);
-        model.addAttribute("profileForm", userService.createProfileForm(user));
-        model.addAttribute("quests", questRepository.findAll());
-        return "quest/select";
-    }
-
-    /**
-     * クエスト選択検索結果画面を表示します
-     * 
-     * @param accountDetails 利用者詳細
-     * @param searchForm     検索フォーム
-     * @param model          モデル
-     * @return クエスト検索結果画面
-     * @throws IOException
-     */
-    @GetMapping("/search-result")
-    public String search(
-            @AuthenticationPrincipal AccountDetails accountDetails,
-            SearchForm searchForm,
-            Model model) throws Exception {
-
-        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
-        final SearchForm searchForm2 = questService.createSearchForm();
-        final List<Quest> quests = questRepository.search(searchCriteria);
-
-        final List<QuestForm> questForms = quests.stream()
-                .map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
-
-        model.addAttribute("searchForm", searchForm2);
-        model.addAttribute("questForms", questForms);
-        model.addAttribute("quests", questRepository.search(searchCriteria));
-        model.addAttribute("profileForm", userService.createProfileForm(user));
-
-        return "/quest/select";
-    }
-
-    /**
-     * プロセス画面を表示します。
-     * 
-     * @return プロセス画面
-     * @throws IOException
-     */
-    @GetMapping("process/{questId}")
-    public String process(
-            @PathVariable(name = "questId") Long questId,
-            @AuthenticationPrincipal AccountDetails accountDetails,
-            Model model) throws Exception {
-
-        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-
-        // クエストIDからクエストに紐づく全てのプロセスを取得
-        final List<Process> processes = processRepository.findByQuestId(questId);
-        Long courseId = processes.get(0).getQuest().getCourse().getId();
-
-        model.addAttribute("courseId", courseId);
-        model.addAttribute("processes", processes);
-        model.addAttribute("profileForm", userService.createProfileForm(user));
-
-        return "process/select";
-    }
-
-    /**
-     * 問題画面を表示します。
-     * 
-     * @param model モデル
-     * @throws IOException
-     */
-    @GetMapping("/{processId}")
-    public String getQuest(
-            @PathVariable(name = "processId") Long processId,
-            Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
-        // クエスト選択された時、クエストIDに紐づく大問の一つ目を表示
-        // formを作ってsetして返す
-        // ①getされた時は必ず一番初めの大問を表示する
-        // 大問フォーム一覧を作成
-        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-        // final Long problemId = problemRepository.findByProcessId(processId);
-        ProblemForm problemForm = questService.createFirstProblemForm(processId);
-        final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
-                .orElseThrow(EntityNotFoundException::new);
-
-        // 大問IDから全ての用語を取得します。
-        final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
-
-        model.addAttribute("words", words);
-        model.addAttribute("processId", processId);
-        model.addAttribute("problemForm", problemForm);
-        model.addAttribute("displayExperienceFlg", true);
-        model.addAttribute("totalExperience", user.getTotalExperience());
-        model.addAttribute("experience", experience);
-        model.addAttribute("profileForm", userService.createProfileForm(user));
-        model.addAttribute("unSelectedFlg", false);
-
-        return "quest/quest";
-    }
-
-    /**
-     * 正誤判定をします
-     * 
-     * @param model モデル
-     * @throws IOException
-     */
-    @PostMapping("/{processId}")
-    public String postQuest(
-            @PathVariable(name = "processId") Long processId,
-            @RequestParam("problemNo") Long problemNo,
-            ProblemForm problemForm,
-            RedirectAttributes redirectAttributes,
-            Model model,
-            @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
-
-        // アカウント詳細IDからユーザを取得
-        final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
-
-        Problem problem = problemRepository.findByProcessIdAndProblemNo(processId, problemNo).orElseThrow();
-
-        final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
-                .orElseThrow(EntityNotFoundException::new);
-
-        // ユーザ情報からユーザの保持経験値を取得する
-        final Long totalExperience = user.getTotalExperience();
-
-        // 大問が取得できなかった場合、全ての大問が時終わったのでクエスト選択画面に遷移
-        if (problem.equals(null)) {
-            return "quest/select";
+                model.addAttribute("searchForm", searchForm);
+                model.addAttribute("questForms", questForms);
+                model.addAttribute("profileForm", userService.createProfileForm(user));
+                model.addAttribute("quests", questRepository.findAll());
+                return "quest/select";
         }
 
-        // 大問から紐づく小問一覧を取得
-        List<Question> questions = questionRepository.findByProblemId(problem.getId());
+        /**
+         * クエスト選択検索結果画面を表示します
+         * 
+         * @param accountDetails 利用者詳細
+         * @param searchForm     検索フォーム
+         * @param model          モデル
+         * @return クエスト検索結果画面
+         * @throws IOException
+         */
+        @GetMapping("/search-result")
+        public String search(
+                        @AuthenticationPrincipal AccountDetails accountDetails,
+                        SearchForm searchForm,
+                        Model model) throws Exception {
 
-        // 取得した小問一覧から小問ごとに小問IDに紐づく正答の選択肢を取得
-        Map<Long, Long> answerChoiceIdMap = questService.createAnswerChoiceIdMap(questions);
+                final User user = userRepository.findById(accountDetails.getId())
+                                .orElseThrow(EntityNotFoundException::new);
+                final SearchCriteria searchCriteria = questService.createSearchCriteria(searchForm);
+                final SearchForm searchForm2 = questService.createSearchForm();
+                final List<Quest> quests = questRepository.search(searchCriteria);
 
-        List<QuestionForm> questionForms = problemForm.getQuestionForms();
+                final List<QuestForm> questForms = quests.stream()
+                                .map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
 
-        // 正誤判定
-        boolean isAllCorrect = questionForms.stream()
-                .allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
+                model.addAttribute("searchForm", searchForm2);
+                model.addAttribute("questForms", questForms);
+                model.addAttribute("quests", questRepository.search(searchCriteria));
+                model.addAttribute("profileForm", userService.createProfileForm(user));
 
-        // questionFormごとに回して、正答と一致しないものを抽出する。
-        List<QuestionForm> filteredQuestionForms = questionForms.stream()
-                .filter(q -> !answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()))
-                .collect(Collectors.toList());
-
-        // 大問IDから全ての用語を取得します。
-        final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
-
-        // 一つでも間違いがあった場合、formにアドバイスをセット
-        if (!isAllCorrect) {
-            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
-                    filteredQuestionForms);
-
-            // 再度同じ大問を表示する
-            model.addAttribute("words", words);
-            model.addAttribute("problemForm", adviceProblemForm);
-            model.addAttribute("displayExperienceFlg", true);
-            model.addAttribute("totalExperience", totalExperience);
-            model.addAttribute("experience", experience);
-            model.addAttribute("profileForm", userService.createProfileForm(user));
-            model.addAttribute("unSelectedFlg", false);
-            return "quest/quest";
+                return "/quest/select";
         }
 
-        // 表示する大問があるかどうか判定するための変数(次の問題)
-        Optional<Problem> nextProblem = problemRepository.findByProcessIdAndProblemNo(processId,
-                problem.getProblemNo() + 1);
+        /**
+         * プロセス画面を表示します。
+         * 
+         * @return プロセス画面
+         * @throws IOException
+         */
+        @GetMapping("process/{questId}")
+        public String process(
+                        @PathVariable(name = "questId") Long questId,
+                        @AuthenticationPrincipal AccountDetails accountDetails,
+                        Model model) throws Exception {
 
-        if (nextProblem.isEmpty()) {
-            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
-                    filteredQuestionForms);
+                final User user = userRepository.findById(accountDetails.getId())
+                                .orElseThrow(EntityNotFoundException::new);
 
-            // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
-            questService.updateUserLevel(user, experience);
+                // クエストIDからクエストに紐づく全てのプロセスを取得
+                final List<Process> processes = processRepository.findByQuestId(questId);
+                Long courseId = processes.get(0).getQuest().getCourse().getId();
 
-            // processIDからプロセスを取得し、フラグをtrueにする
-            questService.updateAccessFlg(processId + 1);
+                model.addAttribute("courseId", courseId);
+                model.addAttribute("processes", processes);
+                model.addAttribute("profileForm", userService.createProfileForm(user));
 
-            // 再度同じ大問を表示する
-            model.addAttribute("words", words);
-            model.addAttribute("problemForm", adviceProblemForm);
-            model.addAttribute("displayExperienceFlg", false);
-            model.addAttribute("totalExperience", totalExperience);
-            model.addAttribute("experience", experience);
-            model.addAttribute("profileForm", userService.createProfileForm(user));
-            model.addAttribute("unSelectedFlg", true);
-
-            return "quest/quest";
+                return "process/select";
         }
 
-        // 全て正答だった場合、次の大問用のformをセット
-        // 正誤対象の大問ID+1で一覧から取得しformにセット
-        model.addAttribute("words", words);
-        model.addAttribute("processId", processId);
-        model.addAttribute("problemForm", questService.createProblemForm(processId, problem.getProblemNo() + 1));
-        model.addAttribute("displayExperienceFlg", true);
-        model.addAttribute("totalExperience", totalExperience);
-        model.addAttribute("experience", experience);
-        model.addAttribute("profileForm", userService.createProfileForm(user));
-        model.addAttribute("unSelectedFlg", false);
+        /**
+         * 問題画面を表示します。
+         * 
+         * @param model モデル
+         * @throws IOException
+         */
+        @GetMapping("/{processId}")
+        public String getQuest(
+                        @PathVariable(name = "processId") Long processId,
+                        Model model,
+                        @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
+                // クエスト選択された時、クエストIDに紐づく大問の一つ目を表示
+                // formを作ってsetして返す
+                // ①getされた時は必ず一番初めの大問を表示する
+                // 大問フォーム一覧を作成
+                final User user = userRepository.findById(accountDetails.getId())
+                                .orElseThrow(EntityNotFoundException::new);
+                // final Long problemId = problemRepository.findByProcessId(processId);
+                ProblemForm problemForm = questService.createFirstProblemForm(processId);
+                final Process process = processRepository.findById(processId).orElseThrow(EntityNotFoundException::new);
+                final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
+                                .orElseThrow(EntityNotFoundException::new);
 
-        return "quest/quest";
-    }
+                // 大問IDから全ての用語を取得します。
+                final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
+
+                model.addAttribute("words", words);
+                model.addAttribute("processId", processId);
+                model.addAttribute("questId", process.getQuest().getId());
+                model.addAttribute("problemForm", problemForm);
+                model.addAttribute("displayExperienceFlg", true);
+                model.addAttribute("totalExperience", user.getTotalExperience());
+                model.addAttribute("experience", experience);
+                model.addAttribute("profileForm", userService.createProfileForm(user));
+                model.addAttribute("unSelectedFlg", false);
+
+                return "quest/quest";
+        }
+
+        /**
+         * 正誤判定をします
+         * 
+         * @param model モデル
+         * @throws IOException
+         */
+        @PostMapping("/{processId}")
+        public String postQuest(
+                        @PathVariable(name = "processId") Long processId,
+                        @RequestParam("problemNo") Long problemNo,
+                        @RequestParam("questId") Long questId,
+                        ProblemForm problemForm,
+                        RedirectAttributes redirectAttributes,
+                        Model model,
+                        @AuthenticationPrincipal AccountDetails accountDetails) throws Exception {
+
+                // アカウント詳細IDからユーザを取得
+                final User user = userRepository.findById(accountDetails.getId())
+                                .orElseThrow(EntityNotFoundException::new);
+
+                Problem problem = problemRepository.findByProcessIdAndProblemNo(processId, problemNo).orElseThrow();
+
+                final Long experience = processRepository.findById(processId).map(q -> q.getExperience())
+                                .orElseThrow(EntityNotFoundException::new);
+
+                // ユーザ情報からユーザの保持経験値を取得する
+                final Long totalExperience = user.getTotalExperience();
+
+                // 大問が取得できなかった場合、全ての大問が時終わったのでクエスト選択画面に遷移
+                if (problem.equals(null)) {
+                        return "quest/select";
+                }
+
+                // 大問から紐づく小問一覧を取得
+                List<Question> questions = questionRepository.findByProblemId(problem.getId());
+
+                // 取得した小問一覧から小問ごとに小問IDに紐づく正答の選択肢を取得
+                Map<Long, Long> answerChoiceIdMap = questService.createAnswerChoiceIdMap(questions);
+
+                List<QuestionForm> questionForms = problemForm.getQuestionForms();
+
+                // 正誤判定
+                boolean isAllCorrect = questionForms.stream()
+                                .allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
+
+                // questionFormごとに回して、正答と一致しないものを抽出する。
+                List<QuestionForm> filteredQuestionForms = questionForms.stream()
+                                .filter(q -> !answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()))
+                                .collect(Collectors.toList());
+
+                // 大問IDから全ての用語を取得します。
+                final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
+
+                // 一つでも間違いがあった場合、formにアドバイスをセット
+                if (!isAllCorrect) {
+                        ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
+                                        filteredQuestionForms);
+
+                        // 再度同じ大問を表示する
+                        model.addAttribute("words", words);
+                        model.addAttribute("questId", questId);
+                        model.addAttribute("problemForm", adviceProblemForm);
+                        model.addAttribute("displayExperienceFlg", true);
+                        model.addAttribute("totalExperience", totalExperience);
+                        model.addAttribute("experience", experience);
+                        model.addAttribute("profileForm", userService.createProfileForm(user));
+                        model.addAttribute("unSelectedFlg", false);
+                        return "quest/quest";
+                }
+
+                // 表示する大問があるかどうか判定するための変数(次の問題)
+                Optional<Problem> nextProblem = problemRepository.findByProcessIdAndProblemNo(processId,
+                                problem.getProblemNo() + 1);
+
+                if (nextProblem.isEmpty()) {
+                        ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
+                                        filteredQuestionForms);
+
+                        // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
+                        questService.updateUserLevel(user, experience);
+
+                        // processIDからプロセスを取得し、フラグをtrueにする
+                        questService.updateAccessFlg(processId + 1);
+
+                        // 再度同じ大問を表示する
+                        model.addAttribute("words", words);
+                        model.addAttribute("questId", questId);
+                        model.addAttribute("problemForm", adviceProblemForm);
+                        model.addAttribute("displayExperienceFlg", false);
+                        model.addAttribute("totalExperience", totalExperience);
+                        model.addAttribute("experience", experience);
+                        model.addAttribute("profileForm", userService.createProfileForm(user));
+                        model.addAttribute("unSelectedFlg", true);
+
+                        return "quest/quest";
+                }
+
+                // 全て正答だった場合、次の大問用のformをセット
+                // 正誤対象の大問ID+1で一覧から取得しformにセット
+                model.addAttribute("words", words);
+                model.addAttribute("processId", processId);
+                model.addAttribute("questId", questId);
+                model.addAttribute("problemForm",
+                                questService.createProblemForm(processId, problem.getProblemNo() + 1));
+                model.addAttribute("displayExperienceFlg", true);
+                model.addAttribute("totalExperience", totalExperience);
+                model.addAttribute("experience", experience);
+                model.addAttribute("profileForm", userService.createProfileForm(user));
+                model.addAttribute("unSelectedFlg", false);
+
+                return "quest/quest";
+        }
 
 }

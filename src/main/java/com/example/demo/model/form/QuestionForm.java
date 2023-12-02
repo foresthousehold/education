@@ -22,6 +22,9 @@ public class QuestionForm {
     /** 正解フラグ */
     private boolean correctFlg;
 
+    /** 初期表示フラグ */
+    private boolean firstDisplayFlg;
+
     public Long getQuestionId() {
         return questionId;
     }
@@ -62,4 +65,11 @@ public class QuestionForm {
         this.correctFlg = correctFlg;
     }
 
+    public boolean isFirstDisplayFlg() {
+        return firstDisplayFlg;
+    }
+
+    public void setFirstDisplayFlg(boolean firstDisplayFlg) {
+        this.firstDisplayFlg = firstDisplayFlg;
+    }
 }

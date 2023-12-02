@@ -17,6 +17,7 @@
       <form th:action="@{/quest/{processId}(processId=${processId})}" th:object="${problemForm}" method="post">
         <input type="hidden" th:field="*{problemNo}">
         <input type="hidden" th:value="${processId}">
+        <input type="hidden" th:value="${questId}" id="questId" name="questId">
         <!-- レベルアップに必要な経験値-->
         <input type="hidden" th:value="100" id="step">
         <!-- 獲得経験値-->
@@ -41,11 +42,13 @@
                   <div class="question-area">
                     <input type="hidden" th:field="*{questionForms[__${questionStat.index}__].questionId}">
                     <div class="row mt-3">
-                      <div th:if="${question.correctFlg}" class="mr-2 d-flex align-items-center">
-                        <i class="fa-regular fa-circle fa-2x"></i>
+                      <div th:if="${question.correctFlg && !question.firstDisplayFlg}"
+                        class="mr-2 d-flex align-items-center">
+                        <i class="fa-regular fa-circle fa-2x" id="shape"></i>
                       </div>
-                      <div th:unless="${question.correctFlg}" class="mr-2 d-flex align-items-center">
-                        <i class="fa-solid fa-x fa-2x"></i>
+                      <div th:if="${!question.correctFlg && !question.firstDisplayFlg}"
+                        class="mr-2 d-flex align-items-center" style="display: none;">
+                        <i class="fa-solid fa-x fa-2x" id="shape"></i>
                       </div>
                       <div class="question d-flex align-items-center">
                         <div class="btn btn-outline-dark" th:text="${questionStat.count}">A</div>
@@ -104,7 +107,8 @@
 
         <!-- 次へボタン -->
         <div class="d-flex justify-content-center mt-2">
-          <button class="btn btn-primary btn-lg submit-btn" type="submit" th:if="${displayExperienceFlg}">next</button>
+          <button class="btn btn-primary btn-lg submit-btn" id="next-btn" type="submit"
+            th:if="${displayExperienceFlg}">next</button>
           <button class="btn btn-primary btn-lg experience-give-btn" id="end-answer" type="button"
             th:if="${!displayExperienceFlg}" data-toggle="modal" data-target="#settingModal">解答終了</button>
           <!-- 経験値付与モーダル*/-->
@@ -125,7 +129,9 @@
                   </div>
                   <div id="levelup" class="not-display">Level up!</div>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-primary" th:href="@{/course/select}" role="button">GO to course</a>
+                    <a class="btn btn-primary" th:href="@{/quest/process/{questId}(questId=${questId})}"
+                      role="button">GO to Process
+                    </a>
                   </div>
                 </div>
               </div>
