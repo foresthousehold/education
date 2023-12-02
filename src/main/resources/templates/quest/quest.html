@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/question.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
@@ -40,11 +41,17 @@
                   <div class="question-area">
                     <input type="hidden" th:field="*{questionForms[__${questionStat.index}__].questionId}">
                     <div class="row mt-3">
-                      <div class="question">
+                      <div th:if="${question.correctFlg}" class="mr-2 d-flex align-items-center">
+                        <i class="fa-regular fa-circle fa-2x"></i>
+                      </div>
+                      <div th:unless="${question.correctFlg}" class="mr-2 d-flex align-items-center">
+                        <i class="fa-solid fa-x fa-2x"></i>
+                      </div>
+                      <div class="question d-flex align-items-center">
                         <div class="btn btn-outline-dark" th:text="${questionStat.count}">A</div>
                       </div>
-                      <div class="col-md-6">
-                        <select class="form-select" aria-label="select option"
+                      <div class="col-md-6 d-flex align-items-center">
+                        <select class=" form-select" aria-label="select option"
                           th:field="*{questionForms[__${questionStat.index}__].choicedAnswerId}"
                           th:disabled="${unSelectedFlg}">
                           <option value="" selected>------</option>
@@ -52,10 +59,10 @@
                             <option th:value="${answerChoice.id}" th:text="${answerChoice.content}"></option>
                           </th:block>
                         </select>
-                        <div class="answerChoice-advice">
-                          <div th:text=${question.advice}></div>
-                        </div>
                       </div>
+                    </div>
+                    <div class="answerChoice-advice">
+                      <div th:text=${question.advice}></div>
                     </div>
                   </div>
                 </th:block>

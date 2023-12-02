@@ -114,7 +114,8 @@ public class QuestService {
     /**
      * 受け取ったクエストIDとproblemFormから値を受け取って返す。
      */
-    public ProblemForm createProblemForm(Long questId, ProblemForm problemForm) {
+    public ProblemForm createProblemForm(Long questId, ProblemForm problemForm,
+            List<QuestionForm> filteredQuestionForms) {
 
         // クエストIDに紐づく一番初めの大問を取得する
         Problem problem = problemRepository.findByProcessIdAndProblemNo(questId, problemForm.getProblemNo())
@@ -125,7 +126,7 @@ public class QuestService {
         updateProblemForm
                 .setImgPaths(problem.getImages().stream().map(i -> i.getFilePath()).collect(Collectors.toList()));
         updateProblemForm.setVideoPath(problem.getVideo().getFilePath());
-        updateProblemForm.setQuestionForms(createQuestionForms(problem.getId(), problemForm));
+        updateProblemForm.setQuestionForms(createQuestionForms(problem.getId(), problemForm, filteredQuestionForms));
 
         return updateProblemForm;
     }
@@ -133,7 +134,8 @@ public class QuestService {
     /**
      * 問題フォームを作成します
      */
-    public List<QuestionForm> createQuestionForms(Long problemId, ProblemForm problemForm) {
+    public List<QuestionForm> createQuestionForms(Long problemId, ProblemForm problemForm,
+            List<QuestionForm> filteredQuestionForms) {
         final List<QuestionForm> questionForms = new ArrayList<>();
 
         // 大問IDに紐づく全ての小問を取得する
@@ -146,6 +148,7 @@ public class QuestService {
             questionForm.setQuestionId(question.getId());
             questionForm.setChoicedAnswerId(problemForm.getQuestionForms().get(i).getChoicedAnswerId());
             questionForm.setAnswerChoiceForms(createAnswerChoiceForms(question.getId()));
+            questionForm.setCorrectFlg(true);
 
             // 小問IDに紐づく全ての解答選択肢を取得する
             final List<AnswerChoice> answerChoices = answerChoiceRepository.findByQuestionId(question.getId());
@@ -159,6 +162,15 @@ public class QuestService {
 
             questionForms.add(questionForm);
         }
+
+        List<Long> filteredQuestionFormIds = filteredQuestionForms.stream().map(q -> q.getQuestionId())
+                .collect(Collectors.toList());
+
+        // 引数のquestionFormsごと回して作成したformsの中から一致するform一覧を取得する。
+        // 取得したformsごとに正答フラグをfalseにする。
+        questionForms.stream()
+                .filter(q -> filteredQuestionFormIds.contains(q.getQuestionId()))
+                .forEach(q -> q.setCorrectFlg(false));
 
         return questionForms;
     }

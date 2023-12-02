@@ -19,6 +19,9 @@ public class QuestionForm {
     /** アドバイス */
     private String advice;
 
+    /** 正解フラグ */
+    private boolean correctFlg;
+
     public Long getQuestionId() {
         return questionId;
     }
@@ -51,5 +54,12 @@ public class QuestionForm {
         this.advice = advice;
     }
 
+    public boolean isCorrectFlg() {
+        return correctFlg;
+    }
+
+    public void setCorrectFlg(boolean correctFlg) {
+        this.correctFlg = correctFlg;
+    }
 
 }

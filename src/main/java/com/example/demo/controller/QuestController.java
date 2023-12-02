@@ -83,7 +83,8 @@ public class QuestController {
         final User user = userRepository.findById(accountDetails.getId()).orElseThrow(EntityNotFoundException::new);
         final SearchForm searchForm = questService.createSearchForm();
         final List<Quest> quests = questRepository.findAll();
-        final List<QuestForm> questForms = quests.stream().map(q -> questService.createQuestForm(q)).collect(Collectors.toList());
+        final List<QuestForm> questForms = quests.stream().map(q -> questService.createQuestForm(q))
+                .collect(Collectors.toList());
 
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("questForms", questForms);
@@ -118,7 +119,7 @@ public class QuestController {
         model.addAttribute("searchForm", searchForm2);
         model.addAttribute("questForms", questForms);
         model.addAttribute("quests", questRepository.search(searchCriteria));
-        model.addAttribute("profileForm", userService.createProfileForm(user));  
+        model.addAttribute("profileForm", userService.createProfileForm(user));
 
         return "/quest/select";
     }
@@ -143,7 +144,7 @@ public class QuestController {
 
         model.addAttribute("courseId", courseId);
         model.addAttribute("processes", processes);
-        model.addAttribute("profileForm", userService.createProfileForm(user));  
+        model.addAttribute("profileForm", userService.createProfileForm(user));
 
         return "process/select";
     }
@@ -178,7 +179,7 @@ public class QuestController {
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", user.getTotalExperience());
         model.addAttribute("experience", experience);
-        model.addAttribute("profileForm", userService.createProfileForm(user));  
+        model.addAttribute("profileForm", userService.createProfileForm(user));
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";
@@ -227,12 +228,18 @@ public class QuestController {
         boolean isAllCorrect = questionForms.stream()
                 .allMatch(q -> answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()));
 
+        // questionFormごとに回して、正答と一致しないものを抽出する。
+        List<QuestionForm> filteredQuestionForms = questionForms.stream()
+                .filter(q -> !answerChoiceIdMap.get(q.getQuestionId()).equals(q.getChoicedAnswerId()))
+                .collect(Collectors.toList());
+
         // 大問IDから全ての用語を取得します。
         final List<Word> words = wordRepository.findByProblemId(problemForm.getProblemNo());
 
         // 一つでも間違いがあった場合、formにアドバイスをセット
         if (!isAllCorrect) {
-            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm);
+            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
+                    filteredQuestionForms);
 
             // 再度同じ大問を表示する
             model.addAttribute("words", words);
@@ -240,7 +247,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", true);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
-            model.addAttribute("profileForm", userService.createProfileForm(user));  
+            model.addAttribute("profileForm", userService.createProfileForm(user));
             model.addAttribute("unSelectedFlg", false);
             return "quest/quest";
         }
@@ -250,7 +257,8 @@ public class QuestController {
                 problem.getProblemNo() + 1);
 
         if (nextProblem.isEmpty()) {
-            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm);
+            ProblemForm adviceProblemForm = questService.createProblemForm(processId, problemForm,
+                    filteredQuestionForms);
 
             // ユーザのレベルを上げます(ユーザ情報、クエストが持つ経験値)
             questService.updateUserLevel(user, experience);
@@ -264,7 +272,7 @@ public class QuestController {
             model.addAttribute("displayExperienceFlg", false);
             model.addAttribute("totalExperience", totalExperience);
             model.addAttribute("experience", experience);
-            model.addAttribute("profileForm", userService.createProfileForm(user));  
+            model.addAttribute("profileForm", userService.createProfileForm(user));
             model.addAttribute("unSelectedFlg", true);
 
             return "quest/quest";
@@ -278,7 +286,7 @@ public class QuestController {
         model.addAttribute("displayExperienceFlg", true);
         model.addAttribute("totalExperience", totalExperience);
         model.addAttribute("experience", experience);
-        model.addAttribute("profileForm", userService.createProfileForm(user));  
+        model.addAttribute("profileForm", userService.createProfileForm(user));
         model.addAttribute("unSelectedFlg", false);
 
         return "quest/quest";
