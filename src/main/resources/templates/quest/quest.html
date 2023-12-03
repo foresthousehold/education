@@ -23,8 +23,9 @@
         <!-- 獲得経験値-->
         <input type="hidden" th:value="${experience}" id="addexp" data-added="0">
         <!-- 利用者が持つ経験値-->
-        <input type="hidden" th:value="${totalExperience}" id="totalExperience" value="0">
-        <input type="hidden" th:value="${level}" id="level">
+        <input type="hidden" th:value="${totalExperience}" id="totalExperience">
+        <input type="hidden" th:value="${updateTotalExperience}" id="updateTotalExperience">
+        <input type="hidden" th:value="${profileForm.level}" id="level" name="level">
         <div class="container bg-white">
           <div class="row">
             <!-- 画面左側 -->
@@ -122,7 +123,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div id="level" th:text="'Lv.' + ${level}">0</div>
+                  <div id="level" th:text="'Lv.' + ${profileForm.level}">0</div>
                   <div id="container">
                     <div class="loader_cover loader_cover-up"></div>
                     <div class="loader_cover loader_cover-down"></div>

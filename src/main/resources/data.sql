@@ -1,5 +1,5 @@
 -- ユーザ-のデータ
-INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ1', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 800, 8);
+INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ1', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 550, 8);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ2', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 700, 7);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ3', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 600, 6);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ4', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 500, 5);
@@ -42,8 +42,8 @@ INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order)
 
 -- プロセスのテストデータ
 -- 味噌汁
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Cutting tofu and green onion', 1, 220, '/images/process/miso/miso_negi.png', '1', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare tofu and green onion', 1, 10, '/images/process/miso/miso_negi.png', '1', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Cutting tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '1', 2);
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare water and seaweed, broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 3);
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Boil after add water and broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 4);
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add tofu and seaweed', 1, 220, '/images/process/miso/miso_negi.png', '1', 5);

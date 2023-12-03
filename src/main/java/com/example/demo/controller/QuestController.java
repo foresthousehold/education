@@ -281,6 +281,7 @@ public class QuestController {
                         model.addAttribute("problemForm", adviceProblemForm);
                         model.addAttribute("displayExperienceFlg", false);
                         model.addAttribute("totalExperience", totalExperience);
+                        model.addAttribute("updateTotalExperience", user.getTotalExperience());
                         model.addAttribute("experience", experience);
                         model.addAttribute("profileForm", userService.createProfileForm(user));
                         model.addAttribute("unSelectedFlg", true);
