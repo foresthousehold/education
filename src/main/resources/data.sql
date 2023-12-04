@@ -42,20 +42,20 @@ INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order)
 
 -- プロセスのテストデータ
 -- 味噌汁
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare tofu and green onion', 1, 10, '/images/process/miso/miso_negi.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Cutting tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '1', 2);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare water and seaweed, broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 3);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Boil after add water and broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 4);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add tofu and seaweed', 1, 220, '/images/process/miso/miso_negi.png', '1', 5);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Dissolve miso after add miso', 1, 220, '/images/process/miso/miso_negi.png', '1', 6);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add the green onions and broth and mix to complete the dish', 1, 220, '/images/process/miso/miso_negi.png', '1', 7);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Prepare tofu and green onion', 1, 10, '/images/process/miso/miso_negi.png', '1', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Cutting tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '1', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Prepare water and seaweed, broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 3);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Boil after add water and broth', 1, 220, '/images/process/miso/miso_negi.png', '1', 4);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('5.Add tofu and seaweed', 1, 220, '/images/process/miso/miso_negi.png', '1', 5);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Dissolve miso after add miso', 1, 220, '/images/process/miso/miso_negi.png', '1', 6);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('7.Add the green onions and broth and mix to complete the dish', 1, 220, '/images/process/miso/miso_negi.png', '1', 7);
 -- カレー
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Prepare ingredient', 2, 110, '/images/process/miso/miso_negi.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Cutting Ingredients', 2, 220, '/images/process/miso/miso_negi.png', '1', 2);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Adding Ingredients.', 2, 220, '/images/process/miso/miso_negi.png', '1', 3);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Stir-fry ingredients', 2, 220, '/images/process/miso/miso_negi.png', '1', 4);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Add water, simmer & add roux', 2, 220, '/images/process/miso/miso_negi.png', '1', 5);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('Complete', 2, 220, '/images/process/miso/miso_negi.png', '1', 6);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Prepare ingredient', 2, 110, '/images/process/curry/1.png', '1', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Cutting Ingredients', 2, 220, '/images/process/curry/2.png', '1', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Adding Ingredients.', 2, 220, '/images/process/curry/3.png', '1', 3);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Stir-fry ingredients', 2, 220, '/images/process/curry/4.png', '1', 4);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('5.Add water, simmer & add roux', 2, 220, '/images/process/curry/5.png', '1', 5);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Complete', 2, 220, '/images/process/curry/6.png', '1', 6);
 
 -- 大問のテストデータ
 -- 味噌汁

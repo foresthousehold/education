@@ -22,12 +22,6 @@ $(() => {
       autoStyleContainer: false //自動付与のスタイルを切る
     },
     step: (_, bar) => {
-      //   // const step = Number($('#step').val()); // 1レベルに必要な経験値
-      //   // const barnum = bar.value(); // 現在の進捗バーの値に基づいて経験値を計算(※bar.valueは相対値を返す -> 0~1)
-      //   // // バーのテキストに表示させるための値: 獲得した経験値 + バーの最大値
-      //   // const exp = Number($('#addexp').attr('data-added')) + barnum;
-      //   // const totalExperience = Number($('#totalExperience').val()); // ユーザが持つ経験値を取得(初回画面表示時)
-      //   // bar.setText(exp + totalExperience + 'exp'); //テキストの数値
       const updateTotalExperience = Number($('#updateTotalExperience').val()); // ユーザが持つ経験値を取得(初回画面表示時)
 
       bar.setText(updateTotalExperience + 'exp'); //テキストの数値
@@ -57,7 +51,7 @@ $(() => {
     const userLevelElement = $("#level");
     let userLevel = parseInt(userLevelElement.val());
 
-    // gainExperience: 獲得経験値、 step: 1レベルに必要な経験値
+    // gainExperience: 獲得経験値、 step: 1レベルに必要な経験値, currentProgressValue: 現在のバーの進捗状況
     async function progress1(gainExperience, step, currentProgressValue) {
       // 100 - 現在の進捗数 => 進めた進捗数
       // 獲得経験値 - 進めた進捗数 => 残獲得経験値
@@ -67,28 +61,25 @@ $(() => {
       return await new Promise((resolve) => {
         bar.animate(1, () => resolve(restGainExperience));
       });
-      // return restProgressValue;
     }
 
-    // gainExperience: 獲得経験値、 step: 1レベルに必要な経験値
     async function progress2() {
       return await new Promise(() => {
         bar.animate(1, () => resolve(0));
       });
-      // return 0;
     }
 
-    // gainExperience: 獲得経験値、 step: 1レベルに必要な経験値
-    async function progress3(test1) {
+    // value: 獲得経験値 + 現在のバーの進捗数
+    async function progress3(value) {
       await new Promise((resolve) => {
-        bar.animate(test1 / 100, () => resolve()); //バーを描画する割合を指定します
+        bar.animate(value / 100, () => resolve()); //バーを描画する割合を指定します
       });
     }
 
     // gainExperience: 獲得経験値
-    async function progress4(test) {
+    async function progress4(gainExperience) {
       await new Promise((resolve) => {
-        bar.animate(test / 100, () => resolve()); //バーを描画する割合を指定します
+        bar.animate(gainExperience / 100, () => resolve()); //バーを描画する割合を指定します
       });
     }
 
@@ -98,13 +89,14 @@ $(() => {
     // 進捗率 * 1レベルに必要な経験で現在の進捗数を取得(②)
     let currentProgressValue = progressRate * 100;
 
+    // 1または2の処理を通過したかの確認フラグ
     let flg = false;
 
     // 獲得経験値が0になるまで繰り返す
     //  (② + 獲得経験値) / 1レベルに必要な経験値 で 1以上か確かめる
-    //   もし　1以上なら(バーの末端に達するかつ獲得経験値がまだ残っている) -> プログレスバーを0にして、ユーザのレベルup, 獲得経験値 - (1レベルに必要な経験値 - ②), 進捗率を保存, 繰り返す
-    //   もし  0 なら(バーのちょうど末端に達する)　-> プログレスバーを0にして ユーザのレベルup, 進捗率を保存
-    //   それ以外なら(バーの末端に達しない) -> 進捗率を保存のみ
+    //   1: もし　1以上なら(バーの末端に達するかつ獲得経験値がまだ残っている) -> プログレスバーを0にして、ユーザのレベルup, 獲得経験値 - (1レベルに必要な経験値 - ②), 進捗率を保存, 繰り返す
+    //   2: もし  0 なら(バーのちょうど末端に達する)　-> プログレスバーを0にして ユーザのレベルup, 進捗率を保存
+    //   3: それ以外なら(バーの末端に達しない) -> 進捗率を保存のみ
 
     while (gainExperience > 0) {
 
@@ -151,8 +143,10 @@ $(() => {
         flg = true;
       } else {
         if (flg == false) {
+          // 1または2の処理を通過しなかった場合 => ユーザの保持経験値と獲得経験値の総和がプログレスバーの末端に達しなかった場合
           await progress3(gainExperience + currentProgressValue);
         } else {
+          // 1または2の処理を通過した場合 => バーの進捗処理を繰り返した後、残経験値分バーを進捗させる場合
           await progress4(gainExperience);
         }
         // 進めた分を保存しておく
