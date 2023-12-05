@@ -248,10 +248,17 @@ public class QuestService {
     @Transactional
     public void updateUserLevel(User user, Long experience) {
         final Long totalExperience = user.getTotalExperience() + experience;
-        final Experience entity = experienceRepository.findByTotalExperience(user.getTotalExperience() + experience)
-                .stream().findFirst().orElse(null);
+        final List<Experience> entityList = experienceRepository
+                .findByTotalExperience(user.getTotalExperience() + experience);
+        final Experience firstCandidate = entityList.get(0);
+        final Experience secondCandidate = entityList.get(1);
 
-        user.setLevel(entity.getLevel());
+        if (firstCandidate.getNeedTotalExperience() < totalExperience
+                && totalExperience < secondCandidate.getNeedTotalExperience()) {
+            user.setLevel(firstCandidate.getLevel());
+        } else {
+            user.setLevel(secondCandidate.getLevel());
+        }
         user.setTotalExperience(totalExperience);
         userRepository.save(user);
     }

@@ -1,10 +1,9 @@
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS user_login;
-DROP TABLE IF EXISTS word;
 DROP TABLE IF EXISTS problem_word;
+DROP TABLE IF EXISTS word;
 DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS video;
 DROP TABLE IF EXISTS answer_choice;
+DROP TABLE IF EXISTS quest_category;
 DROP TABLE IF EXISTS question;
 DROP TABLE IF EXISTS problem;
 DROP TABLE IF EXISTS process;
@@ -13,8 +12,9 @@ DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS experience;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS category;
-DROP TABLE IF EXISTS quest_category;
+DROP TABLE IF EXISTS user_login;
 DROP TABLE IF EXISTS memo;
+DROP TABLE IF EXISTS user;
 
 -- ユーザマスタのテーブル作成
 CREATE TABLE user (
@@ -31,7 +31,8 @@ CREATE Table user_login (
     id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     user_id BIGINT COMMENT 'ユーザID',
     login_date DATE COMMENT 'ログイン日時',
-    DELETE_FLG boolean DEFAULT '0' NOT NULL
+    DELETE_FLG boolean DEFAULT '0' NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 ) COMMENT 'ユーザログインマスタ';
 
 -- 用語マスタのテーブル作成
@@ -44,13 +45,27 @@ CREATE TABLE word (
     DELETE_FLG boolean DEFAULT '0' NOT NULL
 ) COMMENT '用語マスタ';
 
--- 大問用語マスタのテーブル作成
-CREATE TABLE problem_word (
-    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    problem_id BIGINT NOT NULL,
-    word_id BIGINT NOT NULL,
-    DELETE_FLG boolean DEFAULT '0' NOT NULL
-) COMMENT '大問用語マスタ';
+-- 料理テーブル
+CREATE TABLE dish (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
+
+-- 分類テーブル
+CREATE TABLE category (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
+
+-- 経験値テーブル
+CREATE TABLE experience (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    level BIGINT,
+    need_total_experience BIGINT,
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+);
 
 -- コースマスタのテーブル作成
 CREATE TABLE course (
@@ -71,7 +86,8 @@ CREATE TABLE quest (
     image_path VARCHAR(255) NOT NULL,
     access_flg BOOLEAN NOT NULL,
     sort_order BIGINT NOT NULL,
-    FOREIGN KEY (course_id) REFERENCES course(id)
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    FOREIGN KEY (dish_id) REFERENCES dish(id)
 );
 
 -- プロセスマスタのテーブル
@@ -137,35 +153,25 @@ CREATE TABLE video (
     FOREIGN KEY (problem_id) REFERENCES problem(id)
 );
 
--- 経験値テーブル
-CREATE TABLE experience (
-    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    level BIGINT,
-    need_total_experience BIGINT,
-    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
-);
-
--- 料理テーブル
-CREATE TABLE dish (
-    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
-);
-
--- 分類テーブル
-CREATE TABLE category (
-    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
-);
-
 -- クエスト分類テーブル
 CREATE TABLE quest_category (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     quest_id BIGINT,
     category_id BIGINT,
-    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
+    FOREIGN KEY (quest_id) REFERENCES quest(id),
+    FOREIGN KEY (category_id) REFERENCES category(id)
 );
+
+-- 大問用語マスタのテーブル作成
+CREATE TABLE problem_word (
+    id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    problem_id BIGINT NOT NULL,
+    word_id BIGINT NOT NULL,
+    DELETE_FLG boolean DEFAULT '0' NOT NULL,
+    FOREIGN KEY (problem_id) REFERENCES problem(id),
+    FOREIGN KEY (word_id) REFERENCES word(id)
+) COMMENT '大問用語マスタ';
 
 -- メモテーブル
 CREATE TABLE memo (
@@ -175,5 +181,6 @@ CREATE TABLE memo (
     created_date DATE COMMENT '作成日',
     edited_date DATE COMMENT '編集日',
     user_id BIGINT DEFAULT NULL,
-    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL
+    DELETE_FLG BOOLEAN DEFAULT '0' NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );

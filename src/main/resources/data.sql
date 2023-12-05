@@ -1,5 +1,5 @@
 -- ユーザ-のデータ
-INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ1', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 550, 8);
+INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ1', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 550, 5);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ2', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 700, 7);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ3', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 600, 6);
 INSERT INTO user (username, password, total_experience, level) VALUES ('ユーザ4', 'bc7aafe1fcc4a279c26b706427dc327a159e19bf640108b7ab806bd5da3cb4180286c7022f61a2af', 500, 5);
@@ -12,6 +12,16 @@ INSERT INTO user (username, password, total_experience, level) VALUES ('ユー�
 INSERT INTO user_login (user_id, login_date) values (1, '2023-10-31');
 INSERT INTO user_login (user_id, login_date) values (1, '2023-11-01');
 INSERT INTO user_login (user_id, login_date) values (1, '2023-11-02');
+
+-- 料理のテストデータ
+INSERT INTO dish (name) VALUES ('みそ汁');
+INSERT INTO dish (name) VALUES ('カレー');
+INSERT INTO dish (name) VALUES ('豚汁');
+
+-- 分類のテストデータ
+INSERT INTO category (name) VALUES ('継承');
+INSERT INTO category (name) VALUES ('インターフェース');
+INSERT INTO category (name) VALUES ('クラス');
 
 -- 用語のテストデータ
 INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
@@ -26,12 +36,6 @@ INSERT INTO word (japanese_classification, english_classification, japanese_comm
 VALUES ('ワード1', 'word1', '日本語解説1', '英語解説1');
 INSERT INTO word (japanese_classification, english_classification, japanese_comment, english_comment) 
 VALUES ('ワード2', 'word2','日本語解説2', '英語解説2');
-
--- 大問用語のテストデータ
-INSERT INTO problem_word (problem_id, word_id) VALUES (1, 1);
-INSERT INTO problem_word (problem_id, word_id) VALUES (1, 2);
-INSERT INTO problem_word (problem_id, word_id) VALUES (2, 1);
-INSERT INTO problem_word (problem_id, word_id) VALUES (2, 2);
 
 -- コースのテストデータ
 INSERT INTO course (course_name, image_path, sort_order) VALUES ('Cooking course', '/images/cook.jpg', 1);
@@ -74,6 +78,12 @@ INSERT INTO problem (name, process_id, problem_no) VALUES ('カレー3大問1', 
 INSERT INTO problem (name, process_id, problem_no) VALUES ('カレー4大問1', 11, 1);
 INSERT INTO problem (name, process_id, problem_no) VALUES ('カレー5大問1', 12, 1);
 INSERT INTO problem (name, process_id, problem_no) VALUES ('カレー6大問1', 13, 1);
+
+-- 大問用語のテストデータ
+INSERT INTO problem_word (problem_id, word_id) VALUES (1, 1);
+INSERT INTO problem_word (problem_id, word_id) VALUES (1, 2);
+INSERT INTO problem_word (problem_id, word_id) VALUES (2, 1);
+INSERT INTO problem_word (problem_id, word_id) VALUES (2, 2);
 
 -- 小問のテストデータ
 -- みそのデータ(id=19まで)
@@ -479,16 +489,6 @@ VALUES
     (48, 4800),
     (49, 4900),
     (50, 5000);
-
--- 料理のテストデータ
-INSERT INTO dish (name) VALUES ('みそ汁');
-INSERT INTO dish (name) VALUES ('カレー');
-INSERT INTO dish (name) VALUES ('豚汁');
-
--- 分類のテストデータ
-INSERT INTO category (name) VALUES ('継承');
-INSERT INTO category (name) VALUES ('インターフェース');
-INSERT INTO category (name) VALUES ('クラス');
 
 -- クエスト分類のテストデータ
 INSERT INTO quest_category (quest_id, category_id) VALUES (1, 1);
