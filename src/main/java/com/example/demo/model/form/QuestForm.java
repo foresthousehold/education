@@ -16,6 +16,9 @@ public class QuestForm {
     /** インターフェースフラグ */
     private boolean interfaceFlg;
 
+    /** クラスフラグ */
+    private boolean classFlg;
+
     public Quest getQuest() {
         return quest;
     }
@@ -39,4 +42,13 @@ public class QuestForm {
     public void setInterfaceFlg(boolean interfaceFlg) {
         this.interfaceFlg = interfaceFlg;
     }
+
+    public boolean isClassFlg() {
+        return classFlg;
+    }
+
+    public void setClassFlg(boolean classFlg) {
+        this.classFlg = classFlg;
+    }
+
 }

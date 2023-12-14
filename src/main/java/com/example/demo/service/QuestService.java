@@ -316,6 +316,9 @@ public class QuestService {
             if (id == INTERFACE) {
                 questForm.setInterfaceFlg(true);
             }
+            if (id == CLASS) {
+                questForm.setClassFlg(true);
+            }
         });
         return questForm;
     }

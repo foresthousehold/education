@@ -97,6 +97,9 @@
                       <th:block th:if="${form.interfaceFlg}">
                         <p class="category category-interface">Interface</p>
                       </th:block>
+                      <th:block th:if="${form.classFlg}">
+                        <p class="category category-interface">Class</p>
+                      </th:block>
                       <a th:href="@{/quest/process/{questId}(questId=${form.quest.id})}"
                         class="btn btn-primary">Answer</a>
                     </div>
