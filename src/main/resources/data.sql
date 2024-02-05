@@ -52,13 +52,13 @@ INSERT INTO quest (name, course_id, dish_id, image_path, access_flg, sort_order)
 
 -- プロセスのテストデータ
 -- 味噌汁
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Prepare tofu and green onion', 1, 10, '/images/process/miso/miso_negi.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Cutting tofu and green onion', 1, 110, '/images/process/miso/miso_negi.png', '0', 2);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Prepare water and seaweed, broth', 1, 220, '/images/process/miso/miso_negi.png', '0', 3);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Boil after add water and broth', 1, 220, '/images/process/miso/miso_negi.png', '0', 4);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('5.Add tofu and seaweed', 1, 220, '/images/process/miso/miso_negi.png', '0', 5);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Dissolve miso after add miso', 1, 220, '/images/process/miso/miso_negi.png', '0', 6);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('7.Add the green onions and broth and mix to complete the dish', 1, 220, '/images/process/miso/miso_negi.png', '0', 7);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Prepare tofu and green onion', 1, 10, '/images/process/miso/1.png', '1', 1);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Cutting tofu and green onion', 1, 110, '/images/process/miso/2.png', '0', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Prepare water and seaweed, broth', 1, 220, '/images/process/miso/3.png', '0', 3);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Boil after add water and broth', 1, 220, '/images/process/miso/4.png', '0', 4);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('5.Add tofu and seaweed', 1, 220, '/images/process/miso/5.png', '0', 5);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Dissolve miso after add miso', 1, 220, '/images/process/miso/6.png', '0', 6);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('7.Add the green onions and broth and mix to complete the dish', 1, 220, '/images/process/miso/7.png', '0', 7);
 -- カレー
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Prepare ingredient', 2, 110, '/images/process/curry/1.png', '1', 1);
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Cutting Ingredients', 2, 220, '/images/process/curry/2.png', '0', 2);
@@ -68,10 +68,10 @@ INSERT INTO process (process_name, quest_id, experience, image_path, access_flg,
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Complete', 2, 220, '/images/process/curry/6.png', '0', 6);
 -- 煮込みハンバーグ(id=14~18)
 INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('1.Make Base Hamburger Steak', 3, 110, '/images/process/stewed/process1.png', '1', 1);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Make Hamburger Steak', 3, 220, '/images/process/stewed/process2.png', '1', 2);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Make Hamburger Sauce', 3, 220, '/images/process/stewed/process3.png', '1', 3);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Make Stewed Hamburger', 3, 220, '/images/process/stewed/process4.png', '1', 4);
-INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('6.Complete', 3, 220, '/images/process/stewed/process5.png', '1', 5);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('2.Make Hamburger Steak', 3, 220, '/images/process/stewed/process2.png', '0', 2);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('3.Make Hamburger Sauce', 3, 220, '/images/process/stewed/process3.png', '0', 3);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('4.Make Stewed Hamburger', 3, 220, '/images/process/stewed/process4.png', '0', 4);
+INSERT INTO process (process_name, quest_id, experience, image_path, access_flg, sort_order) VALUES ('5.Complete', 3, 220, '/images/process/stewed/process5.png', '0', 5);
 
 -- 大問のテストデータ
 -- 味噌汁(id=1~7)
