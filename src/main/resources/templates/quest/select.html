@@ -4,8 +4,8 @@
 <head th:replace="layouts/layout::head('クエスト選択画面', ~{::link}, ~{script})">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/course.css">
-  <link rel="stylesheet" href="/css/quest.css">
+  <link rel="stylesheet" th:href="@{/css/course.css}">
+  <link rel="stylesheet" th:href="@{/css/quest.css}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
@@ -88,7 +88,7 @@
               <th:block th:each="form : ${questForms}">
                 <div class="col-md-3">
                   <div class="card">
-                    <img class="card-img-top" th:src="${form.quest.imagePath}">
+                    <img class="card-img-top" th:src="@{__${form.quest.imagePath}__}">
                     <div class="card-body">
                       <h5 class="card-title" th:text="${form.quest.name}"></h5>
                       <th:block th:if="${form.extendFlg}">

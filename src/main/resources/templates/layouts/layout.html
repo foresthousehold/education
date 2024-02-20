@@ -5,7 +5,7 @@
 <head th:fragment="head(title,links,scripts)">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <!-- (2)共通で読み込むCSS/JS -->
-  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" th:href="@{/css/layout.css}" />
   <!-- (3)タイトルのフォーマット -->
   <title th:text="${title}">各ページタイトル | sample app</title>
 
@@ -23,7 +23,7 @@
         <label class="col-5 col-lg-5"></label>
         <div class="row col-2 col-lg-2" th:with="form=${profileForm}">
           <div class="img-fluid mr-1">
-            <img class="user-icon" th:src="${form.profileIcon}">
+            <img class="user-icon" th:src="@{__${form.profileIcon}__}">
           </div>
           <div class="nav-item dropdown">
             <div class="user-name nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownMenuLink"

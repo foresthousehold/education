@@ -4,7 +4,7 @@
 <head th:replace="layouts/layout::head('Problem screen', ~{::link}, ~{script})">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/question.css">
+  <link rel="stylesheet" th:href="@{/css/question.css}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,7 +34,7 @@
                 fill-in-the-blank question.<br> Please select the appropriate answer from each option.</label>
               <th:block th:each="imgPath : *{imgPaths}">
                 <div class="imgPath mt-3">
-                  <img th:src="${imgPath}" alt="画像" width="100%">
+                  <img th:src="@{__${imgPath}__}" alt="画像" width="100%">
                 </div>
               </th:block>
               <!-- 選択肢 -->
@@ -76,7 +76,7 @@
             <!-- 動画 -->
             <div class="col-md-6" style="overflow-y: scroll; height: 700px;">
               <div class="mt-3" style="overflow: hidden;">
-                <video th:src="*{videoPath}" class="img-fluid vid_main" controls style="width: 100%;"></video>
+                <video th:src="@{__*{videoPath}__}" class="img-fluid vid_main" controls style="width: 100%;"></video>
               </div>
               <label class="h4 word-label font-weight-bold">Explanation of Terms</label>
               <button type="button" class="button" id="toggleButton">ENGLISH -> JAPANESE</button>
@@ -151,7 +151,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-  <script src="/js/question.js"></script>
+  <script th:src="@{/js/question.js}"></script>
   <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
 </body>
 

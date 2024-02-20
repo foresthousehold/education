@@ -4,7 +4,7 @@
 <head th:replace="layouts/layout::head('ランキング画面', ~{::link}, ~{script})">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/rank/rank.css">
+  <link rel="stylesheet" th:href="@{/css/rank/rank.css}">
 </head>
 
 <body>
@@ -33,13 +33,13 @@
               <tbody>
                 <tr th:each="form, stat : ${rankForms}" th:class="'user-' + ${stat.index+1}">
                   <td class="align-middle">
-                    <img th:if="${stat.index == 0}" src="/images/rank/one.png" style="height: 100px; width: 100px;">
-                    <img th:if="${stat.index == 1}" src="/images/rank/two.png" style="height: 100px; width: 100px;">
-                    <img th:if="${stat.index == 2}" src="/images/rank/three.png" style="height: 100px; width: 100px;">
+                    <img th:if="${stat.index == 0}" th:src="@{/images/rank/one.png}" style="height: 100px; width: 100px;">
+                    <img th:if="${stat.index == 1}" th:src="@{/images/rank/two.png}" style="height: 100px; width: 100px;">
+                    <img th:if="${stat.index == 2}" th:src="@{/images/rank/three.png}" style="height: 100px; width: 100px;">
                     <span th:unless="${stat.index == 0 || stat.index == 1 || stat.index == 2}"
                       th:text="${stat.index+1}"></span>
                   </td>
-                  <td class="align-middle text-center"><img class="user-rank-icon" th:src="${form.profileIcon}">
+                  <td class="align-middle text-center"><img class="user-rank-icon" th:src="@{__${form.profileIcon}__}">
                   </td>
                   <td class="user-name align-middle" th:text="${form.userName}"></td>
                   <td class="user-level align-middle" th:text="Lv. + ${form.level}"></td>
